@@ -1,0 +1,49 @@
+<div class="main-frame">
+  <h2>{{kindergarten.name}}</h2>
+
+  <h3>{{user.name}}</h3>
+  <h3>{{userName}}</h3>
+
+  <div class="row modules-list-container">
+    <ul class="nav nav-pills modules-list actions">
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kindergarten.name}}/bulletin" class="btn btn-success">
+          园内公告
+        </a>
+      </li>
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kindergarten.name}}/class-bulletin" class="btn btn-success">
+          班级通知
+        </a>
+      </li>
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kindergarten.name}}/cookbook" class="btn btn-success">
+          每周食谱
+        </a>
+      </li>
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kindergarten.name}}/learning" class="btn btn-success">
+          学习内容
+        </a>
+      </li>
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kindergarten.name}}/growing" class="btn btn-success">
+          成长档案
+        </a>
+      </li>
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kindergarten.name}}/baby-status" class="btn btn-success">
+          每日育情
+        </a>
+      </li>
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kindergarten.name}}/take-n-drop" class="btn btn-success">
+          接送信息
+        </a>
+      </li>
+
+    </ul>
+
+  </div>
+  <div class="module-view" ui-view></div>
+</div>

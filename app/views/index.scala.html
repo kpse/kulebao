@@ -1,7 +1,4 @@
-@(message: String)
-
-@main("Welcome to Play") {
-
-    @play20.welcome(message)
-
+@main("app") {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    <div ui-view></div>
 }

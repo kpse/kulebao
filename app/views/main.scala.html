@@ -1,15 +1,25 @@
-@(title: String)(content: Html)
+@(appName: String)(content: Html)
 
 <!DOCTYPE html>
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="en" ng-app="@appName"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en" ng-app="@appName"> <!--<![endif]-->
 
-<html>
     <head>
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <title>Welcome to Kulebao</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/jquery-ui.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
     </head>
     <body>
         @content
+    <script src="@routes.Assets.at("javascripts/vendor/jquery-1.10.2.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/vendor/angularjs/angular.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/vendor/angularjs/angular-ui-router.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/vendor/angularjs/angular-resource.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/vendor/angularjs/angular-route.min.js")" type="text/javascript"></script>
+
+    <script src="@routes.Assets.at("js/main.js")" type="text/javascript"></script>
     </body>
 </html>
