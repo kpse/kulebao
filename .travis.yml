@@ -13,4 +13,4 @@ before_script:
   - npm install less
 script:
   - play-${PLAY_VERSION}/play test
-  - karma start --single-run --browsers PhantomJS karma.conf.js
+  - karma start --single-run --browsers PhantomJS karma.conf.coffee

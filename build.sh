@@ -3,6 +3,7 @@
 #npm install coffee-script
 #npm install coffee-script-redux
 #npm install karma
+#npm install generator-angular
 
 
 #!/bin/sh
