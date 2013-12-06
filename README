@@ -1,4 +1,25 @@
-This is your new Play application
-=====================================
+Run ./build p before committing please
 
-This file will be packaged with your application, when using `play dist`.
+todos:
+寻找合适的国内服务器
+和push服务结合
+老师管理页面框架
+园内公告
+班级通知
+每周食谱
+学习内容
+成长档案
+每日育情
+接送情况
+免疫接种
+体格测评
+设置
+家长，老师登陆
+
+done:
+基本环境搭建
+heroku部署
+CI
+Codebase
+
+

@@ -5,9 +5,6 @@
 #npm install karma
 #npm install generator-angular
 
-
-#!/bin/sh
-
 function build_local {
     karma start --single-run && \
     play test
