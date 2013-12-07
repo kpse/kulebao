@@ -7,6 +7,11 @@ app.config ($stateProvider, $urlRouterProvider) ->
       templateUrl: 'templates/kindergarten.html',
       controller: 'KindergartenCtrl'
     )
+  .state('kindergarten.bulletin',
+      url: '/bulletin',
+      templateUrl: 'templates/bulletin.html',
+      controller: 'BulletinCtrl'
+    )
 
   .state('kindergarten.wip',
       url: '/wip',
@@ -16,5 +21,5 @@ app.config ($stateProvider, $urlRouterProvider) ->
   $urlRouterProvider.otherwise ($injector, $location) ->
     path = $location.path()
     if path.indexOf("kindergarten", 0) < 0
-    then $location.path '/kindergarten/jiaotong'
+    then $location.path '/kindergarten/school23'
     else $location.path path.replace /(kindergarten\/[^\/]+)\/.+$/g, '$1/wip'

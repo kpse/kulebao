@@ -19,11 +19,11 @@ module.exports = (config) ->
       'public/javascripts/vendor/angularjs/angular-route.min.js',
       'public/javascripts/vendor/angularjs/angular-ui-router.js',
       'public/javascripts/vendor/**/*.js',
-      'app/assets/js/main.coffee',
-      'app/assets/js/controllers/*.coffee',
-      'app/assets/js/**/*.coffee',
+      'app/assets/scripts/main.coffee',
+      'app/assets/scripts/controllers/*.coffee',
+      'app/assets/scripts/**/*.coffee',
       'test/assets/config/angular-mocks.js',
-      'test/assets/**/*.spec.coffee'
+      'test/spec/**/*.coffee'
     ],
 
     preprocessors:
