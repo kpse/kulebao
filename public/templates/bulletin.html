@@ -1,10 +1,12 @@
-<div class="row modules-list-container">
-  <ul class="nav nav-pills modules-list actions">
-    <li class="news" ng-repeat="news in newsletters">
-      <div>
-        {{news.title}}
-        {{news.content}}
-      </div>
+<div class="newsletters" ng-controller="BulletinCtrl as bulletin">
+  <ul class="list-group">
+    <li class="list-group-item read-{{news.read}}" ng-repeat="news in bulletin.newsletters">
+      <h4 class="list-group-item-heading">{{news.title}}</h4>
+      <a ng-href="#/kindergarten/{{bulletin.kindergarten.name}}/news/{{news.id}}">
+        <p class="list-group-item-text">{{news.content}}</p>
+      </a>
+      <span class="read-flag">{{news.read ? '已阅读' : '未阅读'}}</span>
+      <span class="issue-date">于{{news.issueDate | date:'yyyy年MM月dd日'}}发布</span>
     </li>
   </ul>
 

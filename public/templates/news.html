@@ -1,0 +1,12 @@
+<div class="panel panel-default" ng-controller="NewsCtrl as ctrl">
+  <div class="panel-heading">
+    <h4 class="news-heading">{{ctrl.news.title}}</h4>
+  </div>
+  <div class="panel-body">
+    <p class="news-content">{{ctrl.news.content}}</p>
+  </div>
+  <div class="panel-footer">
+    <span class="read-flag">{{ctrl.news.read ? '已阅读' : '未阅读'}}</span>
+    <span class="issue-date">于{{ctrl.news.issueDate | date:'yyyy年MM月dd日'}}发布</span>
+  </div>
+</div>

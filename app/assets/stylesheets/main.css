@@ -5,3 +5,27 @@
 .module-view {
   margin-top: 30px;
 }
+
+.modules-list-container {
+  margin-left: 0;
+}
+
+.newsletters {
+  max-width: 700px;
+  .read-true {
+    background-color: #dbc59e;
+  }
+  .read-false {
+    background-color: #ffffff;
+  }
+  .issue-date {
+    float: right;
+  }
+  .read-flag {
+    margin-left: 150px;
+  }
+}
+
+.panel {
+  max-width: 700px;
+}
