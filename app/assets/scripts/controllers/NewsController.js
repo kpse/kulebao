@@ -4,15 +4,32 @@
   var Controller;
 
   Controller = (function() {
-    function Controller($stateParams, newsService) {
-      this.newsService = newsService;
-      this.news = this.newsService.getNews($stateParams.news)[0];
+    function Controller($stateParams, newsService, readService) {
+      this.kindergarten = {
+        id: 1,
+        name: 'school23'
+      };
+      this.user = {
+        id: 1,
+        name: '豆瓣'
+      };
+      this.news = newsService.get({
+        kg: this.kindergarten.name,
+        news_id: $stateParams.news
+      });
+      this.readNews = readService.bind({
+        kg: this.kindergarten.name,
+        parent_id: this.user.id
+      }).query();
+      _.each(_.intersection(this.readNews, this.news), function(news) {
+        return news.read = true;
+      });
     }
 
     return Controller;
 
   })();
 
-  angular.module('app').controller('NewsCtrl', ['$stateParams', 'newsService', Controller]);
+  angular.module('app').controller('NewsCtrl', ['$stateParams', 'newsService', 'readService', Controller]);
 
 }).call(this);

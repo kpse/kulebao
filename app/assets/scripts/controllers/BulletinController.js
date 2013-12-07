@@ -4,12 +4,28 @@
   var Controller;
 
   Controller = (function() {
-    function Controller(newsService) {
-      this.newsService = newsService;
-      this.newsletters = this.newsService.get();
+    function Controller(newsService, readService) {
       this.kindergarten = {
         id: 1,
         name: 'school23'
+      };
+      this.user = {
+        id: 1,
+        name: '豆瓣'
+      };
+      this.newsletters = newsService.bind({
+        kg: this.kindergarten.name
+      }).query();
+      this.readNews = readService.bind({
+        kg: this.kindergarten.name,
+        parent_id: this.user.id
+      }).query;
+      this.markRead = function(id) {
+        return readService.markRead({
+          parent_id: this.user.id,
+          kg: this.kindergarten.name,
+          news_id: id
+        });
       };
     }
 
@@ -17,6 +33,6 @@
 
   })();
 
-  angular.module('app').controller('BulletinCtrl', ['newsService', Controller]);
+  angular.module('app').controller('BulletinCtrl', ['newsService', 'readService', Controller]);
 
 }).call(this);
