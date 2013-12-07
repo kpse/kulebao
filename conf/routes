@@ -4,6 +4,7 @@
 
 # Home page
 GET         /                                                     controllers.Application.index
+GET         /admin                                                controllers.Application.admin
 
 #anglarjs template pages
 GET         /templates/*file                                      controllers.Static.at(path="/public/templates", file)

@@ -8,4 +8,8 @@ object Application extends Controller {
     Ok(views.html.index())
   }
 
+  def admin = Action {
+    Ok(views.html.admin())
+  }
+
 }

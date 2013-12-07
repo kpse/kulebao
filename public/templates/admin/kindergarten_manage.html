@@ -1,0 +1,48 @@
+<div class="main-frame" ng-controller="KgManageCtrl as kg">
+  <h2>{{kg.kindergarten.desc}} 后台管理</h2>
+
+  <h3>{{kg.adminUser.name}}</h3>
+
+  <div class="row modules-list-container">
+    <ul class="nav nav-pills modules-list actions">
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.name}}/bulletin" class="btn btn-success">
+          园内公告设置
+        </a>
+      </li>
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.name}}/class-bulletin" class="btn btn-success">
+          班级通知设置
+        </a>
+      </li>
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.name}}/cookbook" class="btn btn-success">
+          每周食谱设置
+        </a>
+      </li>
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.name}}/learning" class="btn btn-success">
+          学习内容设置
+        </a>
+      </li>
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.name}}/growing" class="btn btn-success">
+          成长档案设置
+        </a>
+      </li>
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.name}}/baby-status" class="btn btn-success">
+          每日育情设置
+        </a>
+      </li>
+      <li class="action">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.name}}/take-n-drop" class="btn btn-success">
+          接送信息设置
+        </a>
+      </li>
+
+    </ul>
+
+  </div>
+  <div class="module-view" ui-view></div>
+</div>

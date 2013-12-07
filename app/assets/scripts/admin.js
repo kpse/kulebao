@@ -6,16 +6,16 @@
     function Config($stateProvider, $urlRouterProvider) {
       $stateProvider.state('kindergarten', {
         url: '/kindergarten/:kindergarten',
-        templateUrl: 'templates/kindergarten.html',
-        controller: 'KindergartenCtrl'
+        templateUrl: 'templates/admin/kindergarten_manage.html',
+        controller: 'KgManageCtrl'
       }).state('kindergarten.bulletin', {
         url: '/bulletin',
-        templateUrl: 'templates/bulletin.html',
-        controller: 'BulletinCtrl'
+        templateUrl: 'templates/admin/bulletin_manage.html',
+        controller: 'BulletinManageCtrl'
       }).state('kindergarten.news', {
         url: '/news/:news',
-        templateUrl: 'templates/news.html',
-        controller: 'NewsCtrl'
+        templateUrl: 'templates/admin/news_edit.html',
+        controller: 'NewsEditCtrl'
       }).state('kindergarten.wip', {
         url: '/wip',
         template: '<div>Sorry, we are still in Building...</div><image class="img-responsive" src="assets/images/wip.gif"></image>'
@@ -35,8 +35,8 @@
 
   })();
 
-  angular.module("app", ['ui.router', 'ngResource', 'ngRoute']).config(['$stateProvider', '$urlRouterProvider', Config]);
+  angular.module("admin", ['ui.router', 'ngResource', 'ngRoute']).config(['$stateProvider', '$urlRouterProvider', Config]);
 
-  angular.module('app').factory('newsService', ['$resource', window.kulebaoServices.newsService]).factory('readService', ['$resource', window.kulebaoServices.readService]);
+  angular.module('admin').factory('newsService', ['$resource', window.kulebaoServices.newsService]).factory('readService', ['$resource', window.kulebaoServices.readService]);
 
 }).call(this);
