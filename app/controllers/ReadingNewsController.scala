@@ -2,7 +2,7 @@ package controllers
 
 import play.api.data.Form
 import play.api.data.Forms._
-import models.{News, ReadNews}
+import models.ReadNews
 import play.api.libs.json.Json
 import play.api.mvc._
 

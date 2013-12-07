@@ -5,6 +5,7 @@
 
   Controller = (function() {
     function Controller(newsService, readService) {
+      var _this = this;
       this.kindergarten = {
         id: 1,
         name: 'school23'
@@ -15,17 +16,35 @@
       };
       this.newsletters = newsService.bind({
         kg: this.kindergarten.name
-      }).query();
-      this.readNews = readService.bind({
-        kg: this.kindergarten.name,
-        parent_id: this.user.id
-      }).query;
-      this.markRead = function(id) {
-        return readService.markRead({
-          parent_id: this.user.id,
-          kg: this.kindergarten.name,
-          news_id: id
+      }).query(function() {
+        return _this.readNews = readService.bind({
+          kg: _this.kindergarten.name,
+          parent_id: _this.user.id
+        }).query(function() {
+          return _this.determineReadOrNot(_this.readNews, _this.newsletters, _this.user);
         });
+      });
+      this.determineReadOrNot = function(readNews, newsletters, user) {
+        var news, _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = readNews.length; _i < _len; _i++) {
+          news = readNews[_i];
+          _results.push((function(news) {
+            var n, _j, _len1, _ref, _results1;
+            _ref = newsletters.filter(function(n) {
+              return n.id === news.news_id && news.parent_id === user.id;
+            });
+            _results1 = [];
+            for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+              n = _ref[_j];
+              _results1.push((function(n) {
+                return n.read = true;
+              })(n));
+            }
+            return _results1;
+          })(news));
+        }
+        return _results;
       };
     }
 

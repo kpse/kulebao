@@ -13,16 +13,14 @@
         id: 1,
         name: '豆瓣'
       };
-      this.news = newsService.get({
+      readService.markRead({
+        parent_id: this.user.id,
         kg: this.kindergarten.name,
         news_id: $stateParams.news
       });
-      this.readNews = readService.bind({
+      this.news = newsService.get({
         kg: this.kindergarten.name,
-        parent_id: this.user.id
-      }).query();
-      _.each(_.intersection(this.readNews, this.news), function(news) {
-        return news.read = true;
+        news_id: $stateParams.news
       });
     }
 

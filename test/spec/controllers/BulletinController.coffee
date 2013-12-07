@@ -17,3 +17,31 @@ describe 'Controller: BulletinCtrl', () ->
 
   it 'should attach a list of awesomeThings to the scope', () ->
     expect(BulletinCtrl.kindergarten.id).toBe 1
+
+  it 'should distinguish news which has already been read', () ->
+    readnews = [
+      {parent_id: 1, news_id: 2}
+    ]
+    news = [
+      {id: 1},
+      {id: 2}
+    ]
+    user = id: 1
+    BulletinCtrl.determineReadOrNot(readnews, news, user)
+    expect(news[1].read).toBeTruthy()
+
+  it 'should distinguish news which has already been read', () ->
+    readnews = [
+      {parent_id: 2, news_id: 1},
+      {parent_id: 2, news_id: 2}
+    ]
+    news = [
+      {id: 1},
+      {id: 2}
+    ]
+    user = id: 2
+
+    BulletinCtrl.determineReadOrNot(readnews, news, user)
+
+    expect(news[0].read).toBeTruthy()
+    expect(news[1].read).toBeTruthy()

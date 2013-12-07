@@ -31,15 +31,27 @@ object ReadNews {
 
   def markRead(form: (Long, String, Long)) = DB.withConnection {
     implicit connection =>
-      SQL("insert into newsRead (k_id, parent_id, news_id, readTime) " +
-        "values ((select id from kindergarten where name={k_name}), {parent_id}, {news_id}, {readTime})")
-        .on(
-          'parent_id -> form._1,
-          'k_name -> form._2,
-          'news_id -> form._3,
-          'readTime -> new Date()
-        ).executeInsert()
+      readTimes(form) match {
+        case 0 => SQL("insert into newsRead (k_id, parent_id, news_id, readTime) " +
+          "values ((select id from kindergarten where name={k_name}), {parent_id}, {news_id}, {readTime})")
+          .on(
+            'parent_id -> form._1,
+            'k_name -> form._2,
+            'news_id -> form._3,
+            'readTime -> new Date()
+          ).executeInsert()
+        case _ =>
+      }
+
 
   }
 
+  def readTimes(form: (Long, String, Long)): Long = DB.withConnection {
+    implicit connection =>
+      SQL("select count(1) from newsRead where parent_id={parent_id} and news_id={news_id}")
+        .on(
+          'parent_id -> form._1,
+          'news_id -> form._3
+        ).as(scalar[Long].single)
+  }
 }

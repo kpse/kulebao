@@ -2,34 +2,26 @@
 (function() {
   'use strict';
   describe('Controller: NewsCtrl', function() {
-    var $httpBackend, NewsCtrl, scope;
+    var $httpBackend, NewsCtrl;
     beforeEach(module('app'));
     NewsCtrl = {};
-    scope = {};
     $httpBackend = {};
     beforeEach(inject(function($controller, $rootScope, _$httpBackend_) {
       $httpBackend = _$httpBackend_;
+      $httpBackend.expectPOST('/kindergarten/school23/parent/1/news/999').respond({
+        id: 999,
+        k_id: 1,
+        parent_id: 1,
+        news_id: 2,
+        readTime: '1990-10-01'
+      });
       $httpBackend.expectGET('/kindergarten/school23/news/999').respond({
         id: 999,
-        title: 't',
-        content: '321',
-        issueDate: '1990-10-01'
+        k_id: 1,
+        parent_id: 1,
+        news_id: 1,
+        readTime: '1990-10-01'
       });
-      $httpBackend.expectGET('/kindergarten/school23/parent/1/news').respond([
-        {
-          id: 1,
-          k_id: 1,
-          parent_id: 1,
-          news_id: 1,
-          readTime: '1990-10-01'
-        }, {
-          id: 2,
-          k_id: 1,
-          parent_id: 1,
-          news_id: 2,
-          readTime: '1990-10-01'
-        }
-      ]);
       return NewsCtrl = $controller('NewsCtrl', {
         $stateParams: {
           news: 999
