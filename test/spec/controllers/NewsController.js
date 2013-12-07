@@ -2,19 +2,43 @@
 (function() {
   'use strict';
   describe('Controller: NewsCtrl', function() {
-    var NewsCtrl, scope;
+    var $httpBackend, NewsCtrl, scope;
     beforeEach(module('app'));
     NewsCtrl = {};
     scope = {};
-    beforeEach(inject(function($controller, $rootScope) {
+    $httpBackend = {};
+    beforeEach(inject(function($controller, $rootScope, _$httpBackend_) {
+      $httpBackend = _$httpBackend_;
+      $httpBackend.expectGET('/kindergarten/school23/news/999').respond({
+        id: 999,
+        title: 't',
+        content: '321',
+        issueDate: '1990-10-01'
+      });
+      $httpBackend.expectGET('/kindergarten/school23/parent/1/news').respond([
+        {
+          id: 1,
+          k_id: 1,
+          parent_id: 1,
+          news_id: 1,
+          readTime: '1990-10-01'
+        }, {
+          id: 2,
+          k_id: 1,
+          parent_id: 1,
+          news_id: 2,
+          readTime: '1990-10-01'
+        }
+      ]);
       return NewsCtrl = $controller('NewsCtrl', {
         $stateParams: {
-          news: 2
+          news: 999
         }
       });
     }));
-    return it('should attach a list of awesomeThings to the scope', function() {
-      return expect(NewsCtrl.news.id).toBe(2);
+    return it('should have 2 news from request', function() {
+      $httpBackend.flush();
+      return expect(NewsCtrl.news.id).toBe(999);
     });
   });
 
