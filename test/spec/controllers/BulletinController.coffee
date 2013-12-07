@@ -16,4 +16,4 @@ describe 'Controller: BulletinCtrl', () ->
     }
 
   it 'should attach a list of awesomeThings to the scope', () ->
-    expect(scope.awesomeThings.length).toBe 3
+    expect(BulletinCtrl.kindergarten.id).toBe 1

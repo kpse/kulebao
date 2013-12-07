@@ -13,7 +13,7 @@
       });
     }));
     return it('should attach a list of awesomeThings to the scope', function() {
-      return expect(scope.awesomeThings.length).toBe(3);
+      return expect(BulletinCtrl.kindergarten.id).toBe(1);
     });
   });
 

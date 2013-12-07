@@ -2,18 +2,19 @@
 (function() {
   'use strict';
   describe('Controller: NewsCtrl', function() {
-    var NewscontrollerCtrl, scope;
+    var NewsCtrl, scope;
     beforeEach(module('app'));
-    NewscontrollerCtrl = {};
+    NewsCtrl = {};
     scope = {};
     beforeEach(inject(function($controller, $rootScope) {
-      scope = $rootScope.$new();
-      return NewscontrollerCtrl = $controller('NewsCtrl', {
-        $scope: scope
+      return NewsCtrl = $controller('NewsCtrl', {
+        $stateParams: {
+          news: 2
+        }
       });
     }));
     return it('should attach a list of awesomeThings to the scope', function() {
-      return expect(scope.awesomeThings.length).toBe(3);
+      return expect(NewsCtrl.news.id).toBe(2);
     });
   });
 
