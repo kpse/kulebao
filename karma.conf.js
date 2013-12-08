@@ -14,9 +14,10 @@
       colors: true,
       logLevel: config.LOG_INFO,
       autoWatch: true,
-      browsers: ['Chrome'],
+      browsers: ['Chrome', 'PhantomJS'],
       captureTimeout: 60000,
-      singleRun: false
+      singleRun: false,
+      plugins: ["karma-jasmine", 'karma-requirejs', 'karma-coffee-preprocessor', 'karma-chrome-launcher', "karma-phantomjs-launcher"]
     });
   };
 

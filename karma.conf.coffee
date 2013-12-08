@@ -70,7 +70,7 @@ module.exports = (config) ->
   # - Safari (only Mac)
   # - PhantomJS
   # - IE (only Windows)
-    browsers: ['Chrome'],
+    browsers: ['Chrome', 'PhantomJS'],
 
 
   # If browser does not capture in given timeout [ms], kill it
@@ -79,4 +79,12 @@ module.exports = (config) ->
 
   # Continuous Integration mode
   # if true, it capture browsers, run tests and exit
-    singleRun: false)
+    singleRun: false
+    plugins: [
+      "karma-jasmine",
+      'karma-requirejs',
+      'karma-coffee-preprocessor',
+      'karma-chrome-launcher',
+      "karma-phantomjs-launcher"
+    ]
+  )

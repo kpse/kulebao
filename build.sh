@@ -4,6 +4,9 @@
 #npm install coffee-script-redux
 #npm install karma
 #npm install generator-angular
+#npm install phantomjs
+#sudo npm install -g PhantomJS
+#npm install karma-phantomjs-launcher --save-dev
 
 function build_local {
     karma start --single-run && \
