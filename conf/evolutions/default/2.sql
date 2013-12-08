@@ -6,7 +6,8 @@ CREATE TABLE news (
   title     VARCHAR(255) NOT NULL,
   content   TEXT         NOT NULL,
   issueDate DATE         NOT NULL,
-  published INT          NOT NULL
+  published INT          NOT NULL DEFAULT 0,
+  status    INT          NOT NULL DEFAULT 1
 );
 
 INSERT INTO news (k_id, title, content, issueDate, published) VALUES (1, '通知1',

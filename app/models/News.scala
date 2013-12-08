@@ -11,14 +11,33 @@ case class News(id: Long, k_id: Long, title: String, content: String, issueDate:
 
 
 object News {
-  def update(form: (Long, Long, String, Boolean)) = DB.withConnection {
+  def create(form: (String, String, String)) = DB.withConnection {
     implicit c =>
-      SQL("update news set content={content}, published={published} where id={id}")
+      val createdId: Option[Long] = SQL("insert into news (k_id, title, content, issueDate) values ((select id from kindergarten where name={kg}), {title}, {content}, {date})")
         .on('content -> form._3,
+          'kg -> form._1,
+          'title -> form._2,
+          'date -> new Date()
+        ).executeInsert()
+      findById(form._1)(createdId.getOrElse(-1))
+  }
+
+  def delete(id: Long) = DB.withConnection {
+    implicit c =>
+      SQL("update news set status=0 where id={id}")
+        .on('id -> id
+        ).execute()
+  }
+
+  def update(form: (Long, Long, String, String, Boolean), kg: String) = DB.withConnection {
+    implicit c =>
+      SQL("update news set content={content}, published={published}, title={title} where id={id}")
+        .on('content -> form._4,
+          'title -> form._3,
           'id -> form._1,
-          'published -> (if (form._4) 1 else 0)
+          'published -> (if (form._5) 1 else 0)
         ).executeUpdate()
-      findById(form._1)
+      findById(kg)(form._1)
   }
 
   def findById(id: Long) = DB.withConnection {
@@ -54,14 +73,14 @@ object News {
 
   def all(kg: String): List[News] = DB.withConnection {
     implicit c =>
-      SQL("select a.* from news a, kindergarten k where k.id = a.k_id and k.name={kg} and published=1")
+      SQL("select a.* from news a, kindergarten k where k.id = a.k_id and k.name={kg} and published=1 and status=1")
         .on('kg -> kg)
         .as(simple *)
   }
 
   def allIncludeNonPublished(kg: String): List[News] = DB.withConnection {
     implicit c =>
-      SQL("select a.* from news a, kindergarten k where k.id = a.k_id and k.name={kg}")
+      SQL("select a.* from news a, kindergarten k where k.id = a.k_id and k.name={kg} and status=1")
         .on('kg -> kg)
         .as(simple *)
   }

@@ -15,11 +15,11 @@
         name: '豆瓣'
       };
       this.readCount = 100;
-      this.showEditBox = false;
       this.news = newsService.get({
         kg: this.kindergarten.name,
         news_id: $stateParams.news
       });
+      this.showEditBox = false;
       this.startEditing = function(e) {
         _this.backupContent = _this.news.content;
         e.stopPropagation();
@@ -53,6 +53,23 @@
           kg: _this.kindergarten.name,
           news_id: news.id
         });
+      };
+      this.editingTitle = false;
+      this.backupTitle = this.news.title;
+      this.saveTitle = function(e) {
+        e.stopPropagation();
+        _this.editingTitle = false;
+        if (_this.backupTitle !== _this.news.title) {
+          return _this.news.$save({
+            kg: _this.kindergarten.name,
+            news_id: _this.news.id
+          });
+        }
+      };
+      this.startEditingTitle = function(e) {
+        e.stopPropagation();
+        _this.backupTitle = _this.news.title;
+        return _this.editingTitle = true;
       };
     }
 

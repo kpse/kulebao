@@ -25,6 +25,7 @@ object NewsController extends Controller {
     tuple(
       "id" -> longNumber,
       "k_id" -> longNumber,
+      "title" -> text,
       "content" -> text,
       "pushlished" -> boolean
     )
@@ -34,8 +35,8 @@ object NewsController extends Controller {
     implicit request =>
       newsForm.bindFromRequest.value map {
         news =>
-          val update1 = News.update(news)
-          Ok(Json.toJson(update1)).as("application/json")
+          val updated = News.update(news, kg)
+          Ok(Json.toJson(updated)).as("application/json")
       } getOrElse BadRequest
   }
 
@@ -45,4 +46,26 @@ object NewsController extends Controller {
     val jsons = News.allIncludeNonPublished(kg)
     Ok(Json.toJson(jsons)).as("application/json")
   }
+
+  def delete(kg: String, adminId: Long, newsId: Long) = Action {
+    News.delete(newsId)
+    Ok("{\"status\":\"success\"}").as("application/json")
+  }
+
+  val newsCreateForm = Form(
+    tuple(
+      "kg" -> text,
+      "title" -> text,
+      "content" -> text
+    )
+  )
+
+  def create(kg: String, adminId: Long) = Action {
+    implicit request =>
+      newsCreateForm.bindFromRequest.value map {
+        news =>
+          val created = News.create(news)
+          Ok(Json.toJson(created)).as("application/json")
+      } getOrElse BadRequest
+  } 
 }

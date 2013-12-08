@@ -44,6 +44,29 @@
           news_id: news.id
         });
       };
+      this.deleteNews = function(news) {
+        news.$delete({
+          kg: _this.kindergarten.name,
+          news_id: news.id
+        });
+        return _this.newsletters = _this.newsletters.filter(function(x) {
+          return x !== news;
+        });
+      };
+      this.createNews = function() {
+        var news;
+        news = new adminNewsService({
+          kg: _this.kindergarten.name,
+          admin_id: _this.adminUser.id
+        });
+        news.title = "新通知";
+        news.content = "新通知内容，点击进行编辑";
+        news.$save({
+          kg: _this.kindergarten.name,
+          news_id: news.id
+        });
+        return _this.newsletters.push(news);
+      };
     }
 
     return Controller;

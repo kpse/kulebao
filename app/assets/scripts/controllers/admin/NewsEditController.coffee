@@ -9,14 +9,14 @@ class Controller
       id: 1
       name: '豆瓣'
     @readCount = 100
-    @showEditBox = false
     @news = newsService.get(kg: @kindergarten.name, news_id: $stateParams.news)
+
+    @showEditBox = false
 
     @startEditing = (e) =>
       @backupContent = @news.content
       e.stopPropagation()
       @showEditBox = true
-
 
     @cancelEditing = (e) =>
       e.stopPropagation()
@@ -35,6 +35,19 @@ class Controller
     @hidden = (news) =>
       news.pushlished = false
       news.$save(kg: @kindergarten.name, news_id: news.id)
+
+    @editingTitle = false
+    @backupTitle = @news.title
+
+    @saveTitle = (e) =>
+      e.stopPropagation()
+      @editingTitle = false
+      @news.$save(kg: @kindergarten.name, news_id: @news.id) if(@backupTitle != @news.title)
+
+    @startEditingTitle = (e) =>
+      e.stopPropagation()
+      @backupTitle = @news.title
+      @editingTitle = true
 
 
 

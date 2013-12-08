@@ -1,12 +1,15 @@
 <div class="panel panel-default" ng-controller="NewsEditCtrl as current">
   <div class="panel-heading">
-    <h4 class="news-heading">{{current.news.title}}</h4>
+
+
     <div class="btn-group">
       <button class="btn btn-warning" ng-click="current.startEditing($event) && editTarget.focus()">编辑</button>
       <button class="btn btn-danger">删除</button>
       <button class="btn btn-primary" ng-show="!current.news.published" ng-click="current.publish(current.news)">发布</button>
       <button class="btn btn-info" ng-show="current.news.published" ng-click="current.hidden(current.news)">隐藏</button>
     </div>
+    <h4 ng-click="current.startEditingTitle($event) && editTitle.focus()" class="news-heading" ng-show="!current.editingTitle">{{current.news.title}}</h4>
+    <input ng-model="current.news.title" ng-show="current.editingTitle" class="editing-title" ng-blur="current.saveTitle($event)" x-ng-target="editTitle"/>
   </div>
   <div class="panel-body">
     <p ng-click="current.startEditing($event) && editTarget.focus()" class="news-content" ng-show="!current.showEditBox">{{current.news.content}}</p>

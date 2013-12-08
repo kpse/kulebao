@@ -6,18 +6,20 @@
 
       <div class="btn-group">
         <button class="btn btn-warning">编辑</button>
-        <button class="btn btn-danger">删除</button>
+        <button class="btn btn-danger" ng-click="bulletin.deleteNews(news)">删除</button>
         <button class="btn btn-primary" ng-show="!news.published" ng-click="bulletin.publish(news)">发布</button>
         <button class="btn btn-info" ng-show="news.published" ng-click="bulletin.hidden(news)">隐藏</button>
       </div>
       <a ng-href="#/kindergarten/{{bulletin.kindergarten.name}}/news/{{news.id}}">
-        <p class="list-group-item-text">{{news.content}}</p>
+        <p class="list-group-item-text">{{news.content.substring(0,200)}}</p>
       </a>
       <span class="published">已发布</span>
       <span class="read-flag">阅读次数：{{news.readCount}}</span>
       <span class="issue-date pull-right">于{{news.issueDate | date:'yyyy年MM月dd日'}}发布</span>
     </li>
+    <p ng-show="bulletin.newsletters.length == 0">您还没有创建任何通知，请点击<a ng-click="bulletin.createNews()">这里</a>创建</p>
   </ul>
-  <button class="btn btn-primary col-xs-1">添加</button>
+
+  <button class="btn btn-primary col-xs-1" ng-click="bulletin.createNews()">添加</button>
 </div>
 </div>
