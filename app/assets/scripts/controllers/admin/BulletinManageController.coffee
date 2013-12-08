@@ -17,5 +17,13 @@ class Controller
         do (news) => news.readCount = 100
     )
 
+    @publish = (news) =>
+      news.pushlished = true
+      news.$save(kg: @kindergarten.name, news_id: news.id)
+
+    @hidden = (news) =>
+      news.pushlished = false
+      news.$save(kg: @kindergarten.name, news_id: news.id)
+
 
 angular.module('admin').controller 'BulletinManageCtrl', ['$rootScope','adminNewsService', Controller]

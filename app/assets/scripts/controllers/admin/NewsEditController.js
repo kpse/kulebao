@@ -20,7 +20,6 @@
         kg: this.kindergarten.name,
         news_id: $stateParams.news
       });
-      this.backupContent = this.news.content;
       this.startEditing = function(e) {
         _this.backupContent = _this.news.content;
         e.stopPropagation();
@@ -45,14 +44,14 @@
         news.pushlished = true;
         return news.$save({
           kg: _this.kindergarten.name,
-          news_id: _this.news.id
+          news_id: news.id
         });
       };
       this.hidden = function(news) {
         news.pushlished = false;
         return news.$save({
           kg: _this.kindergarten.name,
-          news_id: _this.news.id
+          news_id: news.id
         });
       };
     }

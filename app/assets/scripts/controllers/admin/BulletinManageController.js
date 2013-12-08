@@ -30,6 +30,20 @@
         }
         return _results;
       });
+      this.publish = function(news) {
+        news.pushlished = true;
+        return news.$save({
+          kg: _this.kindergarten.name,
+          news_id: news.id
+        });
+      };
+      this.hidden = function(news) {
+        news.pushlished = false;
+        return news.$save({
+          kg: _this.kindergarten.name,
+          news_id: news.id
+        });
+      };
     }
 
     return Controller;

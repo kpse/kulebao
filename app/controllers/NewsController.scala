@@ -39,6 +39,8 @@ object NewsController extends Controller {
       } getOrElse BadRequest
   }
 
+  def adminUpdate(kg: String, adminId: Long, newsId: Long) = update(kg, newsId)
+
   def indexWithNonPublished(kg: String, admin: Long) = Action {
     val jsons = News.allIncludeNonPublished(kg)
     Ok(Json.toJson(jsons)).as("application/json")

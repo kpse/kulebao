@@ -12,7 +12,6 @@ class Controller
     @showEditBox = false
     @news = newsService.get(kg: @kindergarten.name, news_id: $stateParams.news)
 
-    @backupContent = @news.content
     @startEditing = (e) =>
       @backupContent = @news.content
       e.stopPropagation()
@@ -31,11 +30,11 @@ class Controller
 
     @publish = (news) =>
       news.pushlished = true
-      news.$save(kg: @kindergarten.name, news_id: @news.id)
+      news.$save(kg: @kindergarten.name, news_id: news.id)
 
     @hidden = (news) =>
       news.pushlished = false
-      news.$save(kg: @kindergarten.name, news_id: @news.id)
+      news.$save(kg: @kindergarten.name, news_id: news.id)
 
 
 
