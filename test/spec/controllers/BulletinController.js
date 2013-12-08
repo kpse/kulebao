@@ -36,7 +36,7 @@
       BulletinCtrl.determineReadOrNot(readnews, news, user);
       return expect(news[1].read).toBeTruthy();
     });
-    return it('should distinguish news which has already been read', function() {
+    it('should distinguish news which has already been read', function() {
       var news, readnews, user;
       readnews = [
         {
@@ -60,6 +60,23 @@
       BulletinCtrl.determineReadOrNot(readnews, news, user);
       expect(news[0].read).toBeTruthy();
       return expect(news[1].read).toBeTruthy();
+    });
+    return it('should consider news is unread by default', function() {
+      var news, readnews, user;
+      readnews = [];
+      news = [
+        {
+          id: 1
+        }, {
+          id: 2
+        }
+      ];
+      user = {
+        id: 1
+      };
+      BulletinCtrl.determineReadOrNot(readnews, news, user);
+      expect(news[0].read).toBe(false);
+      return expect(news[1].read).toBe(false);
     });
   });
 

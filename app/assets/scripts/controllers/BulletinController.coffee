@@ -16,6 +16,7 @@ class Controller
       ))
 
     @determineReadOrNot = (readNews, newsletters, user) ->
+      _.each(newsletters, (news) -> news.read = false)
       for news in readNews
         do (news) ->
           for n in (newsletters.filter (n) -> n.id == news.news_id and news.parent_id == user.id)

@@ -45,3 +45,16 @@ describe 'Controller: BulletinCtrl', () ->
 
     expect(news[0].read).toBeTruthy()
     expect(news[1].read).toBeTruthy()
+
+  it 'should consider news is unread by default', () ->
+    readnews = []
+    news = [
+      {id: 1},
+      {id: 2}
+    ]
+    user = id: 1
+
+    BulletinCtrl.determineReadOrNot(readnews, news, user)
+
+    expect(news[0].read).toBe false
+    expect(news[1].read).toBe false

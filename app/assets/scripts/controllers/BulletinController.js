@@ -26,6 +26,9 @@
       });
       this.determineReadOrNot = function(readNews, newsletters, user) {
         var news, _i, _len, _results;
+        _.each(newsletters, function(news) {
+          return news.read = false;
+        });
         _results = [];
         for (_i = 0, _len = readNews.length; _i < _len; _i++) {
           news = readNews[_i];
