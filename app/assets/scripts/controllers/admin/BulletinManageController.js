@@ -4,7 +4,7 @@
   var Controller;
 
   Controller = (function() {
-    function Controller($rootScope, newsService, readService) {
+    function Controller($rootScope, adminNewsService) {
       var _this = this;
       this.kindergarten = {
         id: 1,
@@ -15,8 +15,9 @@
         name: '豆瓣'
       };
       $rootScope.tabName = 'bulletin';
-      this.newsletters = newsService.bind({
-        kg: this.kindergarten.name
+      this.newsletters = adminNewsService.bind({
+        kg: this.kindergarten.name,
+        admin_id: this.adminUser.id
       }).query(function() {
         var news, _i, _len, _ref, _results;
         _ref = _this.newsletters;
@@ -35,6 +36,6 @@
 
   })();
 
-  angular.module('admin').controller('BulletinManageCtrl', ['$rootScope', 'newsService', 'readService', Controller]);
+  angular.module('admin').controller('BulletinManageCtrl', ['$rootScope', 'adminNewsService', Controller]);
 
 }).call(this);

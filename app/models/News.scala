@@ -7,15 +7,17 @@ import play.api.db.DB
 import anorm.~
 import play.api.Play.current
 
-case class News(id: Long, k_id: Long, title: String, content: String, issueDate: Date)
+case class News(id: Long, k_id: Long, title: String, content: String, issueDate: Date, published: Boolean)
 
 
 object News {
-  def update(form: (Long, Long, String)) = DB.withConnection {
+  def update(form: (Long, Long, String, Boolean)) = DB.withConnection {
     implicit c =>
-      SQL("update news set content={content} where id={id}")
-        .on('content -> form._3)
-        .on('id -> form._1).executeUpdate()
+      SQL("update news set content={content}, published={published} where id={id}")
+        .on('content -> form._3,
+          'id -> form._1,
+          'published -> (if (form._4) 1 else 0)
+        ).executeUpdate()
       findById(form._1)
   }
 
@@ -41,17 +43,28 @@ object News {
       get[Long]("k_id") ~
       get[String]("title") ~
       get[String]("content") ~
-      get[Date]("issueDate") map {
-      case id ~ k_id ~ title ~ content ~ issueDate =>
-        News(id, k_id, title, content, issueDate)
+      get[Date]("issueDate") ~
+      get[Int]("published") map {
+      case id ~ k_id ~ title ~ content ~ issueDate ~ 1 =>
+        News(id, k_id, title, content, issueDate, true)
+      case id ~ k_id ~ title ~ content ~ issueDate ~ 0 =>
+        News(id, k_id, title, content, issueDate, false)
     }
   }
 
   def all(kg: String): List[News] = DB.withConnection {
     implicit c =>
+      SQL("select a.* from news a, kindergarten k where k.id = a.k_id and k.name={kg} and published=1")
+        .on('kg -> kg)
+        .as(simple *)
+  }
+
+  def allIncludeNonPublished(kg: String): List[News] = DB.withConnection {
+    implicit c =>
       SQL("select a.* from news a, kindergarten k where k.id = a.k_id and k.name={kg}")
         .on('kg -> kg)
         .as(simple *)
   }
+
 
 }

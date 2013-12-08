@@ -25,7 +25,8 @@ object NewsController extends Controller {
     tuple(
       "id" -> longNumber,
       "k_id" -> longNumber,
-      "content" -> text
+      "content" -> text,
+      "pushlished" -> boolean
     )
   )
 
@@ -36,5 +37,10 @@ object NewsController extends Controller {
           val update1 = News.update(news)
           Ok(Json.toJson(update1)).as("application/json")
       } getOrElse BadRequest
+  }
+
+  def indexWithNonPublished(kg: String, admin: Long) = Action {
+    val jsons = News.allIncludeNonPublished(kg)
+    Ok(Json.toJson(jsons)).as("application/json")
   }
 }

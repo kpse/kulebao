@@ -41,6 +41,13 @@
           });
         }
       };
+      this.publish = function(news) {
+        news.pushlished = true;
+        return news.$save({
+          kg: _this.kindergarten.name,
+          news_id: _this.news.id
+        });
+      };
     }
 
     return Controller;

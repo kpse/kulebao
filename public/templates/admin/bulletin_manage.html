@@ -5,6 +5,7 @@
       <h4 class="list-group-item-heading">{{news.title}}</h4>
 
       <div class="btn-group">
+        <button class="btn btn-primary" ng-show="!news.published">发布</button>
         <button class="btn btn-warning">编辑</button>
         <button class="btn btn-danger">删除</button>
       </div>

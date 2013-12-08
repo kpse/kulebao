@@ -13,9 +13,10 @@ GET         /*college/templates/*file                                          c
 GET         /kindergarten/:kg/news                                             controllers.NewsController.index(kg: String)
 GET         /kindergarten/:kg/news/:newsId                                     controllers.NewsController.show(kg: String, newsId: Long)
 POST        /kindergarten/:kg/news/:newsId                                     controllers.NewsController.update(kg: String, newsId: Long)
+GET         /kindergarten/:kg/admin/:adminId/news                              controllers.NewsController.indexWithNonPublished(kg: String, adminId: Long)
 
 GET         /kindergarten/:kg/parent/:parentId/news                            controllers.ReadingNewsController.index(kg: String, parentId: Long)
-POST        /kindergarten/:kg/parent/:parentId/news/:newsId                     controllers.ReadingNewsController.create(kg: String, parentId: Long, newsId: Long)
+POST        /kindergarten/:kg/parent/:parentId/news/:newsId                    controllers.ReadingNewsController.create(kg: String, parentId: Long, newsId: Long)
 
 GET         /kindergarten/:kg/admin/:adminId/news_reading_count/:newsId        controllers.ReadingNewsController.countReading(kg: String, adminId: Long, newsId: Long)
 
