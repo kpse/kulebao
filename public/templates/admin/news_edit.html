@@ -2,10 +2,10 @@
   <div class="panel-heading">
     <h4 class="news-heading">{{current.news.title}}</h4>
     <div class="btn-group">
-      <button class="btn btn-primary" ng-show="!current.news.published" ng-click="current.publish(current.news)">发布</button>
-      <button class="btn btn-warning">编辑</button>
+      <button class="btn btn-warning" ng-click="current.startEditing($event) && editTarget.focus()">编辑</button>
       <button class="btn btn-danger">删除</button>
-      <button class="btn btn-info">隐藏</button>
+      <button class="btn btn-primary" ng-show="!current.news.published" ng-click="current.publish(current.news)">发布</button>
+      <button class="btn btn-info" ng-show="current.news.published" ng-click="current.hidden(current.news)">隐藏</button>
     </div>
   </div>
   <div class="panel-body">

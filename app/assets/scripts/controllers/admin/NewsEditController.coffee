@@ -33,6 +33,10 @@ class Controller
       news.pushlished = true
       news.$save(kg: @kindergarten.name, news_id: @news.id)
 
+    @hidden = (news) =>
+      news.pushlished = false
+      news.$save(kg: @kindergarten.name, news_id: @news.id)
+
 
 
 angular.module(window.kulebaoApp).controller 'NewsEditCtrl', [ '$stateParams', 'newsService', Controller]
