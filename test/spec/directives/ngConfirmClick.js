@@ -3,16 +3,40 @@
   'use strict';
   describe('Directive: ngConfirmClick', function() {
     var scope;
-    beforeEach(module('kulebaoApp'));
+    beforeEach(module('admin'));
     scope = {};
     beforeEach(inject(function($controller, $rootScope) {
-      return scope = $rootScope.$new();
+      scope = $rootScope.$new();
+      scope.p = 1;
+      return scope.kill = function() {
+        return scope.p = 0;
+      };
     }));
-    return it('should make hidden element visible', inject(function($compile) {
+    beforeEach(function() {
+      this.confirmStub = window.confirm;
+      return window.confirm = function(a) {
+        return true;
+      };
+    });
+    afterEach(function() {
+      return window.confirm = this.confirmStub;
+    });
+    it('should process after confirmation', inject(function($compile) {
       var element;
-      element = angular.element('<ng-confirm-click></ng-confirm-click>');
+      element = angular.element('<button ng-confirm-msg="really?" ng-confirm-click="kill()"></button>');
       element = $compile(element)(scope);
-      return expect(element.text()).toBe('this is the ngConfirmClick directive');
+      element.click();
+      return expect(scope.p).toBe(0);
+    }));
+    return it('should block without confirmation', inject(function($compile) {
+      var element;
+      window.confirm = function(a) {
+        return false;
+      };
+      element = angular.element('<button ng-confirm-msg="really?" ng-confirm-click="kill()"></button>');
+      element = $compile(element)(scope);
+      element.click();
+      return expect(scope.p).toBe(1);
     }));
   });
 

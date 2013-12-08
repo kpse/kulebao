@@ -1,14 +1,14 @@
 'use strict'
 
-describe 'Service: Adminnewsservice', () ->
+describe 'Service: adminNewsService', () ->
 
   # load the service's module
-  beforeEach module 'kulebaoApp'
+  beforeEach module 'admin'
 
   # instantiate service
-  Adminnewsservice = {}
-  beforeEach inject (_Adminnewsservice_) ->
-    Adminnewsservice = _Adminnewsservice_
+  adminNewsService = {}
+  beforeEach inject (_adminNewsService_) ->
+    adminNewsService = _adminNewsService_
 
   it 'should do something', () ->
-    expect(!!Adminnewsservice).toBe true
+    expect(!!adminNewsService).toBe true
