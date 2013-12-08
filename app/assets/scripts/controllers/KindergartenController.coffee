@@ -1,5 +1,5 @@
 class Controller
-  constructor: () ->
+  constructor: ($rootScope) ->
     @kindergarten =
       name: 'school23'
       desc: '成都市第二十三幼儿园'
@@ -7,4 +7,8 @@ class Controller
       id: 1
       name: '豆瓣'
 
-angular.module(window.kulebaoApp).controller 'KindergartenCtrl', Controller
+    @isSelected = (tab)->
+      tab == $rootScope.tabName
+
+
+angular.module(window.kulebaoApp).controller 'KindergartenCtrl', ['$rootScope', Controller]

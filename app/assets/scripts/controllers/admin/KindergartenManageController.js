@@ -3,7 +3,7 @@
   var Controller;
 
   Controller = (function() {
-    function Controller() {
+    function Controller($rootScope) {
       this.kindergarten = {
         name: 'school23',
         desc: '成都市第二十三幼儿园'
@@ -12,12 +12,15 @@
         id: 1,
         name: '豆瓣老师'
       };
+      this.isSelected = function(tab) {
+        return tab === $rootScope.tabName;
+      };
     }
 
     return Controller;
 
   })();
 
-  angular.module('admin').controller('KgManageCtrl', Controller);
+  angular.module('admin').controller('KgManageCtrl', ['$rootScope', Controller]);
 
 }).call(this);

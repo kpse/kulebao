@@ -1,7 +1,7 @@
 'use strict'
 
 class Controller
-  constructor: (newsService, readService) ->
+  constructor: ($rootScope, newsService, readService) ->
     @kindergarten =
       id: 1,
       name: 'school23'
@@ -9,6 +9,8 @@ class Controller
     @user =
       id: 1
       name: '豆瓣'
+
+    $rootScope.tabName = 'bulletin'
 
     @newsletters = newsService.bind(kg: @kindergarten.name).query(() =>
       @readNews = readService.bind(kg: @kindergarten.name, parent_id: @user.id).query(() =>
@@ -23,4 +25,4 @@ class Controller
             do (n) -> n.read = true
 
 
-angular.module(window.kulebaoApp).controller 'BulletinCtrl', ['newsService', 'readService', Controller]
+angular.module(window.kulebaoApp).controller 'BulletinCtrl', ['$rootScope', 'newsService', 'readService', Controller]

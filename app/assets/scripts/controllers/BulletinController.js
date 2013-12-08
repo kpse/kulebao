@@ -4,7 +4,7 @@
   var Controller;
 
   Controller = (function() {
-    function Controller(newsService, readService) {
+    function Controller($rootScope, newsService, readService) {
       var _this = this;
       this.kindergarten = {
         id: 1,
@@ -14,6 +14,7 @@
         id: 1,
         name: '豆瓣'
       };
+      $rootScope.tabName = 'bulletin';
       this.newsletters = newsService.bind({
         kg: this.kindergarten.name
       }).query(function() {
@@ -55,6 +56,6 @@
 
   })();
 
-  angular.module(window.kulebaoApp).controller('BulletinCtrl', ['newsService', 'readService', Controller]);
+  angular.module(window.kulebaoApp).controller('BulletinCtrl', ['$rootScope', 'newsService', 'readService', Controller]);
 
 }).call(this);
