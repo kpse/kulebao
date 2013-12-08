@@ -9,7 +9,7 @@
       link: function(scope, element, attrs) {
         return element.bind("click", function() {
           var message;
-          message = attrs.ngConfirmationMessage;
+          message = attrs.ngConfirmMsg;
           if (message && confirm(message)) {
             return scope.$apply(attrs.ngConfirmClick);
           }

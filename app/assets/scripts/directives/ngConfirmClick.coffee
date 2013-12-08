@@ -4,8 +4,9 @@ ngConfirmClick = () ->
   restrict: "A"
   link: (scope, element, attrs) ->
     element.bind "click", ->
-      message = attrs.ngConfirmationMessage
-      scope.$apply attrs.ngConfirmClick if message and confirm(message)
+      message = attrs.ngConfirmMsg
+      if message and confirm(message)
+        scope.$apply attrs.ngConfirmClick
 
 
 angular.module(window.kulebaoApp).directive('ngConfirmClick', ngConfirmClick)
