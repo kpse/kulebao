@@ -18,7 +18,8 @@
         controller: 'NewsEditCtrl'
       }).state('kindergarten.wip', {
         url: '/wip',
-        template: '<div>Sorry, we are still in Building...</div><image class="img-responsive" src="assets/images/wip.gif"></image>'
+        template: '<div>Sorry, we are still in Building...</div><image class="img-responsive" src="assets/images/wip.gif"></image>',
+        controller: 'WipCtrl'
       });
       $urlRouterProvider.otherwise(function($injector, $location) {
         var path;
