@@ -25,7 +25,4 @@
 
 .panel {
   max-width: 700px;
-  .issue-date {
-    float: right;
-  }
 }
