@@ -18,6 +18,6 @@
 
   })();
 
-  angular.module('app').controller('KindergartenCtrl', Controller);
+  angular.module(window.kulebaoApp).controller('KindergartenCtrl', Controller);
 
 }).call(this);

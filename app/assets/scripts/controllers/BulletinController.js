@@ -55,6 +55,6 @@
 
   })();
 
-  angular.module('app').controller('BulletinCtrl', ['newsService', 'readService', Controller]);
+  angular.module(window.kulebaoApp).controller('BulletinCtrl', ['newsService', 'readService', Controller]);
 
 }).call(this);

@@ -30,4 +30,8 @@ object ReadingNewsController extends Controller {
     val jsons = ReadNews.all(kg)(parentId)
     Ok(Json.toJson(jsons)).as("application/json")
   }
+
+  def countReading(kg: String, adminId: Long, newsId: Long) = Action {
+    Ok(Json.toJson("{\"count\":\"100\"}")).as("application/json")
+  }
 }

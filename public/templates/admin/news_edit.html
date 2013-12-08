@@ -1,0 +1,20 @@
+<div class="panel panel-default" ng-controller="NewsEditCtrl as current">
+  <div class="panel-heading">
+    <h4 class="news-heading">{{current.news.title}}</h4>
+    <div class="btn-group">
+      <button class="btn btn-primary">发布</button>
+      <button class="btn btn-warning">编辑</button>
+      <button class="btn btn-danger">删除</button>
+      <button class="btn btn-info">隐藏</button>
+    </div>
+  </div>
+  <div class="panel-body">
+    <p ng-click="current.startEditing($event) && editTarget.focus()" class="news-content" ng-show="!current.showEditBox">{{current.news.content}}</p>
+    <textarea ng-model="current.news.content" ng-show="current.showEditBox" class="editing-content" ng-blur="current.save($event)" x-ng-target="editTarget"/>
+    <button class="btn btn-primary pull-right" ng-show="current.showEditBox" ng-click="current.cancelEditing($event)">取消</button>
+  </div>
+  <div class="panel-footer">
+    <span class="read-flag">阅读次数：{{current.readCount}} </span>
+    <span class="issue-date">于{{current.news.issueDate | date:'yyyy年MM月dd日'}}发布</span>
+  </div>
+</div>

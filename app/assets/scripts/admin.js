@@ -35,8 +35,8 @@
 
   })();
 
-  angular.module("admin", ['ui.router', 'ngResource', 'ngRoute']).config(['$stateProvider', '$urlRouterProvider', Config]);
+  window.kulebaoApp = "admin";
 
-  angular.module('admin').factory('newsService', ['$resource', window.kulebaoServices.newsService]).factory('readService', ['$resource', window.kulebaoServices.readService]);
+  angular.module(window.kulebaoApp, ['ui.router', 'ngResource', 'ngRoute']).config(['$stateProvider', '$urlRouterProvider', Config]);
 
 }).call(this);

@@ -7,4 +7,4 @@ class Controller
       id: 1
       name: '豆瓣'
 
-angular.module('app').controller 'KindergartenCtrl', Controller
+angular.module(window.kulebaoApp).controller 'KindergartenCtrl', Controller

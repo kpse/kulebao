@@ -28,6 +28,6 @@
 
   })();
 
-  angular.module('app').controller('NewsCtrl', ['$stateParams', 'newsService', 'readService', Controller]);
+  angular.module(window.kulebaoApp).controller('NewsCtrl', ['$stateParams', 'newsService', 'readService', Controller]);
 
 }).call(this);
