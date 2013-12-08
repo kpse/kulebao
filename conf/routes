@@ -13,6 +13,7 @@ GET           /*college/templates/*file                                         
 GET           /kindergarten/:kg/news                                             controllers.NewsController.index(kg: String)
 GET           /kindergarten/:kg/news/:newsId                                     controllers.NewsController.show(kg: String, newsId: Long)
 POST          /kindergarten/:kg/news/:newsId                                     controllers.NewsController.update(kg: String, newsId: Long)
+DELETE          /kindergarten/:kg/news/:newsId                                     controllers.NewsController.deleteOne(kg: String, newsId: Long)
 GET           /kindergarten/:kg/admin/:adminId/news                              controllers.NewsController.indexWithNonPublished(kg: String, adminId: Long)
 POST           /kindergarten/:kg/admin/:adminId/news                              controllers.NewsController.create(kg: String, adminId: Long)
 POST          /kindergarten/:kg/admin/:adminId/news/:newsId                      controllers.NewsController.adminUpdate(kg: String, adminId: Long, newsId: Long)

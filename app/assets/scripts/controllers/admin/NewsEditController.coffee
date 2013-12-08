@@ -1,7 +1,7 @@
 'use strict'
 
 class Controller
-  constructor: ($stateParams, newsService) ->
+  constructor: ($stateParams, newsService, $location) ->
     @kindergarten =
       id: 1,
       name: 'school23'
@@ -49,6 +49,9 @@ class Controller
       @backupTitle = @news.title
       @editingTitle = true
 
+    @deleteMe = () =>
+      @news.$delete(kg: @kindergarten.name, news_id: @news.id)
+      $location.path("/kindergarten/" + @kindergarten.name + "/bulletin");
 
 
-angular.module(window.kulebaoApp).controller 'NewsEditCtrl', [ '$stateParams', 'newsService', Controller]
+angular.module(window.kulebaoApp).controller 'NewsEditCtrl', [ '$stateParams', 'newsService', '$location', Controller]

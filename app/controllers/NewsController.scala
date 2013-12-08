@@ -67,5 +67,10 @@ object NewsController extends Controller {
           val created = News.create(news)
           Ok(Json.toJson(created)).as("application/json")
       } getOrElse BadRequest
-  } 
+  }
+
+  def deleteOne(kg: String, newsId: Long) = Action {
+    News.delete(newsId)
+    Ok("{\"status\":\"success\"}").as("application/json")
+  }
 }

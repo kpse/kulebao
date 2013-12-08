@@ -4,7 +4,7 @@
   var Controller;
 
   Controller = (function() {
-    function Controller($stateParams, newsService) {
+    function Controller($stateParams, newsService, $location) {
       var _this = this;
       this.kindergarten = {
         id: 1,
@@ -71,12 +71,19 @@
         _this.backupTitle = _this.news.title;
         return _this.editingTitle = true;
       };
+      this.deleteMe = function() {
+        _this.news.$delete({
+          kg: _this.kindergarten.name,
+          news_id: _this.news.id
+        });
+        return $location.path("/kindergarten/" + _this.kindergarten.name + "/bulletin");
+      };
     }
 
     return Controller;
 
   })();
 
-  angular.module(window.kulebaoApp).controller('NewsEditCtrl', ['$stateParams', 'newsService', Controller]);
+  angular.module(window.kulebaoApp).controller('NewsEditCtrl', ['$stateParams', 'newsService', '$location', Controller]);
 
 }).call(this);

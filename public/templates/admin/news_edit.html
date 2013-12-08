@@ -2,7 +2,7 @@
   <div class="panel-heading">
     <div class="btn-group">
       <button class="btn btn-warning" ng-click="current.startEditing($event) && editTarget.focus()">编辑</button>
-      <button class="btn btn-danger">删除</button>
+      <button class="btn btn-danger" ng-confirm-click="current.deleteMe($event)" ng-confirm-msg="你确定要删除吗?">删除</button>
       <button class="btn btn-primary" ng-show="!current.news.published" ng-click="current.publish(current.news)">发布</button>
       <button class="btn btn-info" ng-show="current.news.published" ng-click="current.hidden(current.news)">隐藏</button>
     </div>
