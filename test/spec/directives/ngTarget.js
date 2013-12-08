@@ -3,15 +3,20 @@
   'use strict';
   describe('Directive: ngTarget', function() {
     var scope;
-    beforeEach(module('app'));
+    beforeEach(module('admin'));
     scope = {};
-    beforeEach(inject(function($controller, $rootScope) {
+    beforeEach(inject(function($rootScope) {
       return scope = $rootScope.$new();
     }));
-    return it('should make hidden element visible', inject(function($compile) {
-      var element;
-      element = angular.element('<ng-target></ng-target>');
-      return element = $compile(element)(scope);
+    return it('should build up complex html', inject(function($rootScope, $compile) {
+      var element1, element2, parent;
+      element1 = $compile('<textarea class="target" x-ng-target="target"></textarea>')($rootScope);
+      element2 = $compile('<button class="button" ng-click="target.focus()"></button>')($rootScope);
+      parent = $compile('<div></div>')($rootScope);
+      parent.append(element1);
+      parent.append(element2);
+      $rootScope.$digest();
+      return parent.find(".button").click();
     }));
   });
 

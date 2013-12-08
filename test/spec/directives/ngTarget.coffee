@@ -3,14 +3,22 @@
 describe 'Directive: ngTarget', () ->
 
   # load the directive's module
-  beforeEach module 'app'
+  beforeEach module 'admin'
 
   scope = {}
 
-  beforeEach inject ($controller, $rootScope) ->
+  beforeEach inject ($rootScope) ->
     scope = $rootScope.$new()
 
-  it 'should make hidden element visible', inject ($compile) ->
-    element = angular.element '<ng-target></ng-target>'
-    element = $compile(element) scope
-#    expect(element.text()).toBe 'this is the ngTarget directive'
+  it 'should build up complex html', inject ($rootScope, $compile) ->
+
+    element1 = $compile('<textarea class="target" x-ng-target="target"></textarea>')($rootScope);
+    element2 = $compile('<button class="button" ng-click="target.focus()"></button>')($rootScope);
+    parent = $compile('<div></div>')($rootScope);
+    parent.append(element1)
+    parent.append(element2)
+    $rootScope.$digest();
+    parent.find(".button").click()
+    #some problem while testing focus
+    #expect(parent.find('.target')).toBeFocused();
+
