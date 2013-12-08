@@ -11,10 +11,11 @@ GET         /templates/*file                                                   c
 GET         /*college/templates/*file                                          controllers.Static.ignoreCollege(path="/public/templates", file, college)
 
 GET         /kindergarten/:kg/news                                             controllers.NewsController.index(kg: String)
-GET         /kindergarten/:kg/news/:newId                                      controllers.NewsController.show(kg: String, newId: Long)
+GET         /kindergarten/:kg/news/:newsId                                     controllers.NewsController.show(kg: String, newsId: Long)
+POST        /kindergarten/:kg/news/:newsId                                     controllers.NewsController.update(kg: String, newsId: Long)
 
 GET         /kindergarten/:kg/parent/:parentId/news                            controllers.ReadingNewsController.index(kg: String, parentId: Long)
-POST        /kindergarten/:kg/parent/:parentId/news/:newId                     controllers.ReadingNewsController.create(kg: String, parentId: Long, newId: Long)
+POST        /kindergarten/:kg/parent/:parentId/news/:newsId                     controllers.ReadingNewsController.create(kg: String, parentId: Long, newsId: Long)
 
 GET         /kindergarten/:kg/admin/:adminId/news_reading_count/:newsId        controllers.ReadingNewsController.countReading(kg: String, adminId: Long, newsId: Long)
 
