@@ -20,7 +20,7 @@ module.exports = (config) ->
       'public/javascripts/vendor/angularjs/angular-ui-router.js',
       'public/javascripts/vendor/**/*.js',
       'app/assets/scripts/main.coffee',
-      'app/assets/scripts/services/newsService.coffee',
+      'app/assets/scripts/services/kgNewsService.coffee',
       'app/assets/scripts/controllers/*.coffee',
       'app/assets/scripts/admin.coffee',
       'app/assets/scripts/services/admin*.coffee',
