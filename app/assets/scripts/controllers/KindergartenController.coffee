@@ -11,4 +11,4 @@ class Controller
       tab == $rootScope.tabName
 
 
-angular.module(window.kulebaoApp).controller 'KindergartenCtrl', ['$rootScope', Controller]
+angular.module('kulebaoApp').controller 'KindergartenCtrl', ['$rootScope', Controller]

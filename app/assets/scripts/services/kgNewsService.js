@@ -34,6 +34,6 @@
     });
   };
 
-  angular.module(window.kulebaoApp).factory('newsService', ['$resource', newsService]).factory('readService', ['$resource', readService]).factory('readingStatService', ['$resource', readingStatService]);
+  angular.module('kulebaoApp').factory('newsService', ['$resource', newsService]).factory('readService', ['$resource', readService]).factory('readingStatService', ['$resource', readingStatService]);
 
 }).call(this);

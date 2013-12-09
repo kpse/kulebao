@@ -9,5 +9,5 @@ adminNewsService = ($resource) ->
     }
 
 
-angular.module('admin')
+angular.module('kulebaoAdmin')
 .factory('adminNewsService', ['$resource', adminNewsService])

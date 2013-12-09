@@ -25,4 +25,4 @@ class Controller
             do (n) -> n.read = true
 
 
-angular.module(window.kulebaoApp).controller 'BulletinCtrl', ['$rootScope', 'newsService', 'readService', Controller]
+angular.module('kulebaoApp').controller 'BulletinCtrl', ['$rootScope', 'newsService', 'readService', Controller]

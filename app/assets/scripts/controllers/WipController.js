@@ -12,6 +12,6 @@
 
   })();
 
-  angular.module(window.kulebaoApp).controller('WipCtrl', ['$rootScope', Controller]);
+  angular.module('kulebaoApp').controller('WipCtrl', ['$rootScope', Controller]);
 
 }).call(this);

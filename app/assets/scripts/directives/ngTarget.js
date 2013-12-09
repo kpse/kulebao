@@ -69,6 +69,6 @@
     };
   };
 
-  angular.module(window.kulebaoApp).directive('ngTarget', ngTarget);
+  angular.module('kulebaoApp').directive('ngTarget', ngTarget);
 
 }).call(this);

@@ -3,7 +3,7 @@
   'use strict';
   describe('Service: adminNewsService', function() {
     var adminNewsService;
-    beforeEach(module('admin'));
+    beforeEach(module('kulebaoAdmin'));
     adminNewsService = {};
     beforeEach(inject(function(_adminNewsService_) {
       return adminNewsService = _adminNewsService_;

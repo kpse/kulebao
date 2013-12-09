@@ -9,4 +9,4 @@ ngConfirmClick = () ->
         scope.$apply attrs.ngConfirmClick
 
 
-angular.module(window.kulebaoApp).directive('ngConfirmClick', ngConfirmClick)
+angular.module('kulebaoApp').directive('ngConfirmClick', ngConfirmClick)

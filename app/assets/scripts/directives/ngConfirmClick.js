@@ -18,6 +18,6 @@
     };
   };
 
-  angular.module(window.kulebaoApp).directive('ngConfirmClick', ngConfirmClick);
+  angular.module('kulebaoApp').directive('ngConfirmClick', ngConfirmClick);
 
 }).call(this);

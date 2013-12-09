@@ -84,6 +84,6 @@
 
   })();
 
-  angular.module(window.kulebaoApp).controller('NewsEditCtrl', ['$stateParams', 'newsService', '$location', Controller]);
+  angular.module('kulebaoAdmin').controller('NewsEditCtrl', ['$stateParams', 'newsService', '$location', Controller]);
 
 }).call(this);

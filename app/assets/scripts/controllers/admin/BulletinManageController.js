@@ -73,6 +73,6 @@
 
   })();
 
-  angular.module('admin').controller('BulletinManageCtrl', ['$rootScope', 'adminNewsService', Controller]);
+  angular.module('kulebaoAdmin').controller('BulletinManageCtrl', ['$rootScope', 'adminNewsService', Controller]);
 
 }).call(this);

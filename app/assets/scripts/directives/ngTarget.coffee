@@ -66,4 +66,4 @@ ngTarget =  ($parse, $timeout) ->
         ), 50
 
 
-angular.module(window.kulebaoApp).directive('ngTarget', ngTarget)
+angular.module('kulebaoApp').directive('ngTarget', ngTarget)

@@ -21,6 +21,6 @@
 
   })();
 
-  angular.module(window.kulebaoApp).controller('KindergartenCtrl', ['$rootScope', Controller]);
+  angular.module('kulebaoApp').controller('KindergartenCtrl', ['$rootScope', Controller]);
 
 }).call(this);

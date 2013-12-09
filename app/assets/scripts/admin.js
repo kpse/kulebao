@@ -36,8 +36,8 @@
 
   })();
 
-  window.kulebaoApp = "admin";
+  angular.module('kulebaoApp', []);
 
-  angular.module(window.kulebaoApp, ['ui.router', 'ngResource', 'ngRoute', 'ui.bootstrap']).config(['$stateProvider', '$urlRouterProvider', Config]);
+  angular.module('kulebaoAdmin', ['kulebaoApp', 'ui.router', 'ngResource', 'ngRoute', 'ui.bootstrap']).config(['$stateProvider', '$urlRouterProvider', Config]);
 
 }).call(this);

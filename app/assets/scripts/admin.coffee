@@ -30,5 +30,6 @@ class Config
       else $location.path path.replace /(kindergarten\/[^\/]+)\/.+$/g, '$1/wip'
 
 
-window.kulebaoApp = "admin"
-angular.module(window.kulebaoApp, ['ui.router', 'ngResource', 'ngRoute', 'ui.bootstrap']).config ['$stateProvider', '$urlRouterProvider', Config]
+angular.module('kulebaoApp', [])
+angular.module('kulebaoAdmin', ['kulebaoApp', 'ui.router', 'ngResource', 'ngRoute', 'ui.bootstrap'])
+.config ['$stateProvider', '$urlRouterProvider', Config]

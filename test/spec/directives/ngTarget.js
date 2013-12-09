@@ -3,7 +3,7 @@
   'use strict';
   describe('Directive: ngTarget', function() {
     var scope;
-    beforeEach(module('admin'));
+    beforeEach(module('kulebaoAdmin'));
     scope = {};
     beforeEach(inject(function($rootScope) {
       return scope = $rootScope.$new();

@@ -3,7 +3,7 @@
   'use strict';
   describe('Directive: ngConfirmClick', function() {
     var scope;
-    beforeEach(module('admin'));
+    beforeEach(module('kulebaoAdmin'));
     scope = {};
     beforeEach(inject(function($controller, $rootScope) {
       scope = $rootScope.$new();

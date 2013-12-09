@@ -11,6 +11,6 @@
     });
   };
 
-  angular.module('admin').factory('adminNewsService', ['$resource', adminNewsService]);
+  angular.module('kulebaoAdmin').factory('adminNewsService', ['$resource', adminNewsService]);
 
 }).call(this);

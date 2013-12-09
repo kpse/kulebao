@@ -11,4 +11,4 @@ class Controller
     @isSelected = (tab)->
       tab == $rootScope.tabName
 
-angular.module('admin').controller 'KgManageCtrl', ['$rootScope', Controller]
+angular.module('kulebaoAdmin').controller 'KgManageCtrl', ['$rootScope', Controller]

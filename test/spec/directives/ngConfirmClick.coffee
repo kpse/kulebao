@@ -3,7 +3,7 @@
 describe 'Directive: ngConfirmClick', () ->
 
   # load the directive's module
-  beforeEach module 'admin'
+  beforeEach module 'kulebaoAdmin'
 
   scope = {}
 

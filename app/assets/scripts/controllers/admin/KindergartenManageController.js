@@ -21,6 +21,6 @@
 
   })();
 
-  angular.module('admin').controller('KgManageCtrl', ['$rootScope', Controller]);
+  angular.module('kulebaoAdmin').controller('KgManageCtrl', ['$rootScope', Controller]);
 
 }).call(this);

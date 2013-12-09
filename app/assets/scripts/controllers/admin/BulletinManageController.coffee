@@ -37,4 +37,4 @@ class Controller
       @newsletters.push news
 
 
-angular.module('admin').controller 'BulletinManageCtrl', ['$rootScope','adminNewsService', Controller]
+angular.module('kulebaoAdmin').controller 'BulletinManageCtrl', ['$rootScope','adminNewsService', Controller]
