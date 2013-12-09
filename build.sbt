@@ -1,3 +1,5 @@
+import scala._
+
 name := "kulebao"
 
 version := "1.0-SNAPSHOT"
@@ -14,6 +16,7 @@ def customLessEntryPoints(base: File): PathFinder = (
   (base / "app" / "assets" / "stylesheets" ** "*.less")
   )
 
+
 play.Project.playScalaSettings ++ lesscSettings
 
 lessEntryPoints := Nil
@@ -21,3 +24,7 @@ lessEntryPoints := Nil
 lesscEntryPoints in Compile <<= baseDirectory(customLessEntryPoints)
 
 lesscOptions in Compile := Seq("--no-color", "--yui-compress")
+
+coffeescriptOptions := Seq("bare")
+
+
