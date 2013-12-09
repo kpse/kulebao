@@ -17,3 +17,5 @@ dist
 node_modules/
 app/assets/scripts/**/*.js
 test/spec/**/*.js
+app/assets/scripts/*.js
+karma.conf.js

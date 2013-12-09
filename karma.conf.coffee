@@ -20,10 +20,9 @@ module.exports = (config) ->
       'public/javascripts/vendor/angularjs/angular-ui-router.js',
       'public/javascripts/vendor/**/*.js',
       'app/assets/scripts/main.coffee',
-      'app/assets/scripts/services/kgNewsService.coffee',
-      'app/assets/scripts/controllers/*.coffee',
       'app/assets/scripts/admin.coffee',
-      'app/assets/scripts/services/admin*.coffee',
+      'app/assets/scripts/services/*.coffee',
+      'app/assets/scripts/controllers/*.coffee',
       'app/assets/scripts/directives/*.coffee',
       'test/assets/config/jasmine-jquery.js',
       'test/assets/config/angular-mocks.js',
@@ -31,8 +30,19 @@ module.exports = (config) ->
     ],
 
     preprocessors:
-      '**/*.coffee': 'coffee'
-    ,
+      "**/*.coffee": ["coffee"]
+
+    coffeePreprocessor:
+
+    # options passed to the coffee compiler
+      options:
+        bare: true
+        sourceMap: false
+
+
+    # transforming the filenames
+      transformPath: (path) ->
+        path.replace /\.js$/, ".coffee"
 
   # list of files to exclude
     exclude: [
@@ -70,7 +80,7 @@ module.exports = (config) ->
   # - Safari (only Mac)
   # - PhantomJS
   # - IE (only Windows)
-    browsers: ['Chrome', 'PhantomJS'],
+    browsers: ['Chrome'],
 
 
   # If browser does not capture in given timeout [ms], kill it
@@ -79,7 +89,8 @@ module.exports = (config) ->
 
   # Continuous Integration mode
   # if true, it capture browsers, run tests and exit
-    singleRun: false
+    singleRun: true,
+
     plugins: [
       "karma-jasmine",
       'karma-requirejs',
