@@ -3,7 +3,7 @@
   'use strict';
   describe('Controller: BulletinCtrl', function() {
     var BulletinCtrl, scope;
-    beforeEach(module('app'));
+    beforeEach(module('kulebaoApp'));
     BulletinCtrl = {};
     scope = {};
     beforeEach(inject(function($controller, $rootScope) {

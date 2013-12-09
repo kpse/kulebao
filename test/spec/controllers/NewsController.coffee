@@ -3,7 +3,7 @@
 describe 'Controller: NewsCtrl', () ->
 
   # load the controller's module
-  beforeEach module 'app'
+  beforeEach module 'kulebaoApp'
 
   NewsCtrl = {}
   $httpBackend = {}

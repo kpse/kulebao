@@ -3,7 +3,7 @@
   'use strict';
   describe('Controller: NewsCtrl', function() {
     var $httpBackend, NewsCtrl;
-    beforeEach(module('app'));
+    beforeEach(module('kulebaoApp'));
     NewsCtrl = {};
     $httpBackend = {};
     beforeEach(inject(function($controller, $rootScope, _$httpBackend_) {

@@ -3,7 +3,7 @@
 describe 'Service: newsService', () ->
 
   # load the service's module
-  beforeEach module 'app'
+  beforeEach module 'kulebaoApp'
 
   # instantiate service
   newsService = {}

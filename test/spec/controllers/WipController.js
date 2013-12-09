@@ -3,7 +3,7 @@
   'use strict';
   describe('Controller: WipcontrollerCtrl', function() {
     var WipcontrollerCtrl, scope;
-    beforeEach(module('app'));
+    beforeEach(module('kulebaoApp'));
     WipcontrollerCtrl = {};
     scope = {};
     beforeEach(inject(function($controller, $rootScope) {

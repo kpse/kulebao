@@ -3,7 +3,7 @@
 describe 'Controller: WipcontrollerCtrl', () ->
 
   # load the controller's module
-  beforeEach module 'app'
+  beforeEach module 'kulebaoApp'
 
   WipcontrollerCtrl = {}
   scope = {}

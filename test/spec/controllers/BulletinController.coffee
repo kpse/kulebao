@@ -3,7 +3,7 @@
 describe 'Controller: BulletinCtrl', () ->
 
   # load the controller's module
-  beforeEach module 'app'
+  beforeEach module 'kulebaoApp'
 
   BulletinCtrl = {}
   scope = {}
