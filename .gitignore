@@ -15,3 +15,5 @@ dist
 /.settings
 .DS_Store
 node_modules/
+app/assets/scripts/**/*.js
+test/spec/**/*.js
