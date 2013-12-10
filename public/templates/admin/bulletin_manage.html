@@ -5,7 +5,7 @@
       <h4 class="list-group-item-heading">{{news.title}}</h4>
 
       <div class="btn-group">
-        <button class="btn btn-warning">编辑</button>
+        <button class="btn btn-warning" ng-click="bulletin.edit(news)">编辑</button>
         <button class="btn btn-danger" ng-confirm-msg="你确定要删除吗?" ng-confirm-click="bulletin.deleteNews(news)">删除</button>
         <button class="btn btn-primary" ng-show="!news.published" ng-click="bulletin.publish(news)">发布</button>
         <button class="btn btn-info" ng-show="news.published" ng-click="bulletin.hidden(news)">隐藏</button>
@@ -13,7 +13,7 @@
       <a ng-href="#/kindergarten/{{bulletin.kindergarten.name}}/news/{{news.id}}">
         <p class="list-group-item-text">{{news.content.substring(0,200)}}</p>
       </a>
-      <span class="published">已发布</span>
+      <span class="published">{{news.published ? '已发布' : '未发布'}}</span>
       <span class="read-flag">阅读次数：{{news.readCount}}</span>
       <span class="issue-date pull-right">于{{news.issueDate | date:'yyyy年MM月dd日'}}发布</span>
     </li>
