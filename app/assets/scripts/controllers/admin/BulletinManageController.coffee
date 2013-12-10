@@ -1,7 +1,7 @@
 'use strict'
 
 class Controller
-  constructor: ($rootScope, adminNewsService) ->
+  constructor: ($rootScope, $location, adminNewsService) ->
     @kindergarten =
       id: 1,
       name: 'school23'
@@ -36,5 +36,8 @@ class Controller
       news.$save(kg: @kindergarten.name, news_id: news.id);
       @newsletters.push news
 
+    @edit = (news) =>
+      $location.path('/kindergarten/' + @kindergarten.name + '/news/' + news.id )
 
-angular.module('kulebaoAdmin').controller 'BulletinManageCtrl', ['$rootScope','adminNewsService', Controller]
+
+angular.module('kulebaoAdmin').controller 'BulletinManageCtrl', ['$rootScope', '$location', 'adminNewsService', Controller]
