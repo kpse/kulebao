@@ -19,3 +19,4 @@ app/assets/scripts/**/*.js
 test/spec/**/*.js
 app/assets/scripts/*.js
 karma.conf.js
+app/assets/scripts/controllers/admin/*.js
