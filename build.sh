@@ -30,8 +30,12 @@ function all {
     git push heroku master
 }
 
+function local_https_server {
+    JAVA_OPTS=-Dhttps.port=9001 play start
+}
 function main {
   	case $1 in
+		s) local_https_server ;;
 		a) all ;;
 		d) deploy ;;
 		p) build_and_push ;;

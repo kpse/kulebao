@@ -6,6 +6,10 @@
 GET           /                                                                  controllers.Application.index
 GET           /admin                                                             controllers.Application.admin
 
+POST          /login.do                                                          controllers.Authentication.login
+POST          /checkphonenum.do                                                  controllers.Authentication.validateNumber
+POST          /receiveBindInfo.do                                                  controllers.Authentication.bindNumber
+
 #anglarjs template pages
 GET           /templates/*file                                                   controllers.Static.at(path="/public/templates", file)
 GET           /*college/templates/*file                                          controllers.Static.ignoreCollege(path="/public/templates", file, college)
