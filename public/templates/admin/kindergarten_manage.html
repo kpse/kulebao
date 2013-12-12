@@ -10,6 +10,11 @@
           园内公告设置
         </a>
       </li>
+      <li class="action" ng-class="{active : kg.isSelected('parents')}">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.name}}/parents" class="btn btn-success">
+          家长联系方式管理
+        </a>
+      </li>
       <li class="action">
         <a ng-href="#/kindergarten/{{kg.kindergarten.name}}/class-bulletin" class="btn btn-success">
           班级通知设置

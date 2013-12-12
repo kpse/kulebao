@@ -16,6 +16,11 @@ class Config
         templateUrl: 'templates/admin/news_edit.html',
         controller: 'NewsEditCtrl'
       )
+    .state('kindergarten.parents',
+        url: '/parents',
+        templateUrl: 'templates/admin/parents.html',
+        controller: 'ParentsCtrl'
+      )
 
     .state('kindergarten.wip',
         url: '/wip',

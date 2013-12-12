@@ -31,7 +31,7 @@ function all {
 }
 
 function local_https_server {
-    JAVA_OPTS=-Dhttps.port=9001 play start
+    JAVA_OPTS=-Dhttps.port=9001 play run
 }
 function main {
   	case $1 in
