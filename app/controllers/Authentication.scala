@@ -1,18 +1,64 @@
 package controllers
 
 import play.api.mvc._
+import play.api.libs.json._
+import java.security.MessageDigest
+import models._
+import models.MobileLoginResult
+import models.MobileLogin
+import models.CheckPhoneResult
+import models.ChildInfo
 
 object Authentication extends Controller {
-  def login = Action {
-    Ok("{\"username\":\"kpse\",\"school_name\":\"best school\",\"error_code\":0,\"child_info\":[{\"child_name\":\"Bob\",\"child_pic_url\":\"http://pic.download.com/13409878890/child.png\"}],\"access_token\":\"12332322323\",\"account_name\":\"13409878890\"}").as("application/json")
+
+  implicit val loginReads = Json.reads[MobileLogin]
+
+  implicit val infoWrites = Json.writes[ChildInfo]
+  implicit val resultWrites = Json.writes[MobileLoginResult]
+
+
+  def login = Action(parse.json) {
+    request =>
+      request.body.validate[MobileLogin].map {
+        case (login) =>
+          val result = new MobileLoginResult(0, "kpse", "best school", new ChildInfo("Bob", "http://pic.download.com/13409878890/child.png"), "12332322323", "13409878890")
+          Ok(Json.toJson(result))
+      }.recoverTotal {
+        e => BadRequest("Detected error:" + JsError.toFlatJson(e))
+      }
   }
 
-  def validateNumber = Action {
-    Ok("{\"check_phone_result\":\"1102\"}").as("application/json")
+  implicit val checkReads = Json.reads[CheckPhone]
+  implicit val checkPhoneResultWrites = Json.writes[CheckPhoneResult]
+
+  def validateNumber = Action(parse.json) {
+    request =>
+      request.body.validate[CheckPhone].map {
+        case (login) =>
+          Ok(Json.toJson(new CheckPhoneResult("1102")))
+      }.recoverTotal {
+        e => BadRequest("Detected error:" + JsError.toFlatJson(e))
+      }
+
   }
 
-  def bindNumber() = Action {
-    Ok("{\"error_code\":0, \"access_token\":\"111111111\", \"username\":\"abc\", \"account_name\":\"abc\", \"school_id\":\"1102\"}").as("application/json")
+  implicit val bindingRead = Json.reads[BindingNumber]
+  implicit val bindResultWrites = Json.writes[BindNumberResult]
+
+
+  def bindNumber() = Action(parse.json) {
+    request =>
+      request.body.validate[CheckPhone].map {
+        case (login) =>
+          Ok(Json.toJson(new BindNumberResult(0, "111111111", "abc", "abc", "1102")))
+      }.recoverTotal {
+        e => BadRequest("Detected error:" + JsError.toFlatJson(e))
+      }
+  }
+
+
+  def md5(s: String) = {
+    MessageDigest.getInstance("MD5").digest(s.getBytes)
   }
 
 }
