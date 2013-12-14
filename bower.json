@@ -1,5 +1,8 @@
 {
-    "name": "kulebao",
-    "version": "0.0.1",
-    "appPath": "app/assets/"
+  "name": "kulebao",
+  "version": "0.0.1",
+  "appPath": "app/assets/",
+  "dependencies": {
+    "angular-ui-utils": "~0.0.4"
+  }
 }

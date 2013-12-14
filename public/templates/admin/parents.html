@@ -20,12 +20,11 @@
     </thead>
     <tbody>
     <tr ng-repeat="parent in parents | filter: search" class="row">
-      <td class=".col-xs-2" ng-if="!showEditBox">{{parent.id}}</td>
+      <td class=".col-xs-2" >{{parent.id}}</td>
       <td class=".col-xs-4" ng-if="!showEditBox">{{parent.phone}}</td>
       <td class=".col-xs-4" ng-if="!showEditBox">{{parent.name}}</td>
       <td class=".col-xs-4" ng-if="!showEditBox">{{parent.child}}</td>
-      <td class=".col-xs-2" ng-if="showEditBox"><input ng-model="parent.id" class="editing-field form-control" /></td>
-      <td class=".col-xs-4" ng-if="showEditBox"><input ng-model="parent.phone" class="editing-field form-control"/></td>
+      <td class=".col-xs-4" ng-if="showEditBox"><input type="text" ng-model="parent.phone" ui-mask="{{'999-9999-9999'}}" class="editing-field form-control"/></td>
       <td class=".col-xs-4" ng-if="showEditBox"><input ng-model="parent.name" class="editing-field form-control" /></td>
       <td class=".col-xs-4" ng-if="showEditBox"><input ng-model="parent.child" class="editing-field form-control" /></td>
       <td class=".col-xs-2" >

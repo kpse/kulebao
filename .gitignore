@@ -15,6 +15,7 @@ dist
 /.settings
 .DS_Store
 node_modules/
+bower_components/
 app/assets/scripts/**/*.js
 test/spec/**/*.js
 app/assets/scripts/*.js
