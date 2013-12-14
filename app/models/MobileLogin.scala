@@ -1,3 +1,3 @@
 package models
 
-case class MobileLogin(username: String, password: String)
+case class MobileLogin(account_name: String, password: String)

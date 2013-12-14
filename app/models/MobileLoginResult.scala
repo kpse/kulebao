@@ -22,7 +22,7 @@ object MobileLoginResult {
   def checkPassword(login: MobileLogin) = DB.withConnection {
     implicit c =>
       val firstRow = SQL("select * from accountinfo where accountid={username} and password={password}")
-        .on('username -> login.username,
+        .on('username -> login.account_name,
           'password -> md5(login.password)
         ).apply()
       val success = if (firstRow.isEmpty) 1 else 0
