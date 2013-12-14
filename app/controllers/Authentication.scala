@@ -21,7 +21,7 @@ object Authentication extends Controller {
     request =>
       request.body.validate[MobileLogin].map {
         case (login) =>
-          val result = new MobileLoginResult(0, "kpse", "best school", new ChildInfo("Bob", "http://pic.download.com/13409878890/child.png"), "12332322323", "13409878890")
+          val result = MobileLoginResult.handle(login)
           Ok(Json.toJson(result))
       }.recoverTotal {
         e => BadRequest("Detected error:" + JsError.toFlatJson(e))
@@ -55,10 +55,4 @@ object Authentication extends Controller {
         e => BadRequest("Detected error:" + JsError.toFlatJson(e))
       }
   }
-
-
-  def md5(s: String) = {
-    MessageDigest.getInstance("MD5").digest(s.getBytes)
-  }
-
 }

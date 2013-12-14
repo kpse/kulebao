@@ -6,9 +6,10 @@ CREATE TABLE kindergarten (
   title VARCHAR(255) NOT NULL
 );
 
-INSERT INTO kindergarten (name, title) VALUES ('school23', '成都市第二十三幼儿园');
-INSERT INTO kindergarten (name, title) VALUES ('school1', '西安电子科技大学');
-INSERT INTO kindergarten (name, title) VALUES ('school2', '清华池');
+INSERT INTO kindergarten (name, title) VALUES
+  ('school23', '成都市第二十三幼儿园'),
+  ('school1', '西安电子科技大学'),
+  ('school2', '清华池');
 # --- !Downs
 
 DROP TABLE IF EXISTS kindergarten;
