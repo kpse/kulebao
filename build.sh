@@ -1,5 +1,6 @@
 #!/bin/sh
 
+#npm install yo
 #npm install coffee-script
 #npm install coffee-script-redux
 #npm install karma

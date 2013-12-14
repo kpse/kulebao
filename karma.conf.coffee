@@ -24,6 +24,7 @@ module.exports = (config) ->
       'app/assets/scripts/services/*.coffee',
       'app/assets/scripts/controllers/**/*.coffee',
       'app/assets/scripts/directives/*.coffee',
+      'app/assets/scripts/filters/*.coffee',
       'test/assets/config/jasmine-jquery.js',
       'test/assets/config/angular-mocks.js',
       'test/spec/**/*.coffee'

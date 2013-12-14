@@ -11,26 +11,36 @@
   <table class="table table-hover table-condensed">
     <thead>
     <tr class="row">
-      <th class=".col-xs-2">#</th>
+      <th class=".col-xs-1">#</th>
       <th class=".col-xs-4">电话号码</th>
-      <th class=".col-xs-4">家长姓名</th>
-      <th class=".col-xs-4">小孩姓名</th>
+      <th class=".col-xs-3">家长姓名</th>
+      <th class=".col-xs-3">小孩姓名</th>
       <th class=".col-xs-2">操作</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="parent in parents | filter: search" class="row">
-      <td class=".col-xs-2" >{{parent.id}}</td>
-      <td class=".col-xs-4" ng-if="!showEditBox">{{parent.phone}}</td>
-      <td class=".col-xs-4" ng-if="!showEditBox">{{parent.name}}</td>
-      <td class=".col-xs-4" ng-if="!showEditBox">{{parent.child}}</td>
-      <td class=".col-xs-4" ng-if="showEditBox"><input type="text" ng-model="parent.phone" ui-mask="{{'999-9999-9999'}}" class="editing-field form-control"/></td>
-      <td class=".col-xs-4" ng-if="showEditBox"><input ng-model="parent.name" class="editing-field form-control" /></td>
-      <td class=".col-xs-4" ng-if="showEditBox"><input ng-model="parent.child" class="editing-field form-control" /></td>
-      <td class=".col-xs-2" >
-        <button class="btn btn-xs btn-warning" ng-show="!showEditBox" ng-click="startEditing($event)">编辑</button>
-        <button class="btn btn-xs btn-warning" ng-show="showEditBox" ng-click="save($event)">保存</button>
-        <button class="btn btn-xs btn-danger" ng-confirm-msg="你确定要删除吗?" ng-confirm-click="delete(parent)">删除</button>
+      <td class=".col-xs-1">{{parent.id}}</td>
+
+      <td class=".col-xs-4" ng-if="editingId != parent.id" ng-click="startEditing(parent)">{{parent.phone | phone}}</td>
+      <td class=".col-xs-3" ng-if="editingId != parent.id" ng-click="startEditing(parent)">{{parent.name}}</td>
+      <td class=".col-xs-2" ng-if="editingId != parent.id" ng-click="startEditing(parent)">{{parent.child}}</td>
+
+      <td class=".col-xs-4" ng-if="editingId == parent.id"><input type="text" ng-model="parent.phone"
+                                                                  ui-mask="{{'999-9999-9999'}}"
+                                                                  class="editing-field form-control"/></td>
+      <td class=".col-xs-3" ng-if="editingId == parent.id"><input ng-model="parent.name"
+                                                                  class="editing-field form-control"/></td>
+      <td class=".col-xs-2" ng-if="editingId == parent.id"><input ng-model="parent.child"
+                                                                  class="editing-field form-control"/></td>
+      <td class=".col-xs-2">
+        <button class="btn btn-xs btn-success" ng-if="editingId == parent.id" ng-click="save(parent)">保存</button>
+        <button class="btn btn-xs btn-info" ng-if="editingId == parent.id" ng-click="cancelEditing($event)">取消</button>
+        <button class="btn btn-xs btn-warning" ng-if="editingId != parent.id" ng-click="startEditing(parent)">编辑
+        </button>
+        <button class="btn btn-xs btn-danger" ng-if="editingId != parent.id" ng-confirm-msg="你确定要删除吗?"
+                ng-confirm-click="delete(parent)">删除
+        </button>
       </td>
     </tr>
     </tbody>

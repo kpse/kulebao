@@ -11,18 +11,22 @@ angular.module('kulebaoAdmin')
       {name: '鸭嘴兽', phone: 13234567892, id: 4, child: '卵'},
       {name: '大象', phone: 13234567893, id: 5, child: '小象'}
     ]
-
+    $scope.editingId = -1
+    $scope.backupEditing = {}
     $scope.add = () ->
       lastParent = _.max($scope.parents, (p) -> p.id)
-      $scope.parents.push {name: '新人', phone: 9876543211, id: (lastParent.id + 1), child: '小新人'}
+      $scope.parents.push {name: '新人', phone: 98765432001, id: (lastParent.id + 1), child: '小新人'}
 
     $scope.delete = (parent) ->
       $scope.parents = _.reject($scope.parents, (p) -> parent.id == p.id )
 
-    $scope.startEditing = (e) ->
-      e.stopPropagation()
-      $scope.showEditBox = true
+    $scope.startEditing = (parent) ->
+      $scope.editingId = parent.id
+      $scope.backupEditing = angular.copy $scope.parents
 
-    $scope.save = (e) ->
-      e.stopPropagation()
-      $scope.showEditBox = false
+    $scope.save = () ->
+      $scope.editingId = -1
+
+    $scope.cancelEditing = () ->
+      $scope.editingId = -1
+      angular.copy $scope.backupEditing, $scope.parents
