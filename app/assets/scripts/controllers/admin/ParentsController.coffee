@@ -30,3 +30,17 @@ angular.module('kulebaoAdmin')
     $scope.cancelEditing = () ->
       $scope.editingId = -1
       angular.copy $scope.backupEditing, $scope.parents
+
+angular.module('kulebaoAdmin')
+.controller 'AddParentCtrl', ($scope) ->
+    @createNewParent = (previousId) =>
+      {name: '新人', phone: 98765432001, id: (previousId + 1), child: '小新人'}
+
+    $scope.lastParent = _.max($scope.parents, (p) -> p.id)
+    $scope.parent = @createNewParent($scope.lastParent.id)
+
+    $scope.save = (parent) =>
+      $scope.parents.push parent
+      $scope.parent = @createNewParent(parent.id)
+
+

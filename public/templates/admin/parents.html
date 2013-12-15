@@ -1,10 +1,9 @@
 <div class="panel panel-default">
-  <!-- Default panel contents -->
   <div class="panel-heading">管理家长联系电话列表</div>
   <div class="panel-body">
     <span>检索：</span>
     <input type="text" ng-model="search" tooltip-placement="top" tooltip="输入手机号码，姓名进行匹配..."/>
-    <button class="btn btn-primary pull-right" ng-click="add()">添加</button>
+    <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">添加</button>
   </div>
 
   <!-- Table -->
@@ -45,4 +44,34 @@
     </tr>
     </tbody>
   </table>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+       ng-controller="AddParentCtrl">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">添加家长联系方式</h4>
+        </div>
+        <div class="modal-body">
+          <label for="parent-phone">电话号码</label>
+          <input id="parent-phone" type="text" ng-model="parent.phone"
+                 ui-mask="{{'999-9999-9999'}}"
+                 class="editing-field form-control"/>
+          <label for="parent-name">家长姓名</label>
+          <input id="parent-name" ng-model="parent.name"
+                 class="editing-field form-control"/>
+          <label for="parent-child">宝宝姓名</label>
+          <input id="parent-child" ng-model="parent.child"
+                 class="editing-field form-control"/>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelEditing($event)">Close
+          </button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="save(parent)">Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
