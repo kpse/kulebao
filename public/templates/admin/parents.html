@@ -3,7 +3,7 @@
   <div class="panel-heading">管理家长联系电话列表</div>
   <div class="panel-body">
     <span>检索：</span>
-    <input type="text" ng-model="search"/>
+    <input type="text" ng-model="search" tooltip-placement="top" tooltip="输入手机号码，姓名进行匹配..."/>
     <button class="btn btn-primary pull-right" ng-click="add()">添加</button>
   </div>
 
@@ -19,7 +19,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="parent in parents | filter: search" class="row">
+    <tr ng-repeat="parent in parents | filter: search" class="row" tooltip-placement="top" tooltip="单击开始编辑">
       <td class=".col-xs-1">{{parent.id}}</td>
 
       <td class=".col-xs-4" ng-if="editingId != parent.id" ng-click="startEditing(parent)">{{parent.phone | phone}}</td>
