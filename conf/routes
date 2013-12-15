@@ -8,7 +8,7 @@ GET           /admin                                                            
 
 POST          /login.do                                                          controllers.Authentication.login
 POST          /checkphonenum.do                                                  controllers.Authentication.validateNumber
-POST          /receiveBindInfo.do                                                  controllers.Authentication.bindNumber
+POST          /receiveBindInfo.do                                                controllers.Authentication.bindNumber
 
 #anglarjs template pages
 GET           /templates/*file                                                   controllers.Static.at(path="/public/templates", file)
@@ -22,6 +22,11 @@ GET           /kindergarten/:kg/admin/:adminId/news                             
 POST          /kindergarten/:kg/admin/:adminId/news                              controllers.NewsController.create(kg: String, adminId: Long)
 POST          /kindergarten/:kg/admin/:adminId/news/:newsId                      controllers.NewsController.adminUpdate(kg: String, adminId: Long, newsId: Long)
 DELETE        /kindergarten/:kg/admin/:adminId/news/:newsId                      controllers.NewsController.delete(kg: String, adminId: Long, newsId: Long)
+
+GET           /kindergarten/:kg/parent                                           controllers.ParentController.index(kg: String)
+POST          /kindergarten/:kg/parent                                           controllers.ParentController.create(kg: String)
+POST          /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.update(kg: String, parentId: Long)
+DELETE          /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.delete(kg: String, parentId: Long)
 
 GET           /kindergarten/:kg/parent/:parentId/news                            controllers.ReadingNewsController.index(kg: String, parentId: Long)
 POST          /kindergarten/:kg/parent/:parentId/news/:newsId                    controllers.ReadingNewsController.create(kg: String, parentId: Long, newsId: Long)

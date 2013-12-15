@@ -11,6 +11,7 @@ CREATE TABLE parentinfo (
   picurl       VARCHAR(128) NOT NULL DEFAULT '',
   birthday     DATE         NOT NULL DEFAULT '1800-01-01',
   school_id    VARCHAR(20)  NOT NULL,
+  status    tinyint NOT NULL default 1,
   PRIMARY KEY (uid)
 );
 

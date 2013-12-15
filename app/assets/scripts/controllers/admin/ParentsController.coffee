@@ -1,46 +1,45 @@
 'use strict'
 
 angular.module('kulebaoAdmin')
-.controller 'ParentsCtrl', ($scope, $rootScope) ->
+.controller 'ParentsCtrl', ['$scope', '$rootScope', 'parentService', ($scope, $rootScope, parentService) ->
     $rootScope.tabName = 'parents'
 
-    $scope.parents = [
-      {name: '袋鼠', phone: 13234567889, id: 1, child: '小袋鼠'},
-      {name: '熊猫', phone: 13234567890, id: 2, child: '小熊猫'},
-      {name: '鸵鸟', phone: 13234567891, id: 3, child: '小鸟'},
-      {name: '鸭嘴兽', phone: 13234567892, id: 4, child: '卵'},
-      {name: '大象', phone: 13234567893, id: 5, child: '小象'}
-    ]
+    $scope.kindergarten = {
+      name: 'school23'
+    }
+    $scope.parents = parentService.bind({kg: $scope.kindergarten.name}).query()
+
     $scope.editingId = -1
     $scope.backupEditing = {}
-    $scope.add = () ->
-      lastParent = _.max($scope.parents, (p) -> p.id)
-      $scope.parents.push {name: '新人', phone: 98765432001, id: (lastParent.id + 1), child: '小新人'}
 
     $scope.delete = (parent) ->
-      $scope.parents = _.reject($scope.parents, (p) -> parent.id == p.id )
+      $scope.parents = _.reject($scope.parents, (p) ->
+        parent.id == p.id)
+      parent.$delete()
 
     $scope.startEditing = (parent) ->
       $scope.editingId = parent.id
       $scope.backupEditing = angular.copy $scope.parents
 
-    $scope.save = () ->
+    $scope.save = (parent) ->
       $scope.editingId = -1
+      parent.$save()
 
     $scope.cancelEditing = () ->
       $scope.editingId = -1
       angular.copy $scope.backupEditing, $scope.parents
+  ]
 
 angular.module('kulebaoAdmin')
-.controller 'AddParentCtrl', ($scope) ->
-    @createNewParent = (previousId) =>
-      {name: '新人', phone: 98765432001, id: (previousId + 1), child: '小新人'}
-
-    $scope.lastParent = _.max($scope.parents, (p) -> p.id)
-    $scope.parent = @createNewParent($scope.lastParent.id)
+.controller 'AddParentCtrl', ['$scope', 'parentService', ($scope, Parent) ->
+    $scope.parent = new Parent({kg: $scope.kindergarten.name})
 
     $scope.save = (parent) =>
+      parent.$save(()->
+        $scope.parents = Parent.bind({kg: $scope.kindergarten.name}).query()
+      )
       $scope.parents.push parent
-      $scope.parent = @createNewParent(parent.id)
+      $scope.parent = new Parent({kg: $scope.kindergarten.name})
 
+  ]
 
