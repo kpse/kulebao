@@ -1,8 +1,10 @@
 <div class="panel panel-default">
   <div class="panel-heading">管理家长联系电话列表</div>
+
   <div class="panel-body">
     <span>检索：</span>
-    <input type="text" ng-model="search" tooltip-placement="top" tooltip="输入手机号码，姓名进行匹配..."/>
+    <input ng-model="searchText" />
+    <span>输入电话号码，家长姓名等进行过滤</span>
     <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">添加</button>
   </div>
 
@@ -18,7 +20,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="parent in parents | filter: search" class="row" tooltip-placement="top" tooltip="单击开始编辑">
+    <tr ng-repeat="parent in parents | filter: searchText" class="row" tooltip-placement="top" tooltip="单击开始编辑">
       <td class=".col-xs-1">{{parent.id}}</td>
 
       <td class=".col-xs-4" ng-if="editingId != parent.id" ng-click="startEditing(parent)">{{parent.phone | phone}}</td>
