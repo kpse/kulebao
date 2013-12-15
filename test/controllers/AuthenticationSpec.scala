@@ -14,7 +14,7 @@ class AuthenticationSpec extends Specification {
   "Authentication" should {
     "log mobile in" in new WithApplication {
 
-      private val json = Json.toJson(new MobileLogin("username", "password"))
+      private val json = Json.toJson(new MobileLogin("13333333333", "password"))
 
       val loginResponse = route(FakeRequest(POST, "/login.do").withJsonBody(json)).get
 
@@ -23,8 +23,8 @@ class AuthenticationSpec extends Specification {
 
       val response: JsValue = Json.parse(contentAsString(loginResponse))
       (response \ "error_code").as[Int] must equalTo(0)
-      (response \ "account_name").as[String] must equalTo("username")
-      (response \ "access_token").as[String] must equalTo("username")
+      (response \ "account_name").as[String] must equalTo("13333333333")
+      (response \ "access_token").as[String] must equalTo("13333333333")
       (response \ "username").as[String] must equalTo("测试")
     }
     implicit val checkWrites = Json.writes[CheckPhone]
@@ -57,7 +57,7 @@ class AuthenticationSpec extends Specification {
 
     "reject mobile when wrong password" in new WithApplication {
 
-      private val json = Json.toJson(new MobileLogin("username", "wrong password"))
+      private val json = Json.toJson(new MobileLogin("13333333333", "wrong password"))
 
       val loginResponse = route(FakeRequest(POST, "/login.do").withJsonBody(json)).get
 
