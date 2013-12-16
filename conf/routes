@@ -14,6 +14,9 @@ POST          /receiveBindInfo.do                                               
 GET           /templates/*file                                                   controllers.Static.at(path="/public/templates", file)
 GET           /*college/templates/*file                                          controllers.Static.ignoreCollege(path="/public/templates", file, college)
 
+GET           /kindergarten/:kg/preview                                          controllers.SchoolSummaryController.preview(kg: String)
+GET           /kindergarten/:kg/detail                                           controllers.SchoolSummaryController.detail(kg: String)
+
 GET           /kindergarten/:kg/news                                             controllers.NewsController.index(kg: String)
 GET           /kindergarten/:kg/news/:newsId                                     controllers.NewsController.show(kg: String, newsId: Long)
 POST          /kindergarten/:kg/news/:newsId                                     controllers.NewsController.update(kg: String, newsId: Long)
@@ -26,7 +29,7 @@ DELETE        /kindergarten/:kg/admin/:adminId/news/:newsId                     
 GET           /kindergarten/:kg/parent                                           controllers.ParentController.index(kg: String)
 POST          /kindergarten/:kg/parent                                           controllers.ParentController.create(kg: String)
 POST          /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.update(kg: String, parentId: Long)
-DELETE          /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.delete(kg: String, parentId: Long)
+DELETE        /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.delete(kg: String, parentId: Long)
 
 GET           /kindergarten/:kg/parent/:parentId/news                            controllers.ReadingNewsController.index(kg: String, parentId: Long)
 POST          /kindergarten/:kg/parent/:parentId/news/:newsId                    controllers.ReadingNewsController.create(kg: String, parentId: Long, newsId: Long)
