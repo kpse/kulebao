@@ -8,11 +8,29 @@ import play.api.Play.current
 case class MobileLoginResult(error_code: Int,
                              username: String,
                              school_name: String,
-                             child_info: ChildInfo,
                              access_token: String,
                              account_name: String)
 
-case class ChildInfo(child_name: String, child_pic_url: String)
+case class ChildPreviewResult(error_code: Int,
+                              children: List[ChildPreview]
+                               )
+
+case class ChildPreview(id: Long,
+                        nick: String,
+                        timestamp: Long
+                         )
+case class ChildResult(error_code: Int,
+                       username: String,
+                       school_name: String,
+                       access_token: String,
+                       account_name: String)
+
+case class ChildDetailResult(error_code: Int,
+                             child_info: ChildInfo
+                              )
+
+case class ChildInfo(id: Long, nick: String, icon_url: String, birthday: Long)
+
 
 object MobileLoginResult {
   def handle(login: MobileLogin): MobileLoginResult = {
@@ -28,7 +46,7 @@ object MobileLoginResult {
       val success = if (firstRow.isEmpty) 1 else 0
       val (username, account, token) = getAccountInfo(firstRow)
       val schoolName = getSchoolInfo(firstRow)
-      new MobileLoginResult(success, username, schoolName, new ChildInfo("Bob", "http://pic.download.com/13409878890/child.png"), account, token)
+      new MobileLoginResult(success, username, schoolName, account, token)
   }
 
   def getSchoolInfo(stream: Stream[SqlRow]) = stream match {

@@ -2,18 +2,15 @@ package controllers
 
 import play.api.mvc._
 import play.api.libs.json._
-import java.security.MessageDigest
 import models._
 import models.MobileLoginResult
 import models.MobileLogin
 import models.CheckPhoneResult
-import models.ChildInfo
 
 object Authentication extends Controller {
 
   implicit val loginReads = Json.reads[MobileLogin]
 
-  implicit val infoWrites = Json.writes[ChildInfo]
   implicit val resultWrites = Json.writes[MobileLoginResult]
 
 
@@ -50,7 +47,7 @@ object Authentication extends Controller {
     request =>
       request.body.validate[CheckPhone].map {
         case (login) =>
-          Ok(Json.toJson(new BindNumberResult(0, "111111111", "abc", "abc", "1102")))
+          Ok(Json.toJson(new BindNumberResult(0, "111111111", "袋鼠", "13408654680", "93740362")))
       }.recoverTotal {
         e => BadRequest("Detected error:" + JsError.toFlatJson(e))
       }
