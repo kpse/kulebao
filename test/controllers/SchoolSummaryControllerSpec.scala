@@ -20,7 +20,7 @@ class SchoolSummaryControllerSpec extends Specification {
 
       val response: JsValue = Json.parse(contentAsString(loginResponse))
       (response \ "error_code").as[Int] must equalTo(0)
-      (response \ "school_url").as[String] must equalTo("anyschool")
+      (response \ "school_id").as[String] must equalTo("anyschool")
       (response \ "timestamp").as[Long] must greaterThan(0L)
     }
     "report detail" in new WithApplication {
@@ -32,9 +32,9 @@ class SchoolSummaryControllerSpec extends Specification {
 
       val response: JsValue = Json.parse(contentAsString(loginResponse))
       (response \ "error_code").as[Int] must equalTo(0)
-      (response \ "school_url").as[String] must equalTo("anyschool")
+      (response \ "school_id").as[String] must equalTo("anyschool")
       (response \ "school_info" \ "timestamp").as[Long] must greaterThan(0L)
-      (response \ "school_info" \ "school_phone").as[String] must startingWith("13")
+      (response \ "school_info" \ "phone").as[String] must startingWith("13")
 
     }
 
