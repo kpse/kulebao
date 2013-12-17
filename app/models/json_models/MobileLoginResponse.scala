@@ -1,39 +1,18 @@
-package models
+package models.json_models
 
 import play.api.db.DB
 import anorm._
 import java.security.MessageDigest
 import play.api.Play.current
 
-case class MobileLoginResult(error_code: Int,
-                             username: String,
-                             school_name: String,
-                             access_token: String,
-                             account_name: String)
+case class MobileLoginResponse(error_code: Int,
+                               username: String,
+                               school_name: String,
+                               access_token: String,
+                               account_name: String)
 
-case class ChildPreviewResult(error_code: Int,
-                              children: List[ChildPreview]
-                               )
-
-case class ChildPreview(id: Long,
-                        nick: String,
-                        timestamp: Long
-                         )
-case class ChildResult(error_code: Int,
-                       username: String,
-                       school_name: String,
-                       access_token: String,
-                       account_name: String)
-
-case class ChildDetailResult(error_code: Int,
-                             child_info: ChildInfo
-                              )
-
-case class ChildInfo(id: Long, nick: String, icon_url: String, birthday: Long)
-
-
-object MobileLoginResult {
-  def handle(login: MobileLogin): MobileLoginResult = {
+object MobileLoginResponse {
+  def handle(login: MobileLogin): MobileLoginResponse = {
     checkPassword(login)
   }
 
@@ -46,7 +25,7 @@ object MobileLoginResult {
       val success = if (firstRow.isEmpty) 1 else 0
       val (username, account, token) = getAccountInfo(firstRow)
       val schoolName = getSchoolInfo(firstRow)
-      new MobileLoginResult(success, username, schoolName, account, token)
+      new MobileLoginResponse(success, username, schoolName, account, token)
   }
 
   def getSchoolInfo(stream: Stream[SqlRow]) = stream match {

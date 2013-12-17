@@ -6,7 +6,7 @@ import org.specs2.mutable.Specification
 import play.api.test.{FakeRequest, WithApplication}
 import play.api.test.Helpers._
 import play.api.libs.json._
-import models.{BindingNumber, CheckPhone, MobileLogin}
+import models.json_models.{MobileLogin, CheckPhone, BindingNumber}
 
 @RunWith(classOf[JUnitRunner])
 class AuthenticationSpec extends Specification {

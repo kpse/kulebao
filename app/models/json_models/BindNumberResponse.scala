@@ -1,6 +1,6 @@
-package models
+package models.json_models
 
-case class BindNumberResult(error_code: Int,
+case class BindNumberResponse(error_code: Int,
                             access_token: String,
                             username: String,
                             account_name: String,
