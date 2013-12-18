@@ -26,15 +26,16 @@ POST          /kindergarten/:kg/admin/:adminId/news                             
 POST          /kindergarten/:kg/admin/:adminId/news/:newsId                      controllers.NewsController.adminUpdate(kg: String, adminId: Long, newsId: Long)
 DELETE        /kindergarten/:kg/admin/:adminId/news/:newsId                      controllers.NewsController.delete(kg: String, adminId: Long, newsId: Long)
 
-GET           /kindergarten/:kg/parent                                           controllers.ParentController.index(kg: String)
-POST          /kindergarten/:kg/parent                                           controllers.ParentController.create(kg: String)
-POST          /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.update(kg: String, parentId: Long)
-DELETE        /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.delete(kg: String, parentId: Long)
+GET           /kindergarten/:kg/parent                                           controllers.ParentController.index(kg: Long)
+POST          /kindergarten/:kg/parent                                           controllers.ParentController.create(kg: Long)
+POST          /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.update(kg: Long, parentId: Long)
+DELETE        /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.delete(kg: Long, parentId: Long)
 
 GET           /kindergarten/:kg/parent/:parentId/news                            controllers.ReadingNewsController.index(kg: String, parentId: Long)
 POST          /kindergarten/:kg/parent/:parentId/news/:newsId                    controllers.ReadingNewsController.create(kg: String, parentId: Long, newsId: Long)
 
 GET           /kindergarten/:kg/parent/:parentId/child                           controllers.ChildController.index(kg: Long, parentId: String)
+POST          /kindergarten/:kg/parent/:parentId/child                           controllers.ChildController.index(kg: Long, parentId: String)
 GET           /kindergarten/:kg/parent/:parentId/child/:childId                  controllers.ChildController.show(kg: Long, parentId: String, childId: Long)
 
 GET           /kindergarten/:kg/admin/:adminId/news_reading_count/:newsId        controllers.ReadingNewsController.countReading(kg: String, adminId: Long, newsId: Long)

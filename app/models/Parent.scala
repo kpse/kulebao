@@ -10,14 +10,14 @@ case class Parent(id: Long, schoolId: Long, name: String, phone: String)
 
 
 object Parent {
-  def delete(kg: String)(id: Long) = DB.withConnection {
+  def delete(kg: Long)(id: Long) = DB.withConnection {
     implicit c =>
       SQL("update parentinfo set status=0 where uid={id}")
         .on('id -> id
         ).execute()
   }
 
-  def update(kg: String)(parent: (Long, String, String, String)) = DB.withConnection {
+  def update(kg: Long)(parent: (Long, String, String, String)) = DB.withConnection {
     implicit c =>
       SQL("update parentinfo set school_id={schoolId}, name={name}, phone={phone} where uid={id}")
         .on('schoolId -> parent._4,
@@ -29,17 +29,17 @@ object Parent {
   }
 
 
-  def findById(kg: String)(id: Long) = DB.withConnection {
+  def findById(kg: Long)(id: Long) = DB.withConnection {
     implicit c =>
-      SQL("select p.uid, p.school_id, p.name, p.phone from parentinfo p, schoolinfo s where s.school_id = p.school_id and s.url={kg} and p.uid={id}")
+      SQL("select p.uid, p.school_id, p.name, p.phone from parentinfo p, schoolinfo s where s.school_id = p.school_id and s.school_id={kg} and p.uid={id}")
         .on('kg -> kg)
         .on('id -> id)
         .as(simple.singleOpt)
   }
 
-  def create(kg: String)(parent: (String, String, String)) = DB.withConnection {
+  def create(kg: Long)(parent: (String, String, String)) = DB.withConnection {
     implicit c =>
-      val createdId: Option[Long] = SQL("insert into parentinfo (school_id, name, phone) values ((select school_id from schoolinfo where url={kg}), {name}, {phone})")
+      val createdId: Option[Long] = SQL("insert into parentinfo (school_id, name, phone) values ((select school_id from schoolinfo where school_id={kg}), {name}, {phone})")
         .on('kg -> kg,
           'name -> parent._1,
           'phone -> parent._2
@@ -57,9 +57,9 @@ object Parent {
     }
   }
 
-  def all(kg: String): List[Parent] = DB.withConnection {
+  def all(kg: Long): List[Parent] = DB.withConnection {
     implicit c =>
-      SQL("select p.uid, p.school_id, p.name, p.phone from parentinfo p, schoolinfo s where p.school_id = s.school_id and s.url={kg} and p.status=1")
+      SQL("select p.uid, p.school_id, p.name, p.phone from parentinfo p, schoolinfo s where p.school_id = s.school_id and s.school_id={kg} and p.status=1")
         .on('kg -> kg)
         .as(simple *)
   }

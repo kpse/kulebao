@@ -9,7 +9,7 @@ import models.{News, Parent}
 object ParentController extends Controller {
   implicit val writes = Json.writes[Parent]
 
-  def index(kg: String) = Action {
+  def index(kg: Long) = Action {
     val jsons = Parent.all(kg)
     Ok(Json.toJson(jsons)).as("application/json")
   }
@@ -22,7 +22,7 @@ object ParentController extends Controller {
     )
   )
 
-  def create(kg: String) = Action {
+  def create(kg: Long) = Action {
     implicit request =>
       parentForm.bindFromRequest.value map {
         parent =>
@@ -40,7 +40,7 @@ object ParentController extends Controller {
     )
   )
 
-  def update(kg: String, parentId: Long) = Action {
+  def update(kg: Long, parentId: Long) = Action {
     implicit request =>
       parentUpdateForm.bindFromRequest.value map {
         parent =>
@@ -49,7 +49,7 @@ object ParentController extends Controller {
       } getOrElse BadRequest
   }
 
-  def delete(kg: String, parentId: Long) = Action {
+  def delete(kg: Long, parentId: Long) = Action {
     Parent.delete(kg)(parentId)
     Ok("{\"status\":\"success\"}").as("application/json")
   }

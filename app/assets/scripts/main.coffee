@@ -26,7 +26,7 @@ class Config
     $urlRouterProvider.otherwise ($injector, $location) ->
       path = $location.path()
       if path.indexOf("kindergarten", 0) < 0
-      then $location.path '/kindergarten/school23'
+      then $location.path '/kindergarten/93740362'
       else $location.path path.replace /(kindergarten\/[^\/]+)\/.+$/g, '$1/wip'
 
 angular.module('kulebaoApp', ['ui.router', 'ngResource', 'ngRoute']).config ['$stateProvider', '$urlRouterProvider', Config]

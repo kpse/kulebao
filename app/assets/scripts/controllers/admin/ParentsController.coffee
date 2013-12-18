@@ -5,7 +5,7 @@ angular.module('kulebaoAdmin')
     $rootScope.tabName = 'parents'
 
     $scope.kindergarten = {
-      name: 'school23'
+      name: '93740362'
     }
     $scope.parents = parentService.bind({kg: $scope.kindergarten.name}).query()
 

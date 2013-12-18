@@ -11,7 +11,7 @@ describe 'Controller: NewsCtrl', () ->
   # Initialize the controller and a mock scope
   beforeEach inject ($controller, $rootScope, _$httpBackend_) ->
     $httpBackend = _$httpBackend_
-    $httpBackend.expectPOST('/kindergarten/school23/parent/1/news/999')
+    $httpBackend.expectPOST('/kindergarten/93740362/parent/1/news/999')
     .respond(
         {
           id: 999
@@ -21,7 +21,7 @@ describe 'Controller: NewsCtrl', () ->
           readTime: '1990-10-01'
         }
       )
-    $httpBackend.expectGET('/kindergarten/school23/news/999')
+    $httpBackend.expectGET('/kindergarten/93740362/news/999')
     .respond(
         {
           id: 999

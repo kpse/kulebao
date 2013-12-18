@@ -5,7 +5,7 @@
   Controller = (function() {
     function Controller($rootScope) {
       this.kindergarten = {
-        name: 'school23',
+        name: '93740362',
         desc: '成都市第二十三幼儿园'
       };
       this.adminUser = {

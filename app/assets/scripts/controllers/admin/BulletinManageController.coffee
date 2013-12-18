@@ -4,7 +4,7 @@ class Controller
   constructor: ($rootScope, $location, adminNewsService) ->
     @kindergarten =
       id: 1,
-      name: 'school23'
+      name: '93740362'
 
     @adminUser =
       id: 1

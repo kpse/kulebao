@@ -17,7 +17,7 @@ describe 'Controller: ParentsCtrl', () ->
       parentService: parentService
     }
     $httpBackend = _$httpBackend_
-    $httpBackend.expectGET('/kindergarten/school23/parent')
+    $httpBackend.expectGET('/kindergarten/93740362/parent')
     .respond(
         [
           {
