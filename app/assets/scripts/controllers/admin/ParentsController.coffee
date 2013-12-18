@@ -30,9 +30,15 @@ angular.module('kulebaoAdmin')
       angular.copy $scope.backupEditing, $scope.parents
   ]
 
+angular.module('kulebaoAdmin').value '$strapConfig', { datepicker: language: 'en', format: 'yyyy-mm-dd' }
+
+
+
 angular.module('kulebaoAdmin')
-.controller 'AddParentCtrl', ['$scope', 'parentService', ($scope, Parent) ->
+.controller 'AddParentCtrl', ['$scope', 'parentService', '$timeout', ($scope, Parent, $timeout) ->
     $scope.parent = new Parent({kg: $scope.kindergarten.name})
+    $scope.parent.birthday = new Date
+    $scope.parent.gender = 1
 
     $scope.save = (parent) =>
       parent.$save(()->
@@ -42,4 +48,3 @@ angular.module('kulebaoAdmin')
       $scope.parent = new Parent({kg: $scope.kindergarten.name})
 
   ]
-

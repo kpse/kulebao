@@ -36,5 +36,5 @@ class Config
 
 
 angular.module('kulebaoApp', ['ui.router', 'ngResource', 'ngRoute'])
-angular.module('kulebaoAdmin', ['kulebaoApp', 'ui.router', 'ngResource', 'ngRoute', 'ui.bootstrap', 'ui.mask'])
+angular.module('kulebaoAdmin', ['kulebaoApp', 'ui.router', 'ngResource', 'ngRoute', 'ui.bootstrap', 'ui.mask', '$strap.directives'])
 .config ['$stateProvider', '$urlRouterProvider', Config]

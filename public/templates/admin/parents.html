@@ -3,7 +3,7 @@
 
   <div class="panel-body">
     <span>检索：</span>
-    <input ng-model="searchText" />
+    <input ng-model="searchText"/>
     <span>输入电话号码，家长姓名等进行过滤</span>
     <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">添加</button>
   </div>
@@ -55,16 +55,58 @@
           <h4 class="modal-title">添加家长联系方式</h4>
         </div>
         <div class="modal-body">
-          <label for="parent-phone">电话号码</label>
-          <input id="parent-phone" type="text" ng-model="parent.phone"
-                 ui-mask="{{'999-9999-9999'}}"
-                 class="editing-field form-control"/>
-          <label for="parent-name">家长姓名</label>
-          <input id="parent-name" ng-model="parent.name"
-                 class="editing-field form-control"/>
-          <label for="parent-child">宝宝姓名</label>
-          <input id="parent-child" ng-model="parent.child"
-                 class="editing-field form-control"/>
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="parent-phone" class="col-sm-2 control-label">电话号码</label>
+
+              <div class="col-sm-4">
+                <input id="parent-phone" type="text" ng-model="parent.phone"
+                       ui-mask="{{'999-9999-9999'}}"
+                       class="editing-field form-control"/>
+              </div>
+              <label for="parent-name" class="col-sm-2 control-label">家长姓名</label>
+
+              <div class="col-sm-4">
+                <input id="parent-name" ng-model="parent.name"
+                       class="editing-field form-control"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="parent-gender" class="col-sm-2 control-label">性别</label>
+
+              <div class="col-sm-4">
+                <div class="btn-group" ng-model="parent.gender" bs-buttons-radio>
+                  <button type="button" class="btn btn-default" value="0">男</button>
+                  <button type="button" class="btn btn-default" value="1">女</button>
+                </div>
+              </div>
+              <label for="parent-company" class="col-sm-2 control-label">公司</label>
+
+              <div class="col-sm-4">
+                <input id="parent-company" ng-model="parent.company"
+                       class="editing-field form-control"/>
+              </div>
+
+
+            </div>
+            <div class="form-group">
+              <label for="parent-pic" class="col-sm-2 control-label">上传头像</label>
+
+              <div class="col-sm-4">
+                <input id="parent-pic" ng-model="parent.pic"
+                       class="editing-field form-control"/>
+              </div>
+
+              <label for="parent-birthday" class="col-sm-2 control-label">生日</label>
+
+              <div class="col-sm-4">
+                <div class="control-group input-append">
+                  <input type="text" ng-model="parent.birthday" data-date="en" data-date-format="dd/mm/yyyy" bs-datepicker>
+                  <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelEditing($event)">Close
