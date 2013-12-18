@@ -34,7 +34,7 @@ DELETE        /kindergarten/:kg/parent/:parentId                                
 GET           /kindergarten/:kg/parent/:parentId/news                            controllers.ReadingNewsController.index(kg: String, parentId: Long)
 POST          /kindergarten/:kg/parent/:parentId/news/:newsId                    controllers.ReadingNewsController.create(kg: String, parentId: Long, newsId: Long)
 
-GET           /kindergarten/:kg/parent/:parentId/child                          controllers.ChildController.index(kg: String, parentId: String)
+GET           /kindergarten/:kg/parent/:parentId/child                           controllers.ChildController.index(kg: String, parentId: String)
 GET           /kindergarten/:kg/parent/:parentId/child/:childId                  controllers.ChildController.show(kg: String, parentId: String, childId: String)
 
 GET           /kindergarten/:kg/admin/:adminId/news_reading_count/:newsId        controllers.ReadingNewsController.countReading(kg: String, adminId: Long, newsId: Long)
