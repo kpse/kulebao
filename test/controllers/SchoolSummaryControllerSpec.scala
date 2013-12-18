@@ -13,28 +13,29 @@ class SchoolSummaryControllerSpec extends Specification {
   "SchoolSummary" should {
     "report preview" in new WithApplication {
 
-      val loginResponse = route(FakeRequest(GET, "/kindergarten/123456789/preview")).get
+      val previewResponse = route(FakeRequest(GET, "/kindergarten/93740362/preview")).get
 
-      status(loginResponse) must equalTo(OK)
-      contentType(loginResponse) must beSome.which(_ == "application/json")
+      status(previewResponse) must equalTo(OK)
+      contentType(previewResponse) must beSome.which(_ == "application/json")
 
-      val response: JsValue = Json.parse(contentAsString(loginResponse))
+      val response: JsValue = Json.parse(contentAsString(previewResponse))
       (response \ "error_code").as[Int] must equalTo(0)
-      (response \ "school_id").as[Long] must equalTo(123456789)
+      (response \ "school_id").as[Long] must equalTo(93740362)
       (response \ "timestamp").as[Long] must greaterThan(0L)
     }
     "report detail" in new WithApplication {
 
-      val loginResponse = route(FakeRequest(GET, "/kindergarten/987654321/detail")).get
+      val detailResponse = route(FakeRequest(GET, "/kindergarten/93740362/detail")).get
 
-      status(loginResponse) must equalTo(OK)
-      contentType(loginResponse) must beSome.which(_ == "application/json")
+      status(detailResponse) must equalTo(OK)
+      contentType(detailResponse) must beSome.which(_ == "application/json")
 
-      val response: JsValue = Json.parse(contentAsString(loginResponse))
+      val response: JsValue = Json.parse(contentAsString(detailResponse))
       (response \ "error_code").as[Int] must equalTo(0)
-      (response \ "school_id").as[Long] must equalTo(987654321)
+      (response \ "school_id").as[Long] must equalTo(93740362)
       (response \ "school_info" \ "timestamp").as[Long] must greaterThan(0L)
       (response \ "school_info" \ "phone").as[String] must startingWith("13")
+      (response \ "school_info" \ "school_logo_url").as[String] must startingWith("http")
 
     }
 

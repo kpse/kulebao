@@ -1,0 +1,43 @@
+package models.json_models
+
+import play.api.db.DB
+import anorm._
+import play.api.Play.current
+
+case class SchoolIntro(phone: String, timestamp: Long, desc: String, school_logo_url: String)
+
+case class SchoolIntroDetailResponse(error_code: Int, school_id: Long, school_info: Option[SchoolIntro])
+
+case class SchoolIntroPreviewResponse(error_code: Int, timestamp: Long, school_id: Long)
+
+
+object SchoolIntro {
+
+  def timestamp(row: SqlRow) = row[Long]("update_at")
+  def phone(row: SqlRow) = row[String]("phone")
+  def schoolId(row: SqlRow) = row[String]("school_id").toLong
+  def desc(row: SqlRow) = row[String]("description")
+  def logoUrl(row: SqlRow) = row[String]("logo_url")
+
+  def preview(kg: String) = DB.withConnection {
+    implicit c =>
+      val result = SQL("select update_at, school_id from schoolinfo where school_id={school_id}")
+        .on('school_id -> kg).apply()
+
+      if (result.isEmpty) new SchoolIntroPreviewResponse(1, 0, 0)
+      else new SchoolIntroPreviewResponse(0, timestamp(result.head), schoolId(result.head))
+  }
+
+  def detail(kg: String) = DB.withConnection {
+    implicit c =>
+      val result = SQL("select * from schoolinfo where school_id={school_id}")
+        .on('school_id -> kg).apply()
+
+      if (result.isEmpty) new SchoolIntroDetailResponse(1, 0, None)
+      else {
+        val row = result.head
+        new SchoolIntroDetailResponse(0, schoolId(row), Some(new SchoolIntro(phone(row), timestamp(row), desc(row), logoUrl(row))))
+      }
+  }
+
+}
