@@ -3,6 +3,7 @@ package models.json_models
 import play.api.db.DB
 import anorm._
 import play.api.Play.current
+import models.helper.FieldHelper._
 
 case class SchoolIntro(phone: String, timestamp: Long, desc: String, school_logo_url: String)
 
@@ -12,12 +13,6 @@ case class SchoolIntroPreviewResponse(error_code: Int, timestamp: Long, school_i
 
 
 object SchoolIntro {
-
-  def timestamp(row: SqlRow) = row[Long]("update_at")
-  def phone(row: SqlRow) = row[String]("phone")
-  def schoolId(row: SqlRow) = row[String]("school_id").toLong
-  def desc(row: SqlRow) = row[String]("description")
-  def logoUrl(row: SqlRow) = row[String]("logo_url")
 
   def preview(kg: String) = DB.withConnection {
     implicit c =>

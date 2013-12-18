@@ -12,6 +12,7 @@ CREATE TABLE parentinfo (
   birthday     DATE         NOT NULL DEFAULT '1800-01-01',
   school_id    VARCHAR(20)  NOT NULL,
   status       TINYINT      NOT NULL DEFAULT 1,
+  update_at       int(11)      NOT NULL DEFAULT 0,
   PRIMARY KEY (uid)
 );
 
