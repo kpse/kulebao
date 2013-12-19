@@ -4,6 +4,7 @@ import play.api.db.DB
 import anorm._
 import java.security.MessageDigest
 import play.api.Play.current
+import org.apache.commons.codec.digest.DigestUtils
 
 case class MobileLoginResponse(error_code: Int,
                                username: String,
@@ -51,6 +52,6 @@ object MobileLoginResponse {
   }
 
   def md5(s: String) = {
-    MessageDigest.getInstance("MD5").digest(s.getBytes)
+    DigestUtils.md5Hex(s).toUpperCase
   }
 }

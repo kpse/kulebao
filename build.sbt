@@ -9,7 +9,8 @@ libraryDependencies ++= Seq(
   anorm,
   cache,
   "com.h2database" % "h2" % "1.3.168",
-  "mysql" % "mysql-connector-java" % "5.1.27"
+  "mysql" % "mysql-connector-java" % "5.1.27",
+  "commons-codec" % "commons-codec" % "1.7"
 )
 
 
