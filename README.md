@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kpse/kulebao.png?branch=master)](https://travis-ci.org/kpse/kulebao)
+
 Run ./build p before committing please
 
 todos:
