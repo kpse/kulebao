@@ -5,7 +5,7 @@ import anorm._
 import play.api.Play.current
 import models.helper.FieldHelper._
 
-case class SchoolIntro(phone: String, timestamp: Long, desc: String, school_logo_url: String)
+case class SchoolIntro(school_id: Long, phone: String, timestamp: Long, desc: String, school_logo_url: String, name: String)
 
 case class SchoolIntroDetailResponse(error_code: Int, school_id: Long, school_info: Option[SchoolIntro])
 
@@ -31,7 +31,7 @@ object SchoolIntro {
       if (result.isEmpty) new SchoolIntroDetailResponse(1, 0, None)
       else {
         val row = result.head
-        new SchoolIntroDetailResponse(0, schoolId(row), Some(new SchoolIntro(phone(row), timestamp(row), desc(row), logoUrl(row))))
+        new SchoolIntroDetailResponse(0, schoolId(row), Some(new SchoolIntro(schoolId(row), phone(row), timestamp(row), desc(row), logoUrl(row), name(row))))
       }
   }
 

@@ -21,4 +21,6 @@ object FieldHelper {
   def iconUrl(row: SqlRow) = row[String]("picurl")
 
   def birthday(row: SqlRow) = row[Date]("birthday").getTime
+
+  def name(row: SqlRow) = row[String]("name")
 }
