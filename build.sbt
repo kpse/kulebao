@@ -8,7 +8,8 @@ libraryDependencies ++= Seq(
   jdbc,
   anorm,
   cache,
-  "com.h2database" % "h2" % "1.3.168"
+  "com.h2database" % "h2" % "1.3.168",
+  "mysql" % "mysql-connector-java" % "5.1.27"
 )
 
 
