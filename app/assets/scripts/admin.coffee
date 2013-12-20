@@ -21,6 +21,11 @@ class Config
         templateUrl: 'templates/admin/parents.html',
         controller: 'ParentsCtrl'
       )
+    .state('kindergarten.swipingcard',
+        url: '/swipingcard',
+        templateUrl: 'templates/admin/swipingcard.html',
+        controller: 'AccountCtrl'
+      )
 
     .state('kindergarten.wip',
         url: '/wip',

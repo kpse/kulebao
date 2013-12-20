@@ -1,0 +1,31 @@
+<div class="panel panel-default">
+  <div class="panel-heading">测试手机push</div>
+
+  <div class="panel-body">
+    <span>检索：</span>
+    <input ng-model="searchText"/>
+    <span>输入电话号码进行过滤</span>
+  </div>
+
+  <table class="table table-hover table-condensed">
+    <thead>
+    <tr class="row">
+      <th class=".col-xs-2">#</th>
+      <th class=".col-xs-4">电话号码</th>
+      <th class=".col-xs-4">pushid</th>
+      <th class=".col-xs-2">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="account in accounts | filter: searchText" class="row">
+      <td class=".col-xs-2">{{account.uid}}</td>
+      <td class=".col-xs-4">{{account.phone | phone}}</td>
+      <td class=".col-xs-4">{{account.push_id}}</td>
+      <td class=".col-xs-2">
+        <button class="btn btn-xs btn-warning" ng-click="sendMessage(account)">发送消息
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

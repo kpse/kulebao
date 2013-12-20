@@ -15,6 +15,11 @@
           家长联系方式管理
         </a>
       </li>
+      <li class="action" ng-class="{active : kg.isSelected('swipingcard')}">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.name}}/swipingcard" class="btn btn-warning">
+          刷卡通知测试
+        </a>
+      </li>
       <li class="action">
         <a ng-href="#/kindergarten/{{kg.kindergarten.name}}/class-bulletin" class="btn btn-success">
           班级通知设置
@@ -40,11 +45,7 @@
           每日育情设置
         </a>
       </li>
-      <li class="action">
-        <a ng-href="#/kindergarten/{{kg.kindergarten.name}}/take-n-drop" class="btn btn-success">
-          接送信息设置
-        </a>
-      </li>
+
 
     </ul>
 
