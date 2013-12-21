@@ -68,7 +68,7 @@ object News {
 
   def all(kg: Long): List[News] = DB.withConnection {
     implicit c =>
-      SQL("select * from news where school_id={kg} and published=1 and status=1")
+      SQL("select * from news where school_id={kg} and published=1 and status=1 order by update_at DESC")
         .on('kg -> kg.toString)
         .as(simple *)
   }

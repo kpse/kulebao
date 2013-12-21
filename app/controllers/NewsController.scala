@@ -9,8 +9,31 @@ import play.api.data.Forms._
 object NewsController extends Controller {
   implicit val writes = Json.writes[News]
 
-  def index(kg: Long) = Action {
-    val jsons = News.all(kg)
+  def olderThan(from: Option[Long]): (News) => Boolean = from match {
+    case Some(time) =>
+      (n: News) => n.timestamp match {
+        case older if older > time => true
+        case _ => false
+      }
+    case None => (News) => true
+  }
+
+  def newerThan(to: Option[Long]): (News) => Boolean = to match {
+    case Some(time) =>
+      (n: News) => n.timestamp match {
+        case newer if newer < time => true
+        case _ => false
+      }
+    case None => (News) => true
+  }
+
+  def limit(option: Option[Int]): Int = option match {
+    case Some(i) => i
+    case None => 50
+  }
+
+  def index(kg: Long, from: Option[Long], to: Option[Long], most: Option[Int]) = Action {
+    val jsons = News.all(kg).filter(olderThan(from)).filter(newerThan(to)).take(limit(most))
     Ok(Json.toJson(jsons))
   }
 
