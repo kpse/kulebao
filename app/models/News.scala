@@ -7,7 +7,7 @@ import play.api.db.DB
 import anorm.~
 import play.api.Play.current
 
-case class News(news_id: Long, school_id: Long, title: String, content: String, timestamp: Long, published: Boolean)
+case class News(news_id: Long, school_id: Long, title: String, content: String, timestamp: Long, published: Boolean, notice_type: Int)
 
 
 object News {
@@ -50,6 +50,8 @@ object News {
   }
 
 
+  val NOTICE_TYPE_SCHOOL_INFO = 2
+
   val simple = {
     get[Long]("uid") ~
       get[String]("school_id") ~
@@ -58,9 +60,9 @@ object News {
       get[Long]("update_at") ~
       get[Int]("published") map {
       case id ~ school_id ~ title ~ content ~ timestamp ~ 1 =>
-        News(id, school_id.toLong, title, content, timestamp, true)
+        News(id, school_id.toLong, title, content, timestamp, true, NOTICE_TYPE_SCHOOL_INFO)
       case id ~ school_id ~ title ~ content ~ timestamp ~ 0 =>
-        News(id, school_id.toLong, title, content, timestamp, false)
+        News(id, school_id.toLong, title, content, timestamp, false, NOTICE_TYPE_SCHOOL_INFO)
     }
   }
 
