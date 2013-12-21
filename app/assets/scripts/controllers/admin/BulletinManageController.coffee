@@ -20,14 +20,14 @@ class Controller
 
     @publish = (news) =>
       news.pushlished = true
-      news.$save(school_id: @kindergarten.school_id, news_id: news.news_id)
+      news.$save(school_id: @kindergarten.school_id, news_id: news.news_id, admin_id: @adminUser.id)
 
     @hidden = (news) =>
       news.pushlished = false
-      news.$save(school_id: @kindergarten.school_id, news_id: news.news_id)
+      news.$save(school_id: @kindergarten.school_id, news_id: news.news_id, admin_id: @adminUser.id)
 
     @deleteNews = (news) =>
-      news.$delete(school_id: @kindergarten.school_id, news_id: news.news_id)
+      news.$delete(school_id: @kindergarten.school_id, news_id: news.news_id, admin_id: @adminUser.id)
       @newsletters = @newsletters.filter (x) => x != news
 
     @createNews = () =>
