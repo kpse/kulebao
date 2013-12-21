@@ -41,8 +41,12 @@ GET           /kindergarten/:kg/admin/:adminId/news_reading_count/:newsId       
 
 
 GET           /kindergarten/:kg/account                                          controllers.AccountController.index(kg: Long)
+
 GET           /kindergarten/:kg/class/:classId/schedule/preview                  controllers.ScheduleController.preview(kg: Long, classId: Long)
-GET           /kindergarten/:kg/class/:classId/schedule/:scheduleId                  controllers.ScheduleController.show(kg: Long, classId: Long, scheduleId: Long)
+GET           /kindergarten/:kg/class/:classId/schedule/:scheduleId              controllers.ScheduleController.show(kg: Long, classId: Long, scheduleId: Long)
+
+GET           /kindergarten/:kg/cookbook/preview                                 controllers.CookbookController.preview(kg: Long)
+GET           /kindergarten/:kg/cookbook/:cookbookId                             controllers.CookbookController.show(kg: Long, cookbookId: Long)
 
 GET           /ws/swipe                                                          controllers.WSController.call
 POST          /ws/swipe                                                          controllers.WSController.sendMessage
