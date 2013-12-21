@@ -46,7 +46,7 @@ object Authentication extends Controller {
     request =>
       request.body.validate[CheckPhone].map {
         case (login) =>
-          Ok(Json.toJson(new BindNumberResponse(0, "111111111", "袋鼠", "13408654680", "93740362")))
+          Ok(Json.toJson(new BindNumberResponse(0, "111111111", "袋鼠", "13408654680", 93740362, 777888)))
       }.recoverTotal {
         e => BadRequest("Detected error:" + JsError.toFlatJson(e))
       }
