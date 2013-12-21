@@ -15,6 +15,8 @@ describe 'Controller: ParentsCtrl', () ->
     ParentsCtrl = $controller 'ParentsCtrl', {
       $scope: scope
       parentService: parentService
+      $stateParams:
+        kindergarten: 93740362
     }
     $httpBackend = _$httpBackend_
     $httpBackend.expectGET('/kindergarten/93740362/parent')

@@ -15,9 +15,6 @@ describe 'Controller: BulletinCtrl', () ->
       $scope: scope
     }
 
-  it 'should attach a list of awesomeThings to the scope', () ->
-    expect(BulletinCtrl.kindergarten.id).toBe 1
-
   it 'should distinguish news which has already been read', () ->
     readnews = [
       {parent_id: 1, news_id: 2}

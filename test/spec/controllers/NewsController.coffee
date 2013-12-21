@@ -15,7 +15,7 @@ describe 'Controller: NewsCtrl', () ->
     .respond(
         {
           id: 999
-          k_id: 1
+          school_id: 93740362
           parent_id: 1
           news_id: 2
           readTime: '1990-10-01'
@@ -25,14 +25,15 @@ describe 'Controller: NewsCtrl', () ->
     .respond(
         {
           id: 999
-          k_id: 1
+          school_id: 93740362
           parent_id: 1
           news_id: 1
           readTime: '1990-10-01'
         })
     NewsCtrl = $controller 'NewsCtrl', {
       $stateParams:
-        news: 999,
+        news: 999
+        kindergarten: 93740362
     }
 
   it 'should have 2 news from request', () ->
