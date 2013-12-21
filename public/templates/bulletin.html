@@ -2,7 +2,7 @@
   <ul class="list-group">
     <li class="list-group-item read-{{news.read}}" ng-repeat="news in bulletin.newsletters">
       <h4 class="list-group-item-heading">{{news.title}}</h4>
-      <a ng-href="#/kindergarten/{{bulletin.kindergarten.name}}/news/{{news.news_id}}">
+      <a ng-href="#/kindergarten/{{bulletin.kindergarten.school_id}}/news/{{news.news_id}}">
         <p class="list-group-item-text">{{news.content.substring(0,200)}}</p>
       </a>
       <span class="read-flag">{{news.read ? '已阅读' : '未阅读（点击查看详情）'}}</span>

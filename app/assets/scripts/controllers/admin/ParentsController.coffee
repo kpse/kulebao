@@ -1,12 +1,11 @@
 'use strict'
 
 angular.module('kulebaoAdmin')
-.controller 'ParentsCtrl', ['$scope', '$rootScope', 'parentService', ($scope, $rootScope, parentService) ->
+.controller 'ParentsCtrl', ['$scope', '$rootScope', 'parentService', '$stateParams', ($scope, $rootScope, parentService, $stateParams) ->
     $rootScope.tabName = 'parents'
 
     $scope.kindergarten = {
-      name: '93740362'
-      school_id: 93740362
+      school_id: $stateParams.kindergarten
     }
     $scope.parents = parentService.bind({school_id: $scope.kindergarten.school_id}).query()
 

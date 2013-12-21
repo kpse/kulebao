@@ -1,7 +1,7 @@
 class Controller
-  constructor: ($rootScope) ->
+  constructor: ($rootScope, $stateParams) ->
     @kindergarten =
-      name: '93740362'
+      school_id: $stateParams.kindergarten
       desc: '成都市第二十三幼儿园'
     @user =
       id: '1'
@@ -11,4 +11,4 @@ class Controller
       tab == $rootScope.tabName
 
 
-angular.module('kulebaoApp').controller 'KindergartenCtrl', ['$rootScope', Controller]
+angular.module('kulebaoApp').controller 'KindergartenCtrl', ['$rootScope', '$stateParams', Controller]

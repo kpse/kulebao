@@ -1,11 +1,9 @@
 'use strict'
 
 class Controller
-  constructor: ($rootScope, newsService, readService) ->
+  constructor: ($rootScope, newsService, readService, $stateParams) ->
     @kindergarten =
-      id: 1,
-      name: '93740362'
-      school_id: 93740362
+      school_id: $stateParams.kindergarten
 
     @user =
       id: '1'
@@ -26,4 +24,4 @@ class Controller
             do (n) -> n.read = true
 
 
-angular.module('kulebaoApp').controller 'BulletinCtrl', ['$rootScope', 'newsService', 'readService', Controller]
+angular.module('kulebaoApp').controller 'BulletinCtrl', ['$rootScope', 'newsService', 'readService', '$stateParams', Controller]

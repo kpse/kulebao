@@ -4,8 +4,7 @@ class Controller
   constructor: ($stateParams, newsService, readService) ->
     @kindergarten =
       id: 1
-      name: '93740362'
-      school_id: 93740362
+      school_id: $stateParams.kindergarten
     @user =
       id: '1'
       name: '豆瓣'

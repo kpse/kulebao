@@ -3,9 +3,9 @@
   var Controller;
 
   Controller = (function() {
-    function Controller($rootScope) {
+    function Controller($rootScope, $stateParams) {
       this.kindergarten = {
-        name: '93740362',
+        school_id: $stateParams.kindergarten,
         desc: '成都市第二十三幼儿园'
       };
       this.adminUser = {
@@ -21,6 +21,6 @@
 
   })();
 
-  angular.module('kulebaoAdmin').controller('KgManageCtrl', ['$rootScope', Controller]);
+  angular.module('kulebaoAdmin').controller('KgManageCtrl', ['$rootScope', '$stateParams', Controller]);
 
 }).call(this);

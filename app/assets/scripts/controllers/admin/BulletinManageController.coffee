@@ -1,11 +1,10 @@
 'use strict'
 
 class Controller
-  constructor: ($rootScope, $location, adminNewsService) ->
+  constructor: ($rootScope, $location, adminNewsService, $stateParams) ->
     @kindergarten =
       id: 1,
-      name: '93740362'
-      school_id: 93740362
+      school_id: $stateParams.kindergarten
 
     @adminUser =
       id: 1
@@ -41,4 +40,4 @@ class Controller
       $location.path('/kindergarten/' + @kindergarten.school_id + '/news/' + news.news_id )
 
 
-angular.module('kulebaoAdmin').controller 'BulletinManageCtrl', ['$rootScope', '$location', 'adminNewsService', Controller]
+angular.module('kulebaoAdmin').controller 'BulletinManageCtrl', ['$rootScope', '$location', 'adminNewsService', '$stateParams', Controller]

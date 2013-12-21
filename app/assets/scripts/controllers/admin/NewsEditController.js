@@ -8,8 +8,7 @@
       var _this = this;
       this.kindergarten = {
         id: 1,
-        name: '93740362',
-        school_id: 93740362
+        school_id: $stateParams.kindergarten
       };
       this.adminUser = {
         id: 1,

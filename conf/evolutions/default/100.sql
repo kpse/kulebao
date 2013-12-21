@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `childinfo` (
                COLLATE utf8_bin NOT NULL DEFAULT '',
   `nick`       VARCHAR(20)      NOT NULL DEFAULT '',
   `status`     TINYINT          NOT NULL DEFAULT 1,
-  `update_at`  INT(11)          NOT NULL DEFAULT 0,
+  `update_at`  BIGINT          NOT NULL DEFAULT 0,
   PRIMARY KEY (`uid`),
   UNIQUE KEY `child_id` (`child_id`),
   KEY `birthday` (`birthday`),
@@ -248,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `parentinfo` (
   `school_id`    VARCHAR(20)
                  COLLATE utf8_bin NOT NULL,
   `status`       TINYINT          NOT NULL DEFAULT 1,
-  `update_at`    INT(11)          NOT NULL DEFAULT 0,
+  `update_at`    BIGINT          NOT NULL DEFAULT 0,
   PRIMARY KEY (`uid`),
   UNIQUE KEY `parent_id` (`parent_id`),
   KEY `school_id` (`school_id`),
@@ -323,7 +323,7 @@ CREATE TABLE IF NOT EXISTS `schoolinfo` (
   phone       VARCHAR(16)      NOT NULL,
   status      TINYINT          NOT NULL DEFAULT 1,
   logo_url    VARCHAR(256),
-  update_at   INT(11)          NOT NULL,
+  update_at   BIGINT          NOT NULL,
   PRIMARY KEY (`uid`),
   UNIQUE KEY `school_id` (`school_id`)
 )
@@ -366,14 +366,12 @@ INSERT INTO `test` (`id`, `name`) VALUES
   ('0', 'djctest');
 
 CREATE TABLE news (
-  uid       INT(11)          NOT NULL AUTO_INCREMENT,
-  school_id VARCHAR(20)      NOT NULL,
-  title     VARCHAR(255)
-            COLLATE utf8_bin NOT NULL,
-  content   TEXT
-            COLLATE utf8_bin,
-  update_at INT(11)          NOT NULL DEFAULT 0,
-  published INT              NOT NULL DEFAULT 0,
+  uid       INT(11)      NOT NULL AUTO_INCREMENT,
+  school_id VARCHAR(20)  NOT NULL,
+  title     VARCHAR(255) COLLATE utf8_bin NOT NULL,
+  content   TEXT       COLLATE utf8_bin,
+  update_at BIGINT         NOT NULL DEFAULT 0,
+  published INT          NOT NULL DEFAULT 0,
   status    TINYINT          NOT NULL DEFAULT 1,
   PRIMARY KEY (uid)
 )
@@ -398,7 +396,7 @@ CREATE TABLE newsread (
   school_id VARCHAR(20) NOT NULL,
   parent_id VARCHAR(40) NOT NULL,
   news_id   INT(11)     NOT NULL,
-  readTime  INT(11)     NOT NULL DEFAULT 0,
+  readTime  INT(11)        NOT NULL DEFAULT 0,
   PRIMARY KEY (uid)
 );
 

@@ -5,7 +5,7 @@ CREATE TABLE newsread (
   school_id VARCHAR(20) NOT NULL,
   parent_id VARCHAR(40) NOT NULL,
   news_id   INT(11)     NOT NULL,
-  readTime  LONG        NOT NULL DEFAULT 0,
+  readTime  BIGINT        NOT NULL DEFAULT 0,
   PRIMARY KEY (uid)
 );
 
