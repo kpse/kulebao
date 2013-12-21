@@ -5,7 +5,7 @@ CREATE TABLE news (
   school_id VARCHAR(20)  NOT NULL,
   title     VARCHAR(255) NOT NULL,
   content   TEXT         NOT NULL,
-  update_at LONG         NOT NULL DEFAULT 0,
+  update_at INT(11)         NOT NULL DEFAULT 0,
   published INT          NOT NULL DEFAULT 0,
   status    INT          NOT NULL DEFAULT 1,
   PRIMARY KEY (uid)

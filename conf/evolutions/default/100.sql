@@ -366,13 +366,15 @@ INSERT INTO `test` (`id`, `name`) VALUES
   ('0', 'djctest');
 
 CREATE TABLE news (
-  uid       INT(11)      NOT NULL AUTO_INCREMENT,
-  school_id VARCHAR(20)  NOT NULL,
-  title     VARCHAR(255) NOT NULL,
-  content   TEXT         NOT NULL,
-  update_at LONG         NOT NULL DEFAULT 0,
-  published INT          NOT NULL DEFAULT 0,
-  status    INT          NOT NULL DEFAULT 1,
+  uid       INT(11)          NOT NULL AUTO_INCREMENT,
+  school_id VARCHAR(20)      NOT NULL,
+  title     VARCHAR(255)
+            COLLATE utf8_bin NOT NULL,
+  content   TEXT
+            COLLATE utf8_bin,
+  update_at INT(11)          NOT NULL DEFAULT 0,
+  published INT              NOT NULL DEFAULT 0,
+  status    TINYINT          NOT NULL DEFAULT 1,
   PRIMARY KEY (uid)
 )
   ENGINE =InnoDB
@@ -396,7 +398,7 @@ CREATE TABLE newsread (
   school_id VARCHAR(20) NOT NULL,
   parent_id VARCHAR(40) NOT NULL,
   news_id   INT(11)     NOT NULL,
-  readTime  LONG        NOT NULL DEFAULT 0,
+  readTime  INT(11)     NOT NULL DEFAULT 0,
   PRIMARY KEY (uid)
 );
 
