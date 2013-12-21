@@ -1,35 +1,26 @@
+--
+-- 表的结构 relationmap
+--
 # --- !Ups
 
-CREATE TABLE childinfo (
+CREATE TABLE relationmap (
   uid int(11) NOT NULL AUTO_INCREMENT,
-  name varchar(20) NOT NULL,
   child_id varchar(40) NOT NULL,
-  student_id varchar(20) NOT NULL,
-  gender tinyint(4) NOT NULL DEFAULT '2',
-  classname varchar(40) NOT NULL DEFAULT '',
-  picurl varchar(128) NOT NULL DEFAULT '',
-  birthday date NOT NULL DEFAULT '1800-01-01',
-  indate date NOT NULL DEFAULT '1800-01-01',
-  school_id varchar(20) NOT NULL,
-  address varchar(200) NOT NULL DEFAULT '',
-  stu_type tinyint(4) NOT NULL DEFAULT '2',
-  hukou tinyint(4) NOT NULL DEFAULT '2',
-  social_id varchar(20) NOT NULL DEFAULT ''  ,
-  nick varchar(20) NOT NULL DEFAULT ''  ,
-  update_at INT(11) NOT NULL DEFAULT 0,
+  parent_id varchar(40) NOT NULL,
   PRIMARY KEY (uid)
 );
 
 --
--- 转存表中的数据 childinfo
+-- 转存表中的数据 relationmap
 --
 
-INSERT INTO childinfo (uid, name, child_id, student_id, gender, classname, picurl, birthday, indate, school_id, address, stu_type, hukou, social_id, nick, update_at) VALUES
-(1, '张光', '1_93740362_374', '0032', 1, '苹果班', 'http://www.qqw21.com/article/uploadpic/2013-1/201311101516591.jpg', '2007-06-04', '2011-05-08', '93740362', '', 1, 1, '510107123416547856', '大苹果', 1387360036),
-(2, '李小华', '1_93740362_456', '0021', 0, '香蕉班', '', '2008-09-09', '2012-06-06', '93740362', '', 1, 1, '510107123416511111', '小苹果', 1387360036),
-(3, '王大侠', '1_93740362_9982', '322', 1, '香蕉班', 'http://img.zwbk.org/baike/spic/2010/12/01/2010120110214141_3528.jpg', '2007-01-01', '2011-09-03', '93740362', '', 0, 2, '510107123416523456', '小香蕉', 1387360036),
-(4, '王大锤', '1_93740362_778', '323', 1, '梨儿班', '', '2007-01-01', '2011-09-03', '93740362', '', 0, 2, '510107123416523459', '绿葡萄', 1387360036);
+INSERT INTO relationmap (uid, child_id, parent_id) VALUES
+(1, '1_93740362_374', '2_93740362_789'),
+(2, '1_93740362_456', '2_93740362_456'),
+(3, '1_93740362_9982', '2_93740362_790'),
+(4, '1_93740362_778', '2_93740362_792');
+
 
 # --- !Downs
 
-DROP TABLE IF EXISTS childinfo;
+DROP TABLE IF EXISTS relationmap;

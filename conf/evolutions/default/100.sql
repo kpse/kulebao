@@ -365,6 +365,41 @@ CREATE TABLE IF NOT EXISTS `test` (
 INSERT INTO `test` (`id`, `name`) VALUES
   ('0', 'djctest');
 
+CREATE TABLE news (
+  uid       INT(11)      NOT NULL AUTO_INCREMENT,
+  school_id VARCHAR(20)  NOT NULL,
+  title     VARCHAR(255) NOT NULL,
+  content   TEXT         NOT NULL,
+  update_at LONG         NOT NULL DEFAULT 0,
+  published INT          NOT NULL DEFAULT 0,
+  status    INT          NOT NULL DEFAULT 1,
+  PRIMARY KEY (uid)
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8
+  COLLATE =utf8_bin
+  AUTO_INCREMENT =2;
+
+INSERT INTO news (school_id, title, content, update_at, published) VALUES
+  ('93740362', '通知1',
+   '缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知缴费通知',
+   1387353635, 1),
+  ('93740362', '通知2',
+   '学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电学校停电',
+   1387353636, 1),
+  ('93740362', '通知3',
+   '恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击恐怖分子袭击',
+   1387353637, 0);
+
+CREATE TABLE newsread (
+  uid       INT(11)     NOT NULL AUTO_INCREMENT,
+  school_id VARCHAR(20) NOT NULL,
+  parent_id VARCHAR(40) NOT NULL,
+  news_id   INT(11)     NOT NULL,
+  readTime  LONG        NOT NULL DEFAULT 0,
+  PRIMARY KEY (uid)
+);
+
 /*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS = @OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;

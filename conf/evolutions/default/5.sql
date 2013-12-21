@@ -1,22 +1,35 @@
 # --- !Ups
 
-CREATE TABLE accountinfo (
+CREATE TABLE childinfo (
   uid int(11) NOT NULL AUTO_INCREMENT,
-  accountid      varchar(16) NOT NULL,
-  password varchar(32) NOT NULL,
-  pushid   varchar(20) NOT NULL DEFAULT '',
-  active  int NOT NULL DEFAULT 0,
-  pwd_change_time bigint(20) NOT NULL DEFAULT 0,
+  name varchar(20) NOT NULL,
+  child_id varchar(40) NOT NULL,
+  student_id varchar(20) NOT NULL,
+  gender tinyint(4) NOT NULL DEFAULT '2',
+  classname varchar(40) NOT NULL DEFAULT '',
+  picurl varchar(128) NOT NULL DEFAULT '',
+  birthday date NOT NULL DEFAULT '1800-01-01',
+  indate date NOT NULL DEFAULT '1800-01-01',
+  school_id varchar(20) NOT NULL,
+  address varchar(200) NOT NULL DEFAULT '',
+  stu_type tinyint(4) NOT NULL DEFAULT '2',
+  hukou tinyint(4) NOT NULL DEFAULT '2',
+  social_id varchar(20) NOT NULL DEFAULT ''  ,
+  nick varchar(20) NOT NULL DEFAULT ''  ,
+  update_at INT(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (uid)
 );
 
-INSERT INTO accountinfo (uid, accountid, password, pushid, active, pwd_change_time) VALUES
-(1, '13402815317', '3FDE6BB0541387E4EBDADF7C2FF31123', '952021056346783736', 1, 1386425935574),
-(2, '13880498549', '', '', 0, 0),
-(3, '13408654680', '96E79218965EB72C92A549DD5A330112', '1144914350790965629', 1, 1386849160798),
-(4, '13333333333', '5F4DCC3B5AA765D61D8327DEB882CF99', '0', 1, 1386849160798);
+--
+-- 转存表中的数据 childinfo
+--
 
+INSERT INTO childinfo (uid, name, child_id, student_id, gender, classname, picurl, birthday, indate, school_id, address, stu_type, hukou, social_id, nick, update_at) VALUES
+(1, '张光', '1_93740362_374', '0032', 1, '苹果班', 'http://www.qqw21.com/article/uploadpic/2013-1/201311101516591.jpg', '2007-06-04', '2011-05-08', '93740362', '', 1, 1, '510107123416547856', '大苹果', 1387360036),
+(2, '李小华', '1_93740362_456', '0021', 0, '香蕉班', '', '2008-09-09', '2012-06-06', '93740362', '', 1, 1, '510107123416511111', '小苹果', 1387360036),
+(3, '王大侠', '1_93740362_9982', '322', 1, '香蕉班', 'http://img.zwbk.org/baike/spic/2010/12/01/2010120110214141_3528.jpg', '2007-01-01', '2011-09-03', '93740362', '', 0, 2, '510107123416523456', '小香蕉', 1387360036),
+(4, '王大锤', '1_93740362_778', '323', 1, '梨儿班', '', '2007-01-01', '2011-09-03', '93740362', '', 0, 2, '510107123416523459', '绿葡萄', 1387360036);
 
 # --- !Downs
 
-DROP TABLE IF EXISTS accountinfo;
+DROP TABLE IF EXISTS childinfo;

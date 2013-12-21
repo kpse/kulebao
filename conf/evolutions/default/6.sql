@@ -1,24 +1,33 @@
 # --- !Ups
 
-CREATE TABLE schoolinfo (
-  uid         INT(11)     NOT NULL AUTO_INCREMENT,
-  school_id   VARCHAR(20) NOT NULL,
-  province    VARCHAR(20) NOT NULL,
-  city        VARCHAR(20) NOT NULL,
-  name        VARCHAR(20) NOT NULL,
-  description TEXT,
-  phone       VARCHAR(16) NOT NULL,
-  logo_url    VARCHAR(256),
-  update_at   INT(11)     NOT NULL,
+CREATE TABLE parentinfo (
+  uid          INT(11)      NOT NULL AUTO_INCREMENT,
+  name         VARCHAR(20)  NOT NULL,
+  parent_id    VARCHAR(40)  NOT NULL,
+  relationship VARCHAR(20)  NOT NULL,
+  phone        VARCHAR(16)  NOT NULL,
+  gender       TINYINT(4)   NOT NULL DEFAULT '2',
+  company      VARCHAR(200) NOT NULL DEFAULT '',
+  picurl       VARCHAR(128) NOT NULL DEFAULT '',
+  birthday     DATE         NOT NULL DEFAULT '1800-01-01',
+  school_id    VARCHAR(20)  NOT NULL,
+  status       TINYINT      NOT NULL DEFAULT 1,
+  update_at       int(11)      NOT NULL DEFAULT 0,
   PRIMARY KEY (uid)
 );
 
-INSERT INTO schoolinfo (uid, school_id, province, city, name, description, logo_url, phone, update_at) VALUES
-  (1, '93740362', '四川省', '成都', '成都市第三军区幼儿园', '\n李刚牌土豪幼儿园，成立时间超过100年，其特点有：\n1.价格超贵\n2.硬件超好\n3.教师超屌\n4.绝不打折\n5.入园超难\n6.......\n.......\n.......\n.......\n.......\n\n',
-   'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRUYYbqMhPTWL6VSfmtOTlr486NDyv1jJDUMUxbSd-9jxZwg4SZ', '13991855476', 1387353635),
-  (2, '93740562', '陕西省', '西安', '西安市高新一幼', '\n苦逼幼儿园，成立时间超过100年，其特点有：\n1.价格超贵\n2.硬件超好\n3.教师超屌\n4.绝不打折\n5.入园超难\n6.......\n.......\n.......\n.......\n.......\n\n',
-   'http://www.houstonisd.org/cms/lib2/TX01001591/Centricity/Domain/16137/crestgif.gif', '13291855476', 1387353635);
+--
+-- 转存表中的数据 parentinfo
+--
+
+INSERT INTO parentinfo (uid, name, parent_id, relationship, phone, gender, company, picurl, birthday, school_id) VALUES
+  (1, '李毅', '2_93740362_123', '爸爸', '13402815317', 1, 'abcdef', '', '1800-01-01', '93740362'),
+  (2, '林玄', '2_93740362_456', '爸爸', '13880498549', 1, '4455hhyh', '', '1800-01-01', '93740362'),
+  (3, '袋鼠', '2_93740362_789', '妈妈', '13408654680', 0, '门口偶', '', '1800-01-01', '93740362'),
+  (6, '袋鼠', '2_93740362_790', '妈妈', '13408654680', 0, '门口偶', '', '1800-01-01', '93740362'),
+  (4, '大象', '2_93740362_792', '妈妈', '13408654681', 0, '门口偶', '', '1800-01-01', '93740362'),
+  (5, '测试', '2_93740362_999', '妈妈', '13333333333', 0, '门口偶', '', '1800-01-01', '93740362');
 
 # --- !Downs
 
-DROP TABLE IF EXISTS schoolinfo;
+DROP TABLE IF EXISTS parentinfo;
