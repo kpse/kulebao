@@ -7,81 +7,74 @@ import play.api.db.DB
 import anorm.~
 import play.api.Play.current
 
-case class News(id: Long, k_id: Long, title: String, content: String, issueDate: Date, published: Boolean)
+case class News(news_id: Long, school_id: Long, title: String, content: String, timestamp: Long, published: Boolean)
 
 
 object News {
-  def create(form: (String, String, String)) = DB.withConnection {
+  def create(form: (Long, String, String)) = DB.withConnection {
     implicit c =>
-      val createdId: Option[Long] = SQL("insert into news (k_id, title, content, issueDate) values ((select id from kindergarten where name={kg}), {title}, {content}, {date})")
+      val createdId: Option[Long] = SQL("insert into news (school_id, title, content, update_at) values ({kg}, {title}, {content}, {timestamp})")
         .on('content -> form._3,
-          'kg -> form._1,
+          'kg -> form._1.toString,
           'title -> form._2,
-          'date -> new Date()
+          'timestamp -> new Date().getTime
         ).executeInsert()
-      findById(form._1)(createdId.getOrElse(-1))
+      findById(form._1, createdId.getOrElse(-1))
   }
 
   def delete(id: Long) = DB.withConnection {
     implicit c =>
-      SQL("update news set status=0 where id={id}")
+      SQL("update news set status=0 where uid={id}")
         .on('id -> id
         ).execute()
   }
 
-  def update(form: (Long, Long, String, String, Boolean), kg: String) = DB.withConnection {
+  def update(form: (Long, Long, String, String, Boolean), kg: Long) = DB.withConnection {
     implicit c =>
-      SQL("update news set content={content}, published={published}, title={title} where id={id}")
+      SQL("update news set content={content}, published={published}, title={title}, update_at={timestamp} where uid={id}")
         .on('content -> form._4,
           'title -> form._3,
           'id -> form._1,
-          'published -> (if (form._5) 1 else 0)
+          'published -> (if (form._5) 1 else 0),
+          'timestamp -> new Date().getTime
         ).executeUpdate()
-      findById(kg)(form._1)
+      findById(kg, form._1)
   }
 
-  def findById(id: Long) = DB.withConnection {
+  def findById(kg: Long, id: Long) = DB.withConnection {
     implicit c =>
-      SQL("select * from news where id={id}")
-        .on('id -> id)
-        .as(simple.singleOpt)
-  }
-
-
-  def findById(kg: String)(id: Long) = DB.withConnection {
-    implicit c =>
-      SQL("select a.* from news a, kindergarten k where k.id = a.k_id and k.name={kg} and a.id={id}")
-        .on('kg -> kg)
+      SQL("select * from news where school_id={kg} and uid={id}")
+        .on('kg -> kg.toString)
         .on('id -> id)
         .as(simple.singleOpt)
   }
 
 
   val simple = {
-    get[Long]("id") ~
-      get[Long]("k_id") ~
+    get[Long]("uid") ~
+      get[String]("school_id") ~
       get[String]("title") ~
       get[String]("content") ~
-      get[Date]("issueDate") ~
+      get[Long]("update_at") ~
       get[Int]("published") map {
-      case id ~ k_id ~ title ~ content ~ issueDate ~ 1 =>
-        News(id, k_id, title, content, issueDate, true)
-      case id ~ k_id ~ title ~ content ~ issueDate ~ 0 =>
-        News(id, k_id, title, content, issueDate, false)
+      case id ~ school_id ~ title ~ content ~ timestamp ~ 1 =>
+        News(id, school_id.toLong, title, content, timestamp, true)
+      case id ~ school_id ~ title ~ content ~ timestamp ~ 0 =>
+        News(id, school_id.toLong, title, content, timestamp, false)
     }
   }
 
-  def all(kg: String): List[News] = DB.withConnection {
+  def all(kg: Long): List[News] = DB.withConnection {
     implicit c =>
-      SQL("select a.* from news a, kindergarten k where k.id = a.k_id and k.name={kg} and published=1 and status=1")
-        .on('kg -> kg)
+      SQL("select * from news where school_id={kg} and published=1 and status=1")
+        .on('kg -> kg.toString)
         .as(simple *)
   }
 
-  def allIncludeNonPublished(kg: String): List[News] = DB.withConnection {
+  def allIncludeNonPublished(kg: Long): List[News] = DB.withConnection {
     implicit c =>
-      SQL("select a.* from news a, kindergarten k where k.id = a.k_id and k.name={kg} and status=1")
-        .on('kg -> kg)
+      SQL("select * from news where school_id={kg} and status=1")
+        .on('kg -> kg.toString)
         .as(simple *)
   }
 

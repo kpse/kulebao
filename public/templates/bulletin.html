@@ -2,11 +2,11 @@
   <ul class="list-group">
     <li class="list-group-item read-{{news.read}}" ng-repeat="news in bulletin.newsletters">
       <h4 class="list-group-item-heading">{{news.title}}</h4>
-      <a ng-href="#/kindergarten/{{bulletin.kindergarten.name}}/news/{{news.id}}">
+      <a ng-href="#/kindergarten/{{bulletin.kindergarten.name}}/news/{{news.news_id}}">
         <p class="list-group-item-text">{{news.content.substring(0,200)}}</p>
       </a>
       <span class="read-flag">{{news.read ? '已阅读' : '未阅读（点击查看详情）'}}</span>
-      <span class="issue-date pull-right">于{{news.issueDate | date:'yyyy年MM月dd日'}}发布</span>
+      <span class="issue-date pull-right">于{{news.timestamp | date:'yyyy年MM月dd日'}}发布</span>
     </li>
   </ul>
   <div ng-show="bulletin.newsletters.length == 0">您所在的学校最近没有通知</div>

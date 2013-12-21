@@ -9,68 +9,68 @@ import play.api.data.Forms._
 object NewsController extends Controller {
   implicit val writes = Json.writes[News]
 
-  def index(kg: String) = Action {
+  def index(kg: Long) = Action {
     val jsons = News.all(kg)
-    Ok(Json.toJson(jsons)).as("application/json")
+    Ok(Json.toJson(jsons))
   }
 
-  def show(kg: String, newsId: Long) = Action {
-    News.findById(kg)(newsId).map {
+  def show(kg: Long, newsId: Long) = Action {
+    News.findById(kg, newsId).map {
       news =>
-        Ok(Json.toJson(news)).as("application/json")
+        Ok(Json.toJson(news))
     }.getOrElse(NotFound)
   }
 
   val newsForm = Form(
     tuple(
-      "id" -> longNumber,
-      "k_id" -> longNumber,
+      "news_id" -> longNumber,
+      "school_id" -> longNumber,
       "title" -> text,
       "content" -> text,
       "pushlished" -> boolean
     )
   )
 
-  def update(kg: String, newsId: Long) = Action {
+  def update(kg: Long, newsId: Long) = Action {
     implicit request =>
       newsForm.bindFromRequest.value map {
         news =>
           val updated = News.update(news, kg)
-          Ok(Json.toJson(updated)).as("application/json")
+          Ok(Json.toJson(updated))
       } getOrElse BadRequest
   }
 
-  def adminUpdate(kg: String, adminId: Long, newsId: Long) = update(kg, newsId)
+  def adminUpdate(kg: Long, adminId: Long, newsId: Long) = update(kg, newsId)
 
-  def indexWithNonPublished(kg: String, admin: Long) = Action {
+  def indexWithNonPublished(kg: Long, admin: Long) = Action {
     val jsons = News.allIncludeNonPublished(kg)
-    Ok(Json.toJson(jsons)).as("application/json")
+    Ok(Json.toJson(jsons))
   }
 
-  def delete(kg: String, adminId: Long, newsId: Long) = Action {
+  def delete(kg: Long, adminId: Long, newsId: Long) = Action {
     News.delete(newsId)
     Ok("{\"status\":\"success\"}").as("application/json")
   }
 
   val newsCreateForm = Form(
     tuple(
-      "kg" -> text,
+      "school_id" -> longNumber,
       "title" -> text,
       "content" -> text
     )
   )
 
-  def create(kg: String, adminId: Long) = Action {
+  def create(kg: Long, adminId: Long) = Action {
     implicit request =>
       newsCreateForm.bindFromRequest.value map {
         news =>
           val created = News.create(news)
-          Ok(Json.toJson(created)).as("application/json")
+          Ok(Json.toJson(created))
       } getOrElse BadRequest
   }
 
-  def deleteOne(kg: String, newsId: Long) = Action {
+  def deleteOne(kg: Long, newsId: Long) = Action {
     News.delete(newsId)
-    Ok("{\"status\":\"success\"}").as("application/json")
+    Ok("{\"status\":\"success\"}")
   }
 }

@@ -5,11 +5,12 @@ class Controller
     @kindergarten =
       id: 1,
       name: '93740362'
+      school_id: 93740362
     @adminUser =
       id: 1
       name: '豆瓣'
     @readCount = 100
-    @news = newsService.get(kg: @kindergarten.name, news_id: $stateParams.news)
+    @news = newsService.get(school_id: @kindergarten.school_id, news_id: $stateParams.news)
 
     @showEditBox = false
 
@@ -26,15 +27,15 @@ class Controller
     @save = (e) =>
       e.stopPropagation()
       @showEditBox = false
-      @news.$save(kg: @kindergarten.name, news_id: @news.id) if(@backupContent != @news.content)
+      @news.$save(school_id: @kindergarten.school_id, news_id: @news.news_id) if(@backupContent != @news.content)
 
     @publish = (news) =>
       news.pushlished = true
-      news.$save(kg: @kindergarten.name, news_id: news.id)
+      news.$save(school_id: @kindergarten.school_id, news_id: news.news_id)
 
     @hidden = (news) =>
       news.pushlished = false
-      news.$save(kg: @kindergarten.name, news_id: news.id)
+      news.$save(school_id: @kindergarten.school_id, news_id: news.news_id)
 
     @editingTitle = false
     @backupTitle = @news.title
@@ -42,7 +43,7 @@ class Controller
     @saveTitle = (e) =>
       e.stopPropagation()
       @editingTitle = false
-      @news.$save(kg: @kindergarten.name, news_id: @news.id) if(@backupTitle != @news.title)
+      @news.$save(school_id: @kindergarten.school_id, news_id: @news.news_id) if(@backupTitle != @news.title)
 
     @startEditingTitle = (e) =>
       e.stopPropagation()
@@ -50,8 +51,8 @@ class Controller
       @editingTitle = true
 
     @deleteMe = () =>
-      @news.$delete(kg: @kindergarten.name, news_id: @news.id)
-      $location.path("/kindergarten/" + @kindergarten.name + "/bulletin");
+      @news.$delete(school_id: @kindergarten.school_id, news_id: @news.news_id)
+      $location.path("/kindergarten/" + @kindergarten.school_id + "/bulletin");
 
 
 angular.module('kulebaoAdmin').controller 'NewsEditCtrl', [ '$stateParams', 'newsService', '$location', Controller]

@@ -11,27 +11,27 @@ object ReadingNewsController extends Controller {
 
   val newsReadForm = Form(
     tuple(
-      "parent_id" -> longNumber,
-      "kg" -> text,
+      "parent_id" -> text,
+      "school_id" -> longNumber,
       "news_id" -> longNumber
     )
   )
 
-  def create(kg: String, parentId: Long, newId: Long) = Action {
+  def create(kg: Long, parentId: Long, newId: Long) = Action {
     implicit request =>
       newsReadForm.bindFromRequest.value map {
         news =>
           ReadNews.markRead(news)
-          Ok("{\"status\":\"success\"}").as("application/json")
+          Ok("{\"error_code\":0}").as("application/json")
       } getOrElse BadRequest
   }
 
-  def index(kg: String, parentId: Long) = Action {
+  def index(kg: Long, parentId: String) = Action {
     val jsons = ReadNews.all(kg)(parentId)
     Ok(Json.toJson(jsons)).as("application/json")
   }
 
-  def countReading(kg: String, adminId: Long, newsId: Long) = Action {
+  def countReading(kg: Long, adminId: Long, newsId: Long) = Action {
     Ok(Json.toJson("{\"count\":\"100\"}")).as("application/json")
   }
 }

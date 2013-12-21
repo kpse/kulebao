@@ -5,6 +5,7 @@ class Controller
     @kindergarten =
       id: 1,
       name: '93740362'
+      school_id: 93740362
 
     @adminUser =
       id: 1
@@ -12,32 +13,32 @@ class Controller
 
     $rootScope.tabName = 'bulletin'
 
-    @newsletters = adminNewsService.bind(kg: @kindergarten.name, admin_id: @adminUser.id).query(() =>
+    @newsletters = adminNewsService.bind(school_id: @kindergarten.school_id, admin_id: @adminUser.id).query(() =>
       for news in @newsletters
         do (news) => news.readCount = 100
     )
 
     @publish = (news) =>
       news.pushlished = true
-      news.$save(kg: @kindergarten.name, news_id: news.id)
+      news.$save(school_id: @kindergarten.school_id, news_id: news.news_id)
 
     @hidden = (news) =>
       news.pushlished = false
-      news.$save(kg: @kindergarten.name, news_id: news.id)
+      news.$save(school_id: @kindergarten.school_id, news_id: news.news_id)
 
     @deleteNews = (news) =>
-      news.$delete(kg: @kindergarten.name, news_id: news.id)
+      news.$delete(school_id: @kindergarten.school_id, news_id: news.news_id)
       @newsletters = @newsletters.filter (x) => x != news
 
     @createNews = () =>
-      news = new adminNewsService({kg: @kindergarten.name, admin_id: @adminUser.id});
+      news = new adminNewsService({school_id: @kindergarten.school_id, admin_id: @adminUser.id});
       news.title = "新通知";
       news.content = "新通知内容，点击进行编辑";
-      news.$save(kg: @kindergarten.name, news_id: news.id);
+      news.$save(school_id: @kindergarten.school_id, news_id: news.news_id);
       @newsletters.push news
 
     @edit = (news) =>
-      $location.path('/kindergarten/' + @kindergarten.name + '/news/' + news.id )
+      $location.path('/kindergarten/' + @kindergarten.school_id + '/news/' + news.news_id )
 
 
 angular.module('kulebaoAdmin').controller 'BulletinManageCtrl', ['$rootScope', '$location', 'adminNewsService', Controller]

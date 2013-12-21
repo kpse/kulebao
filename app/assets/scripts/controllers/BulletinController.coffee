@@ -5,15 +5,16 @@ class Controller
     @kindergarten =
       id: 1,
       name: '93740362'
+      school_id: 93740362
 
     @user =
-      id: 1
+      id: '1'
       name: '豆瓣'
 
     $rootScope.tabName = 'bulletin'
 
-    @newsletters = newsService.bind(kg: @kindergarten.name).query(() =>
-      @readNews = readService.bind(kg: @kindergarten.name, parent_id: @user.id).query(() =>
+    @newsletters = newsService.bind(school_id: @kindergarten.school_id).query(() =>
+      @readNews = readService.bind(school_id: @kindergarten.school_id, parent_id: @user.id).query(() =>
         @determineReadOrNot(@readNews, @newsletters, @user)
       ))
 
@@ -21,7 +22,7 @@ class Controller
       _.each(newsletters, (news) -> news.read = false)
       for news in readNews
         do (news) ->
-          for n in (newsletters.filter (n) -> n.id == news.news_id and news.parent_id == user.id)
+          for n in (newsletters.filter (n) -> n.news_id == news.news_id and news.parent_id == user.id)
             do (n) -> n.read = true
 
 

@@ -1,13 +1,14 @@
 # --- !Ups
 
-CREATE TABLE newsRead (
-  id        SERIAL PRIMARY KEY,
-  k_id      LONG NOT NULL,
-  parent_id LONG NOT NULL,
-  news_id   LONG,
-  readTime  DATE NOT NULL
+CREATE TABLE newsread (
+  uid       INT(11)     NOT NULL AUTO_INCREMENT,
+  school_id VARCHAR(20) NOT NULL,
+  parent_id VARCHAR(40) NOT NULL,
+  news_id   INT(11)     NOT NULL,
+  readTime  LONG        NOT NULL DEFAULT 0,
+  PRIMARY KEY (uid)
 );
 
 # --- !Downs
 
-DROP TABLE IF EXISTS newsRead;
+DROP TABLE IF EXISTS newsread;

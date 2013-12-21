@@ -23,8 +23,8 @@ describe 'Controller: BulletinCtrl', () ->
       {parent_id: 1, news_id: 2}
     ]
     news = [
-      {id: 1},
-      {id: 2}
+      {news_id: 1},
+      {news_id: 2}
     ]
     user = id: 1
     BulletinCtrl.determineReadOrNot(readnews, news, user)
@@ -36,8 +36,8 @@ describe 'Controller: BulletinCtrl', () ->
       {parent_id: 2, news_id: 2}
     ]
     news = [
-      {id: 1},
-      {id: 2}
+      {news_id: 1},
+      {news_id: 2}
     ]
     user = id: 2
 
@@ -49,8 +49,8 @@ describe 'Controller: BulletinCtrl', () ->
   it 'should consider news is unread by default', () ->
     readnews = []
     news = [
-      {id: 1},
-      {id: 2}
+      {news_id: 1},
+      {news_id: 2}
     ]
     user = id: 1
 

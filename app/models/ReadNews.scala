@@ -7,38 +7,38 @@ import anorm.~
 import java.util.Date
 import play.api.Play.current
 
-case class ReadNews(id: Long, kindergarten_id: Long, parent_id: Long, news_id: Long, readTime: Date)
+case class ReadNews(uid: Long, school_id: Long, parent_id: String, news_id: Long, readTime: Long)
 
 object ReadNews {
   val simple = {
-    get[Long]("id") ~
-      get[Long]("k_id") ~
-      get[Long]("parent_id") ~
+    get[Long]("uid") ~
+      get[String]("school_id") ~
+      get[String]("parent_id") ~
       get[Long]("news_id") ~
-      get[Date]("readTime") map {
-      case id ~ k_id ~ parent_id ~ news_id ~ readTime =>
-        ReadNews(id, k_id, parent_id, news_id, readTime)
+      get[Long]("readTime") map {
+      case id ~ school_id ~ parent_id ~ news_id ~ readTime =>
+        ReadNews(id, school_id.toLong, parent_id, news_id, readTime)
     }
   }
 
-  def all(kg: String)(parent: Long): List[ReadNews] = DB.withConnection {
+  def all(kg: Long)(parent: String): List[ReadNews] = DB.withConnection {
     implicit c =>
-      SQL("select a.* from newsRead a, kindergarten k where k.id = a.k_id and k.name={kg} and a.parent_id={parent}")
+      SQL("select * from newsRead where school_id={kg} and parent_id={parent}")
         .on('kg -> kg)
         .on('parent -> parent)
         .as(simple *)
   }
 
-  def markRead(form: (Long, String, Long)) = DB.withConnection {
+  def markRead(form: (String, Long, Long)) = DB.withConnection {
     implicit connection =>
       readTimes(form) match {
-        case 0 => SQL("insert into newsRead (k_id, parent_id, news_id, readTime) " +
-          "values ((select id from kindergarten where name={k_name}), {parent_id}, {news_id}, {readTime})")
+        case 0 => SQL("insert into newsRead (school_id, parent_id, news_id, readTime) " +
+          "values ({school_id}, {parent_id}, {news_id}, {readTime})")
           .on(
             'parent_id -> form._1,
-            'k_name -> form._2,
+            'school_id -> form._2,
             'news_id -> form._3,
-            'readTime -> new Date()
+            'readTime -> new Date().getTime
           ).executeInsert()
         case _ =>
       }
@@ -46,7 +46,7 @@ object ReadNews {
 
   }
 
-  def readTimes(form: (Long, String, Long)): Long = DB.withConnection {
+  def readTimes(form: (String, Long, Long)): Long = DB.withConnection {
     implicit connection =>
       SQL("select count(1) from newsRead where parent_id={parent_id} and news_id={news_id}")
         .on(

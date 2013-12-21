@@ -10,7 +10,7 @@
         <button class="btn btn-primary" ng-show="!news.published" ng-click="bulletin.publish(news)">发布</button>
         <button class="btn btn-info" ng-show="news.published" ng-click="bulletin.hidden(news)">隐藏</button>
       </div>
-      <a ng-href="#/kindergarten/{{bulletin.kindergarten.name}}/news/{{news.id}}">
+      <a ng-href="#/kindergarten/{{bulletin.kindergarten.name}}/news/{{news.news_id}}">
         <p class="list-group-item-text">{{news.content.substring(0,200)}}</p>
       </a>
       <span class="published">{{news.published ? '已发布' : '未发布'}}</span>

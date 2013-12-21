@@ -3,15 +3,15 @@
 
 
 newsService = ($resource) ->
-  $resource '/kindergarten/:kg/news/:news_id',
+  $resource '/kindergarten/:school_id/news/:news_id',
     {
-      kg: '@kg'
+      school_id: '@school_id'
       news_id: '@news_id'
     }
 readService = ($resource) ->
-  $resource '/kindergarten/:kg/parent/:parent_id/news/:news_id',
+  $resource '/kindergarten/:school_id/parent/:parent_id/news/:news_id',
     {
-      kg: '@kg'
+      school_id: '@school_id'
       news_id: '@news_id'
       parent_id: '@parent_id'
     },
@@ -20,9 +20,9 @@ readService = ($resource) ->
         method: 'POST'
     }
 readingStatService = ($resource) ->
-  $resource '/kindergarten/:kg/admin/:admin_id/news_reading_count/:news_id',
+  $resource '/kindergarten/:school_id/admin/:admin_id/news_reading_count/:news_id',
     {
-      kg: '@kg'
+      school_id: '@school_id'
       news_id: '@news_id'
       admin_id: '@admin_id'
     },

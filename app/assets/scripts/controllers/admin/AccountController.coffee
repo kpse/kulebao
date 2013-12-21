@@ -4,9 +4,9 @@ angular.module('kulebaoAdmin')
 .controller 'AccountCtrl', ['$scope', '$resource', '$rootScope', '$http', ($scope, $resource, $rootScope, $http) ->
     $rootScope.tabName = 'swipingcard'
 
-    Account = $resource '/kindergarten/:kg/account/:accountId',
+    Account = $resource '/kindergarten/:school_id/account/:accountId',
       {
-        kg: '93740362'
+        school_id: 93740362
         accountId: '@accountId'
       }
     $scope.accounts = Account.query()

@@ -1,9 +1,9 @@
 'use strict'
 
 parentService = ($resource) ->
-  $resource '/kindergarten/:kg/parent/:parentId',
+  $resource '/kindergarten/:school_id/parent/:parentId',
     {
-      kg: '@kg'
+      school_id: '@school_id'
       parentId: '@id'
     }
 

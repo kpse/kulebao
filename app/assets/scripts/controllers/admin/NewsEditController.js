@@ -8,7 +8,8 @@
       var _this = this;
       this.kindergarten = {
         id: 1,
-        name: '93740362'
+        name: '93740362',
+        school_id: 93740362
       };
       this.adminUser = {
         id: 1,
@@ -16,7 +17,7 @@
       };
       this.readCount = 100;
       this.news = newsService.get({
-        kg: this.kindergarten.name,
+        school_id: this.kindergarten.school_id,
         news_id: $stateParams.news
       });
       this.showEditBox = false;
@@ -35,23 +36,23 @@
         _this.showEditBox = false;
         if (_this.backupContent !== _this.news.content) {
           return _this.news.$save({
-            kg: _this.kindergarten.name,
-            news_id: _this.news.id
+            school_id: _this.kindergarten.school_id,
+            news_id: _this.news.news_id
           });
         }
       };
       this.publish = function(news) {
         news.pushlished = true;
         return news.$save({
-          kg: _this.kindergarten.name,
-          news_id: news.id
+          school_id: _this.kindergarten.school_id,
+          news_id: news.news_id
         });
       };
       this.hidden = function(news) {
         news.pushlished = false;
         return news.$save({
-          kg: _this.kindergarten.name,
-          news_id: news.id
+          school_id: _this.kindergarten.school_id,
+          news_id: news.news_id
         });
       };
       this.editingTitle = false;
@@ -61,8 +62,8 @@
         _this.editingTitle = false;
         if (_this.backupTitle !== _this.news.title) {
           return _this.news.$save({
-            kg: _this.kindergarten.name,
-            news_id: _this.news.id
+            school_id: _this.kindergarten.school_id,
+            news_id: _this.news.news_id
           });
         }
       };
@@ -73,10 +74,10 @@
       };
       this.deleteMe = function() {
         _this.news.$delete({
-          kg: _this.kindergarten.name,
-          news_id: _this.news.id
+          school_id: _this.kindergarten.school_id,
+          news_id: _this.news.news_id
         });
-        return $location.path("/kindergarten/" + _this.kindergarten.name + "/bulletin");
+        return $location.path("/kindergarten/" + _this.kindergarten.school_id + "/bulletin");
       };
     }
 
