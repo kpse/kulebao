@@ -52,7 +52,7 @@ object Authentication extends Controller {
       }
   }
 
-  case class AppUpgradeResponse(error_code: Int, url: Option[String], size: Option[Long], verison: Option[String], summary: Option[String])
+  case class AppUpgradeResponse(error_code: Int, url: Option[String], size: Option[Long], version: Option[String], summary: Option[String])
 
   implicit val write1 = Json.writes[AppUpgradeResponse]
 

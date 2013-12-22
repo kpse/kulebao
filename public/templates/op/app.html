@@ -1,6 +1,26 @@
 <h2>当前App版本</h2>
-<input ng-model="app.summary"/>
-<input ng-model="app.url"/>
-<input ng-model="app.size"/>
-<input ng-model="app.version"/>
-<input ng-model="app.versioncode"/>
+<form role="form">
+  <div class="form-group">
+    <label for="summary">概要</label>
+    <input id="summary" ng-model="app.summary"/>
+  </div>
+  <div class="form-group">
+    <label for="store-url">升级包路径</label>
+    <input type="file" id="store-url" ng-model="app.url"/>
+    <p class="help-block">上传新的升级包文件到服务器</p>
+  </div>
+  <div class="form-group">
+    <label for="store-size">升级包大小</label>
+    <input id="store-size" ng-model="app.size"/>
+  </div>
+  <div class="form-group">
+    <label for="store-version">升级包版本</label>
+    <input id="store-version" ng-model="app.version"/>
+  </div>
+  <div class="form-group">
+    <label for="store-version-code">升级包版本号</label>
+    <input id="store-version-code" ng-model="app.versioncode"/>
+  </div>
+  <button type="submit" class="btn btn-default">更新</button>
+  <button class="btn btn-info">取消</button>
+</form>
