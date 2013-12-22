@@ -3,9 +3,8 @@ package controllers
 import play.api.mvc._
 import play.api.libs.ws._
 import play.api.libs.json.{JsValue, Json}
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.ExecutionContext
 import ExecutionContext.Implicits.global
-import java.util.Date
 
 object WSController extends Controller {
 
@@ -20,7 +19,7 @@ object WSController extends Controller {
 
   def postData(pushId: Option[String]): JsValue = {
     Json.obj(
-      "timestamp" -> new Date().getTime,
+      "timestamp" -> System.currentTimeMillis,
       "notice_type" -> "1",
       "child_id" -> "3",
       "pushid" -> Json.toJson(pushId.getOrElse("925387477040814447")),

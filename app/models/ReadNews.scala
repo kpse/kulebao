@@ -4,7 +4,6 @@ import anorm.SqlParser._
 import anorm._
 import play.api.db.DB
 import anorm.~
-import java.util.Date
 import play.api.Play.current
 
 case class ReadNews(uid: Long, school_id: Long, parent_id: String, news_id: Long, readTime: Long)
@@ -38,7 +37,7 @@ object ReadNews {
             'parent_id -> form._1,
             'school_id -> form._2,
             'news_id -> form._3,
-            'readTime -> new Date().getTime
+            'readTime -> System.currentTimeMillis
           ).executeInsert()
         case _ =>
       }

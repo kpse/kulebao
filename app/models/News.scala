@@ -1,6 +1,5 @@
 package models
 
-import java.util.Date
 import anorm.SqlParser._
 import anorm._
 import play.api.db.DB
@@ -17,7 +16,7 @@ object News {
         .on('content -> form._3,
           'kg -> form._1.toString,
           'title -> form._2,
-          'timestamp -> new Date().getTime
+          'timestamp -> System.currentTimeMillis
         ).executeInsert()
       findById(form._1, createdId.getOrElse(-1))
   }
@@ -36,7 +35,7 @@ object News {
           'title -> form._3,
           'id -> form._1,
           'published -> (if (form._5) 1 else 0),
-          'timestamp -> new Date().getTime
+          'timestamp -> System.currentTimeMillis
         ).executeUpdate()
       findById(kg, form._1)
   }
