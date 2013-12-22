@@ -51,5 +51,7 @@ GET           /kindergarten/:kg/cookbook/:cookbookId                            
 GET           /ws/swipe                                                          controllers.WSController.call
 POST          /ws/swipe                                                          controllers.WSController.sendMessage
 
+POST          /ws/boardcast                                                      controllers.WSController.sendBroadcastMessage
+
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                                                      controllers.Assets.at(path="/public", file)
