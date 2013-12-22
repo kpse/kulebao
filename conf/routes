@@ -5,10 +5,12 @@
 # Home page
 GET           /                                                                  controllers.Application.index
 GET           /admin                                                             controllers.Application.admin
+GET           /operation                                                             controllers.Application.operation
 
 POST          /login.do                                                          controllers.Authentication.login
 POST          /checkphonenum.do                                                  controllers.Authentication.validateNumber
 POST          /receiveBindInfo.do                                                controllers.Authentication.bindNumber
+GET          /upgrade                                                controllers.Authentication.app(version: Long)
 
 #anglarjs template pages
 GET           /templates/*file                                                   controllers.Static.at(path="/public/templates", file)

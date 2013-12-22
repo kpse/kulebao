@@ -51,4 +51,19 @@ object Authentication extends Controller {
         e => BadRequest("Detected error:" + JsError.toFlatJson(e))
       }
   }
+
+  case class AppUpgradeResponse(error_code: Int, url: Option[String], size: Option[Long], verison: Option[String], summary: Option[String])
+
+  implicit val write1 = Json.writes[AppUpgradeResponse]
+
+  def app(version: Long) = Action {
+    //    {"summary":"测试版本","error_code":"0","url":"http://cocobabys.oss-cn-hangzhou.aliyuncs.com/app_release/release_2.apk","size":500000,"version":"V1.1"}
+    val CURRENT_VERSION = 2
+    version match {
+      case n if n < CURRENT_VERSION => Ok(Json.toJson(new AppUpgradeResponse(0, Some("http://cocobabys.oss-cn-hangzhou.aliyuncs.com/app_release/release_2.apk"),
+        Some(500000), Some("V1.1"), Some("测试版本"))))
+      case _ => Ok(Json.toJson(new AppUpgradeResponse(1, None, None, None, None)))
+    }
+
+  }
 }

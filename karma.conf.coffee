@@ -21,6 +21,7 @@ module.exports = (config) ->
       'public/javascripts/vendor/**/*.js',
       'app/assets/scripts/main.coffee',
       'app/assets/scripts/admin.coffee',
+      'app/assets/scripts/op.coffee',
       'app/assets/scripts/services/*.coffee',
       'app/assets/scripts/controllers/**/*.coffee',
       'app/assets/scripts/directives/*.coffee',

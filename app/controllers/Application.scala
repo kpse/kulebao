@@ -12,4 +12,7 @@ object Application extends Controller {
     Ok(views.html.admin())
   }
 
+  def operation() = Action {
+    Ok(views.html.operation())
+  }
 }

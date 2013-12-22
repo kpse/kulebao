@@ -340,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `schoolinfo` (
 INSERT INTO schoolinfo (uid, school_id, province, city, name, description, logo_url, phone, update_at) VALUES
   (1, '93740362', '四川省', '成都', '成都市第三军区幼儿园',
    '\n李刚牌土豪幼儿园，成立时间超过100年，其特点有：\n1.价格超贵\n2.硬件超好\n3.教师超屌\n4.绝不打折\n5.入园超难\n6.......\n.......\n.......\n.......\n.......\n\n',
-   'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRUYYbqMhPTWL6VSfmtOTlr486NDyv1jJDUMUxbSd-9jxZwg4SZ',
+   'http://www.jslfgz.com.cn/UploadFiles/xxgl/2013/4/201342395834.jpg',
    '13991855476', 1387353635),
   (2, '93740562', '陕西省', '西安', '西安市高新一幼',
    '\n苦逼幼儿园，成立时间超过100年，其特点有：\n1.价格超贵\n2.硬件超好\n3.教师超屌\n4.绝不打折\n5.入园超难\n6.......\n.......\n.......\n.......\n.......\n\n',
