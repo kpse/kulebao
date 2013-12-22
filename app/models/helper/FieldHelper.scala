@@ -23,4 +23,6 @@ object FieldHelper {
   def birthday(row: SqlRow) = row[Date]("birthday").getTime
 
   def name(row: SqlRow) = row[String]("name")
+
+  def childId(row: SqlRow) = row[Long]("class_id")
 }

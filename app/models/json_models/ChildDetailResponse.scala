@@ -3,7 +3,7 @@ package models.json_models
 import play.api.db.DB
 import anorm._
 import anorm.SqlParser._
-import models.helper.FieldHelper.{uid, nick, iconUrl, birthday, timestamp}
+import models.helper.FieldHelper.{uid, nick, iconUrl, birthday, timestamp, childId}
 import play.api.Play.current
 import java.util.Date
 
@@ -49,15 +49,15 @@ object Children {
         .on('phone -> phone).as(simple *)
   }
 
-  def show(schoolId: Long, phone: String, childId: Long) = DB.withConnection {
+  def show(schoolId: Long, phone: String, id: Long) = DB.withConnection {
     implicit c =>
       val result = SQL("select * from childinfo where uid={uid}")
-        .on('uid -> childId).apply()
+        .on('uid -> id).apply()
 
       if (result.isEmpty) new ChildDetailResponse(1, None)
       else {
         val row = result.head
-        new ChildDetailResponse(0, Some(new ChildDetail(uid(row), nick(row), iconUrl(row), birthday(row), timestamp(row))))
+        new ChildDetailResponse(0, Some(new ChildDetail(uid(row), nick(row), iconUrl(row), birthday(row), childId(row), timestamp(row))))
       }
   }
 

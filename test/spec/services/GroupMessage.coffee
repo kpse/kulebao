@@ -1,14 +1,14 @@
 'use strict'
 
-describe 'Service: Groupmessage', () ->
+describe 'Service: GroupMessage', () ->
 
   # load the service's module
-  beforeEach module 'kulebaoApp'
+  beforeEach module 'kulebaoAdmin'
 
   # instantiate service
-  Groupmessage = {}
-  beforeEach inject (_Groupmessage_) ->
-    Groupmessage = _Groupmessage_
+  GroupMessage = {}
+  beforeEach inject (_GroupMessage_) ->
+    GroupMessage = _GroupMessage_
 
   it 'should do something', () ->
-    expect(!!Groupmessage).toBe true
+    expect(!!GroupMessage).toBe true
