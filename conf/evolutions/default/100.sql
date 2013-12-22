@@ -134,6 +134,7 @@ CREATE TABLE IF NOT EXISTS `childinfo` (
   `student_id` VARCHAR(20)
                COLLATE utf8_bin NOT NULL,
   `gender`     TINYINT(4)       NOT NULL DEFAULT '2',
+  `class_id`   INT(11)          NOT NULL,
   `classname`  VARCHAR(40)
                COLLATE utf8_bin NOT NULL DEFAULT '',
   `picurl`     VARCHAR(128)
@@ -150,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `childinfo` (
                COLLATE utf8_bin NOT NULL DEFAULT '',
   `nick`       VARCHAR(20)      NOT NULL DEFAULT '',
   `status`     TINYINT          NOT NULL DEFAULT 1,
-  `update_at`  BIGINT          NOT NULL DEFAULT 0,
+  `update_at`  BIGINT           NOT NULL DEFAULT 0,
   PRIMARY KEY (`uid`),
   UNIQUE KEY `child_id` (`child_id`),
   KEY `birthday` (`birthday`),
@@ -166,15 +167,15 @@ CREATE TABLE IF NOT EXISTS `childinfo` (
 -- 转存表中的数据 `childinfo`
 --
 
-INSERT INTO `childinfo` (uid, name, child_id, student_id, gender, classname, picurl, birthday, indate, school_id, address, stu_type, hukou, social_id, nick, update_at)
+INSERT INTO `childinfo` (uid, name, child_id, student_id, gender, class_id, classname, picurl, birthday, indate, school_id, address, stu_type, hukou, social_id, nick, update_at)
 VALUES
-  (1, '张光', '1_93740362_374', '0032', 1, '苹果班', 'http://www.qqw21.com/article/uploadpic/2013-1/201311101516591.jpg',
+  (1, '张光', '1_93740362_374', '0032', 1, 777888,'苹果班', 'http://www.qqw21.com/article/uploadpic/2013-1/201311101516591.jpg',
    '2007-06-04', '2011-05-08', '93740362', '', 1, 1, '510107123416547856', '大苹果', 1387360036),
-  (2, '李小华', '1_93740362_456', '0021', 0, '香蕉班', '', '2008-09-09', '2012-06-06', '93740362', '', 1, 1,
+  (2, '李小华', '1_93740362_456', '0021', 0, 777999, '香蕉班', '', '2008-09-09', '2012-06-06', '93740362', '', 1, 1,
    '510107123416511111', '小苹果', 1387360036),
-  (3, '王大侠', '1_93740362_9982', '322', 1, '香蕉班', 'http://img.zwbk.org/baike/spic/2010/12/01/2010120110214141_3528.jpg',
+  (3, '王大侠', '1_93740362_9982', '322', 1, 777999, '香蕉班', 'http://img.zwbk.org/baike/spic/2010/12/01/2010120110214141_3528.jpg',
    '2007-01-01', '2011-09-03', '93740362', '', 0, 2, '510107123416523456', '小香蕉', 1387360036),
-  (4, '王大锤', '1_93740362_778', '323', 1, '梨儿班', '', '2007-01-01', '2011-09-03', '93740362', '', 0, 2,
+  (4, '王大锤', '1_93740362_778', '323', 1, 777666, '梨儿班', '', '2007-01-01', '2011-09-03', '93740362', '', 0, 2,
    '510107123416523459', '绿葡萄', 1387360036);
 
 -- --------------------------------------------------------
@@ -248,7 +249,7 @@ CREATE TABLE IF NOT EXISTS `parentinfo` (
   `school_id`    VARCHAR(20)
                  COLLATE utf8_bin NOT NULL,
   `status`       TINYINT          NOT NULL DEFAULT 1,
-  `update_at`    BIGINT          NOT NULL DEFAULT 0,
+  `update_at`    BIGINT           NOT NULL DEFAULT 0,
   PRIMARY KEY (`uid`),
   UNIQUE KEY `parent_id` (`parent_id`),
   KEY `school_id` (`school_id`),
@@ -323,7 +324,7 @@ CREATE TABLE IF NOT EXISTS `schoolinfo` (
   phone       VARCHAR(16)      NOT NULL,
   status      TINYINT          NOT NULL DEFAULT 1,
   logo_url    VARCHAR(256),
-  update_at   BIGINT          NOT NULL,
+  update_at   BIGINT           NOT NULL,
   PRIMARY KEY (`uid`),
   UNIQUE KEY `school_id` (`school_id`)
 )
@@ -366,12 +367,14 @@ INSERT INTO `test` (`id`, `name`) VALUES
   ('0', 'djctest');
 
 CREATE TABLE news (
-  uid       INT(11)      NOT NULL AUTO_INCREMENT,
-  school_id VARCHAR(20)  NOT NULL,
-  title     VARCHAR(255) COLLATE utf8_bin NOT NULL,
-  content   TEXT       COLLATE utf8_bin,
-  update_at BIGINT         NOT NULL DEFAULT 0,
-  published INT          NOT NULL DEFAULT 0,
+  uid       INT(11)          NOT NULL AUTO_INCREMENT,
+  school_id VARCHAR(20)      NOT NULL,
+  title     VARCHAR(255)
+            COLLATE utf8_bin NOT NULL,
+  content   TEXT
+            COLLATE utf8_bin,
+  update_at BIGINT           NOT NULL DEFAULT 0,
+  published INT              NOT NULL DEFAULT 0,
   status    TINYINT          NOT NULL DEFAULT 1,
   PRIMARY KEY (uid)
 )
@@ -396,7 +399,7 @@ CREATE TABLE newsread (
   school_id VARCHAR(20) NOT NULL,
   parent_id VARCHAR(40) NOT NULL,
   news_id   INT(11)     NOT NULL,
-  readTime  INT(11)        NOT NULL DEFAULT 0,
+  readTime  INT(11)     NOT NULL DEFAULT 0,
   PRIMARY KEY (uid)
 );
 

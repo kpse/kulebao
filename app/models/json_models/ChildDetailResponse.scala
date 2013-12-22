@@ -15,7 +15,7 @@ case class ChildResponse(error_code: Int,
 
 case class ChildrenResponse(error_code: Int, children: List[ChildDetail])
 
-case class ChildDetail(id: Long, nick: String, icon_url: String, birthday: Long, timestamp: Long)
+case class ChildDetail(id: Long, nick: String, icon_url: String, birthday: Long, timestamp: Long, class_id: Long)
 
 case class ChildDetailResponse(error_code: Int, child_info: Option[ChildDetail])
 
@@ -27,9 +27,10 @@ object Children {
       get[String]("nick") ~
       get[String]("picurl") ~
       get[Date]("birthday") ~
+      get[Long]("class_id") ~
       get[Long]("update_at") map {
-      case id ~ nick ~ icon_url ~ birth ~ t =>
-        new ChildDetail(id, nick, icon_url, birth.getTime, t)
+      case id ~ nick ~ icon_url ~ birth ~ classId ~ t =>
+        new ChildDetail(id, nick, icon_url, birth.getTime, t, classId)
     }
   }
 

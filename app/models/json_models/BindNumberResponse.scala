@@ -4,5 +4,4 @@ case class BindNumberResponse(error_code: Int,
                               access_token: String,
                               username: String,
                               account_name: String,
-                              school_id: Long,
-                              class_id: Long)
+                              school_id: Long)
