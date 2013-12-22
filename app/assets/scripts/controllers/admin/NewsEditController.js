@@ -4,7 +4,7 @@
   var Controller;
 
   Controller = (function() {
-    function Controller($stateParams, newsService, $location) {
+    function Controller($stateParams, newsService, $location, GroupMessage) {
       var _this = this;
       this.kindergarten = {
         id: 1,
@@ -41,11 +41,16 @@
         }
       };
       this.publish = function(news) {
+        var msg;
         news.pushlished = true;
-        return news.$save({
+        news.$save({
           school_id: _this.kindergarten.school_id,
           news_id: news.news_id
         });
+        msg = new GroupMessage;
+        msg.school_id = parseInt(_this.kindergarten.school_id);
+        msg.news_id = news.news_id;
+        return msg.$save();
       };
       this.hidden = function(news) {
         news.pushlished = false;
@@ -84,6 +89,6 @@
 
   })();
 
-  angular.module('kulebaoAdmin').controller('NewsEditCtrl', ['$stateParams', 'newsService', '$location', Controller]);
+  angular.module('kulebaoAdmin').controller('NewsEditCtrl', ['$stateParams', 'newsService', '$location', 'GroupMessage', Controller]);
 
 }).call(this);

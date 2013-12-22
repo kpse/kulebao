@@ -1,7 +1,7 @@
 'use strict'
 
 class Controller
-  constructor: ($stateParams, newsService, $location) ->
+  constructor: ($stateParams, newsService, $location, GroupMessage) ->
     @kindergarten =
       id: 1,
       school_id: $stateParams.kindergarten
@@ -31,6 +31,10 @@ class Controller
     @publish = (news) =>
       news.pushlished = true
       news.$save(school_id: @kindergarten.school_id, news_id: news.news_id)
+      msg = new GroupMessage
+      msg.school_id = parseInt(@kindergarten.school_id)
+      msg.news_id = news.news_id
+      msg.$save()
 
     @hidden = (news) =>
       news.pushlished = false
@@ -54,4 +58,4 @@ class Controller
       $location.path("/kindergarten/" + @kindergarten.school_id + "/bulletin");
 
 
-angular.module('kulebaoAdmin').controller 'NewsEditCtrl', [ '$stateParams', 'newsService', '$location', Controller]
+angular.module('kulebaoAdmin').controller 'NewsEditCtrl', [ '$stateParams', 'newsService', '$location', 'GroupMessage', Controller]
