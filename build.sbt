@@ -10,7 +10,8 @@ libraryDependencies ++= Seq(
   cache,
   "com.h2database" % "h2" % "1.3.168",
   "mysql" % "mysql-connector-java" % "5.1.27",
-  "commons-codec" % "commons-codec" % "1.7"
+  "commons-codec" % "commons-codec" % "1.7",
+  "com.qiniu" % "sdk" % "6.0.0"
 )
 
 

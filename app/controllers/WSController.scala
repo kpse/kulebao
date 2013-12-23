@@ -8,6 +8,9 @@ import ExecutionContext.Implicits.global
 import models.News
 import scala.Some
 import play.api.Logger
+import com.qiniu.api.rs.PutPolicy
+import com.qiniu.api.auth.digest.Mac
+;
 
 object WSController extends Controller {
 
@@ -74,8 +77,17 @@ object WSController extends Controller {
         }
 
       }
-
-
   }
 
+  case class UpToken(token: String)
+
+  implicit val writes1 = Json.writes[UpToken]
+
+  def generateToken(bucket: String) = Action {
+    val ACCESS_KEY = "vML8y91UgErLsWX2Lzk6dkD6tZqgGGyw5-Fyv17_"
+    val SECRET_KEY = "fPFadbRU708pWTG3teqj2bFs7WzVZeCoLb5qccme"
+    val putPolicy = new PutPolicy(bucket)
+    val uptoken = putPolicy.token(new Mac(ACCESS_KEY, SECRET_KEY))
+    Ok(Json.toJson(new UpToken(uptoken)))
+  }
 }
