@@ -1,1 +1,9 @@
 @import "btnUpload.less";
+
+.upload-form {
+  width: 550px;
+}
+
+.button-group {
+  margin-top: 30px;
+}

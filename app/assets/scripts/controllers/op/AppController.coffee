@@ -1,9 +1,9 @@
 class Controller
   constructor: ($scope, $rootScope, $stateParams, $http, uploadService) ->
     $scope.app =
-      summary: '测试版本'
+      summary: ''
       url: 'http://cocobabys.oss-cn-hangzhou.aliyuncs.com/app_release/release_2.apk'
-      size: 50000
+      size: 0
       version: 'V1.1'
       versioncode: 2
       remote_url: ''
@@ -11,13 +11,16 @@ class Controller
     $scope.uploadme = {};
     $scope.uploadme.src = ''
 
-    $http.get('/ws/fileToken?bucket=suoqin-test').success( (data)-> $scope.token = data.token)
-
     $scope.doUpload = ->
-      uploadService.send($scope.file, $scope.token, (remoteFile) ->
-        $scope.app.url = remoteFile
-        console.log $scope.app
+      $http.get('/ws/fileToken?bucket=suoqin-test').success( (data)->
+        $scope.token = data.token
+        uploadService.send($scope.file, $scope.token, (remoteFile) ->
+          $scope.app.url = remoteFile.url
+          $scope.app.size = remoteFile.size
+          console.log $scope.app
+        )
       )
+
 
 
 

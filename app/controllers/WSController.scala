@@ -86,8 +86,9 @@ object WSController extends Controller {
   def generateToken(bucket: String) = Action {
     val ACCESS_KEY = Play.current.configuration.getString("oss.ak").getOrElse("")
     val SECRET_KEY = Play.current.configuration.getString("oss.sk").getOrElse("")
-    Logger.debug("ACCESS_KEY = %s, SECRET_KEY = %s".format(ACCESS_KEY, SECRET_KEY))
+    Logger.info("ACCESS_KEY = %s, SECRET_KEY = %s".format(ACCESS_KEY, SECRET_KEY))
     val putPolicy = new PutPolicy(bucket)
+    putPolicy.returnBody = "{\"name\": $(fname), \"size\": $(fsize),\"hash\": $(etag)}";
     val uptoken = putPolicy.token(new Mac(ACCESS_KEY, SECRET_KEY))
     Ok(Json.toJson(new UpToken(uptoken)))
   }

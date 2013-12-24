@@ -10,7 +10,12 @@ uploadService = () ->
     xhr = new XMLHttpRequest()
 
     xhr.onloadend = (e) ->
-      successCallback("http://suoqin-test.u.qiniudn.com/" + JSON.parse(e.currentTarget.response).key)
+      response = JSON.parse(e.currentTarget.response)
+      successCallback({
+      url: "http://suoqin-test.u.qiniudn.com/" + response.name
+      size: response.size
+      })
+
 
 
     # Send to server, where we can then access it with $_FILES['file].
@@ -29,6 +34,8 @@ angular.module('kulebaoAdmin').directive "fileChange", ->
     # onChange, push the files to $scope.files.
     element.bind "change", (event) ->
       $scope.file = event.target.files[0]
+      $scope.$apply( -> $scope.app.size = $scope.file.size)
+
 
   restrict: "A"
   link: linker
