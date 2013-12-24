@@ -7,7 +7,7 @@ import scala.concurrent.{Future, ExecutionContext}
 import ExecutionContext.Implicits.global
 import models.News
 import scala.Some
-import play.api.Logger
+import play.api.{Play, Logger}
 import com.qiniu.api.rs.PutPolicy
 import com.qiniu.api.auth.digest.Mac
 ;
@@ -84,8 +84,9 @@ object WSController extends Controller {
   implicit val writes1 = Json.writes[UpToken]
 
   def generateToken(bucket: String) = Action {
-    val ACCESS_KEY = "vML8y91UgErLsWX2Lzk6dkD6tZqgGGyw5-Fyv17_"
-    val SECRET_KEY = "fPFadbRU708pWTG3teqj2bFs7WzVZeCoLb5qccme"
+    val ACCESS_KEY = Play.current.configuration.getString("oss.ak").getOrElse("")
+    val SECRET_KEY = Play.current.configuration.getString("oss.sk").getOrElse("")
+    Logger.debug("ACCESS_KEY = %s, SECRET_KEY = %s".format(ACCESS_KEY, SECRET_KEY))
     val putPolicy = new PutPolicy(bucket)
     val uptoken = putPolicy.token(new Mac(ACCESS_KEY, SECRET_KEY))
     Ok(Json.toJson(new UpToken(uptoken)))

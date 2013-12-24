@@ -46,7 +46,7 @@ function deploy_prod {
     ssh $destServer "unzip -x $destFilename -d /var/play/$now/" && \
     ssh $destServer "rm /var/play/kulebao" && \
     ssh $destServer "ln -s /var/play/$now/kulebao-1.0-SNAPSHOT/ /var/play/kulebao" && \
-    ssh $destServer "echo coco999 | sudo -S service kulebao restart" && \
+    ssh $destServer "echo coco999 | sudo -S service kulebao restart"
 
     retvalue=$?
     echo "Return value: $retvalue"
