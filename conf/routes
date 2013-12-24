@@ -5,12 +5,12 @@
 # Home page
 GET           /                                                                  controllers.Application.index
 GET           /admin                                                             controllers.Application.admin
-GET           /operation                                                             controllers.Application.operation
+GET           /operation                                                         controllers.Application.operation
 
 POST          /login.do                                                          controllers.Authentication.login
 POST          /checkphonenum.do                                                  controllers.Authentication.validateNumber
 POST          /receiveBindInfo.do                                                controllers.Authentication.bindNumber
-GET          /upgrade                                                controllers.Authentication.app(version: Long)
+GET           /upgrade                                                           controllers.Authentication.app(version: Long)
 
 #anglarjs template pages
 GET           /templates/*file                                                   controllers.Static.at(path="/public/templates", file)
@@ -53,9 +53,11 @@ GET           /kindergarten/:kg/cookbook/:cookbookId                            
 GET           /ws/swipe                                                          controllers.WSController.call
 POST          /ws/swipe                                                          controllers.WSController.sendMessage
 
+POST          /app_package                                                      controllers.AppPackageController.create
+
 POST          /ws/broadcast                                                      controllers.WSController.sendBroadcastMessage
 
-GET          /ws/fileToken                                                      controllers.WSController.generateToken(bucket: String)
+GET           /ws/fileToken                                                      controllers.WSController.generateToken(bucket: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                                                      controllers.Assets.at(path="/public", file)

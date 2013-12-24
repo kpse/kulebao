@@ -6,6 +6,8 @@ import models.json_models._
 import models.json_models.CheckPhoneResponse
 import models.json_models.MobileLogin
 import models.json_models.BindingNumber
+import models.{AppUpgradeResponse, AppPackage}
+import play.api.Logger
 
 object Authentication extends Controller {
 
@@ -52,18 +54,16 @@ object Authentication extends Controller {
       }
   }
 
-  case class AppUpgradeResponse(error_code: Int, url: Option[String], size: Option[Long], version: Option[String], summary: Option[String])
-
   implicit val write1 = Json.writes[AppUpgradeResponse]
 
   def app(version: Long) = Action {
     //    {"summary":"测试版本","error_code":"0","url":"http://cocobabys.oss-cn-hangzhou.aliyuncs.com/app_release/release_2.apk","size":500000,"version":"V1.1"}
-    val CURRENT_VERSION = 2
-    version match {
-      case n if n < CURRENT_VERSION => Ok(Json.toJson(new AppUpgradeResponse(0, Some("http://cocobabys.oss-cn-hangzhou.aliyuncs.com/app_release/release_2.apk"),
-        Some(500000), Some("V1.1"), Some("测试版本"))))
-      case _ => Ok(Json.toJson(new AppUpgradeResponse(1, None, None, None, None)))
+    val pkg: AppPackage = AppPackage.latest
+    Logger.info("latest version code = %d".format(pkg.version_code))
+    if (version < pkg.version_code){
+      Ok(Json.toJson(AppPackage.response(pkg)))
     }
+    else Ok(Json.toJson(AppPackage.noUpdate))
 
   }
 }

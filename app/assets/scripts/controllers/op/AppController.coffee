@@ -1,12 +1,7 @@
 class Controller
-  constructor: ($scope, $rootScope, $stateParams, $http, uploadService) ->
-    $scope.app =
-      summary: ''
-      url: 'http://cocobabys.oss-cn-hangzhou.aliyuncs.com/app_release/release_2.apk'
-      size: 0
-      version: 'V1.1'
-      versioncode: 2
-      remote_url: ''
+  constructor: ($scope, $rootScope, $stateParams, $http, uploadService, appPackageService) ->
+    $scope.lastApp = new appPackageService
+    $scope.app = new appPackageService
 
     $scope.uploadme = {};
     $scope.uploadme.src = ''
@@ -18,11 +13,14 @@ class Controller
           $scope.app.url = remoteFile.url
           $scope.app.size = remoteFile.size
           console.log $scope.app
+          $scope.app.$save()
         )
       )
 
 
 
 
-angular.module('kulebaoOp').controller 'OpAppCtrl', ['$scope', '$rootScope', '$stateParams', '$http', 'uploadService', Controller]
+angular.module('kulebaoOp').controller 'OpAppCtrl', ['$scope', '$rootScope',
+                                                     '$stateParams', '$http',
+                                                     'uploadService', 'appPackageService', Controller]
 
