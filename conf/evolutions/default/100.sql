@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `appinfo` (
   `summary`      VARCHAR(256)
                  COLLATE utf8_bin NOT NULL,
   `file_size`    BIGINT(20)       NOT NULL,
-  `release_time` DATETIME         NOT NULL,
+  `release_time` BIGINT(20)         NOT NULL,
   PRIMARY KEY (`uid`),
   UNIQUE KEY `version_code` (`version_code`)
 )
@@ -80,10 +80,10 @@ CREATE TABLE IF NOT EXISTS `appinfo` (
 --
 
 INSERT INTO `appinfo` (`uid`, `version_code`, `version_name`, `url`, `summary`, `file_size`, `release_time`) VALUES
-  (1, 4, 'V1.1', '/version/LoginTest_4.apk', '1.修正错误', 12344, '2013-10-22 00:00:00'),
-  (9, 7, 'v1.2', '/version/LoginTest_7.apk', '1.新增功能\\n2.该版本号是7', 22345, '2013-10-23 00:00:00'),
-  (10, 11, 'v2.0', '/version/release-11.apk', '1.新增园内通知功能\\n2.该版本号为11', 324709, '2013-12-07 14:00:00'),
-  (12, 12, 'v2.1', '/version/release-12.apk', '1.新增学习内容和每日育情\\n2.该版本号为12', 324877, '2013-12-08 14:00:00');
+  (1, 4, 'V1.1', '/version/LoginTest_4.apk', '1.修正错误', 12344, 1387649057933),
+  (9, 7, 'v1.2', '/version/LoginTest_7.apk', '1.新增功能\\n2.该版本号是7', 22345, 1387649057933),
+  (10, 11, 'v2.0', '/version/release-11.apk', '1.新增园内通知功能\\n2.该版本号为11', 324709, 1387649057933),
+  (12, 12, 'v2.1', '/version/release-12.apk', '1.新增学习内容和每日育情\\n2.该版本号为12', 324877, 1387649057933);
 
 -- --------------------------------------------------------
 

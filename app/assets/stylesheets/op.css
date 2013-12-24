@@ -1,6 +1,7 @@
 @import "btnUpload.less";
 
-.upload-form {
+.upload-form,
+.old-version {
   width: 550px;
 }
 

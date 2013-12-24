@@ -53,7 +53,8 @@ GET           /kindergarten/:kg/cookbook/:cookbookId                            
 GET           /ws/swipe                                                          controllers.WSController.call
 POST          /ws/swipe                                                          controllers.WSController.sendMessage
 
-POST          /app_package                                                      controllers.AppPackageController.create
+GET           /app_package                                                       controllers.AppPackageController.last(last: String)
+POST          /app_package                                                       controllers.AppPackageController.create
 
 POST          /ws/broadcast                                                      controllers.WSController.sendBroadcastMessage
 

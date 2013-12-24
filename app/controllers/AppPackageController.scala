@@ -21,9 +21,9 @@ object AppPackageController extends Controller {
     tuple(
       "summary" -> text,
       "url" -> text,
-      "size" -> longNumber,
-      "version" -> text,
-      "versioncode" -> number
+      "file_size" -> longNumber,
+      "version_name" -> text,
+      "version_code" -> number
     )
   )
   implicit val write1 = Json.writes[AppPackage]
@@ -35,5 +35,9 @@ object AppPackageController extends Controller {
           val created = AppPackage.create(app)
           Ok(Json.toJson(created))
       } getOrElse BadRequest
+  }
+
+  def last(last: String) = Action {
+    Ok(Json.toJson(AppPackage.latest))
   }
 }

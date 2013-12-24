@@ -1,13 +1,74 @@
 <h2>当前App版本</h2>
+<div class="well old-version">
+  <form role="form" class="upload-form form-horizontal">
+
+    <div class="form-group">
+      <label for="store-version-code" class="col-sm-4 control-label">版本序号</label>
+
+      <div class="col-sm-8">
+        <p class="form-control-static">{{lastApp.version_code}}</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="summary" class="col-sm-4 control-label">概要</label>
+
+      <div class="col-sm-8">
+        <p class="form-control-static">{{lastApp.summary}}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-4 control-label" for="store-url">升级包路径</label>
+
+      <div class="col-sm-8">
+        <p class="form-control-static">{{lastApp.url}}</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="store-size" class="col-sm-4 control-label">升级包大小</label>
+
+      <div class="col-sm-8">
+        <p class="form-control-static">{{lastApp.file_size}}</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="store-version" class="col-sm-4 control-label">升级包版本</label>
+
+      <div class="col-sm-8">
+        <p class="form-control-static">{{lastApp.version_name}}</p>
+      </div>
+    </div>
+
+  </form>
+</div>
+<h2>上传新版本</h2>
 <form role="form" class="upload-form form-horizontal">
+  <div class="form-group">
+    <label for="store-version-code" class="col-sm-4 control-label">版本序号</label>
+
+    <div class="col-sm-8">
+      <p class="form-control-static">{{app.version_code}}</p>
+    </div>
+  </div>
 
   <div class="form-group">
     <label for="summary" class="col-sm-4 control-label">概要</label>
 
     <div class="col-sm-8">
-      <input id="summary" class="form-control" ng-model="app.summary" placeholder="版本介绍。。。" ng-required="请填写介绍"/>
+      <input id="summary" class="form-control" ng-model="app.summary" placeholder="版本介绍。。。"/>
     </div>
   </div>
+
+  <div class="form-group">
+    <label for="store-version" class="col-sm-4 control-label">升级包版本</label>
+
+    <div class="col-sm-8">
+      <input id="store-version" class="form-control" ng-model="app.version_name" placeholder="{{lastApp.version_name}}-snapshot"/>
+    </div>
+  </div>
+
   <div class="form-group">
     <label class="col-sm-4 control-label" for="store-url">升级包路径</label>
 
@@ -21,27 +82,9 @@
     <label for="store-size" class="col-sm-4 control-label">升级包大小</label>
 
     <div class="col-sm-8">
-      <p class="form-control-static">{{app.size}}</p>
+      <p class="form-control-static">{{app.file_size}}</p>
     </div>
   </div>
-
-  <div class="form-group">
-    <label for="store-version" class="col-sm-4 control-label">升级包版本</label>
-
-    <div class="col-sm-8">
-      <input id="store-version" class="form-control" ng-model="app.version"/>
-    </div>
-  </div>
-
-
-  <div class="form-group">
-    <label for="store-version-code" class="col-sm-4 control-label">版本序号</label>
-
-    <div class="col-sm-8">
-      <input type="number" id="store-version-code" class="form-control" ng-model="app.versioncode"/>
-    </div>
-  </div>
-
 
   <div class="form-group button-group">
     <div class="col-sm-offset-3 col-sm-4">
