@@ -3,14 +3,15 @@ package models.json_models
 import org.apache.commons.codec.digest.DigestUtils
 import play.api.db.DB
 import anorm._
-import controllers.Authentication.ResetPassword
 import play.api.Play.current
 import play.api.Logger
 
-case class ResetPasswordResponse(error_code: Int, access_token: String)
+case class ChangePassword(account_name: String, old_password: String, new_password: String)
 
-object ResetPasswordResponse {
-  def handle(request: ResetPassword) = DB.withConnection {
+case class ChangePasswordResponse(error_code: Int, access_token: String)
+
+object ChangePasswordResponse {
+  def handle(request: ChangePassword) = DB.withConnection {
     implicit c =>
       val firstRow = SQL("select * from accountinfo where accountid={username} and password={password}")
         .on('username -> request.account_name,
@@ -26,9 +27,9 @@ object ResetPasswordResponse {
               'new_password -> md5(request.new_password),
               'timestamp -> System.currentTimeMillis
             )
-          new ResetPasswordResponse(0, updateTime.toString)
+          new ChangePasswordResponse(0, updateTime.toString)
         case true =>
-          new ResetPasswordResponse(1, "")
+          new ChangePasswordResponse(1, "")
       }
   }
 

@@ -67,16 +67,24 @@ object Authentication extends Controller {
 
   }
 
-  case class ResetPassword(account_name: String, old_password: String, new_password: String)
-
-  implicit val read1 = Json.reads[ResetPassword]
-  implicit val write3 = Json.writes[ResetPasswordResponse]
+  implicit val read1 = Json.reads[ChangePassword]
+  implicit val write3 = Json.writes[ChangePasswordResponse]
 
   def resetPassword = Action(parse.json) {
     request =>
-      request.body.validate[ResetPassword].map {
+      request.body.validate[ChangePassword].map {
         case (request) =>
-          Ok(Json.toJson(ResetPasswordResponse.handle(request)))
+          Ok(Json.toJson(ChangePasswordResponse.handle(request)))
+      }.recoverTotal {
+        e => BadRequest("Detected error:" + JsError.toFlatJson(e))
+      }
+  }
+
+  def changePassword = Action(parse.json) {
+    request =>
+      request.body.validate[ChangePassword].map {
+        case (request) =>
+          Ok(Json.toJson(ChangePasswordResponse.handle(request)))
       }.recoverTotal {
         e => BadRequest("Detected error:" + JsError.toFlatJson(e))
       }

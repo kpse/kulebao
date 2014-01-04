@@ -11,6 +11,7 @@ POST          /login.do                                                         
 POST          /checkphonenum.do                                                  controllers.Authentication.validateNumber
 POST          /receiveBindInfo.do                                                controllers.Authentication.bindNumber
 POST          /resetpwd.do                                                       controllers.Authentication.resetPassword
+POST          /changepwd.do                                                       controllers.Authentication.changePassword
 GET           /upgrade                                                           controllers.Authentication.app(version: Long)
 
 #anglarjs template pages
