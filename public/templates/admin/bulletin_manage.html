@@ -1,7 +1,7 @@
 <div class="newsletters" ng-controller="BulletinManageCtrl as bulletin">
 <div class="row">
   <ul class="list-group col-xs-11">
-    <li class="list-group-item read-{{news.read}}" ng-repeat="news in bulletin.newsletters">
+    <li class="list-group-item read-{{news.read}}" ng-repeat="news in bulletin.newsletters | orderBy:'timestamp':true">
       <h4 class="list-group-item-heading">{{news.title}}</h4>
 
       <div class="btn-group">
@@ -15,7 +15,7 @@
       </a>
       <span class="published">{{news.published ? '已发布' : '未发布'}}</span>
       <span class="read-flag">阅读次数：{{news.readCount}}</span>
-      <span class="issue-date pull-right">于{{news.issueDate | date:'yyyy年MM月dd日'}}发布</span>
+      <span class="issue-date pull-right">于{{news.timestamp | date:'yyyy年MM月dd日'}}发布</span>
     </li>
     <p ng-show="bulletin.newsletters.length == 0">您还没有创建任何通知，请点击<a ng-click="bulletin.createNews()">这里</a>创建</p>
   </ul>
