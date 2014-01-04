@@ -21,6 +21,9 @@ class Controller
         )
 
       )
+    $scope.cleanFields = ->
+      $scope.app = new appPackageService
+
 
 
 
