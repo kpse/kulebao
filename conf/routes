@@ -10,6 +10,7 @@ GET           /operation                                                        
 POST          /login.do                                                          controllers.Authentication.login
 POST          /checkphonenum.do                                                  controllers.Authentication.validateNumber
 POST          /receiveBindInfo.do                                                controllers.Authentication.bindNumber
+POST          /resetpwd.do                                                       controllers.Authentication.resetPassword
 GET           /upgrade                                                           controllers.Authentication.app(version: Long)
 
 #anglarjs template pages

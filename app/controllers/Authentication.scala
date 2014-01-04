@@ -44,7 +44,7 @@ object Authentication extends Controller {
   implicit val bindResultWrites = Json.writes[BindNumberResponse]
 
 
-  def bindNumber() = Action(parse.json) {
+  def bindNumber = Action(parse.json) {
     request =>
       request.body.validate[CheckPhone].map {
         case (login) =>
@@ -60,10 +60,25 @@ object Authentication extends Controller {
     //    {"summary":"测试版本","error_code":"0","url":"http://cocobabys.oss-cn-hangzhou.aliyuncs.com/app_release/release_2.apk","size":500000,"version":"V1.1"}
     val pkg: AppPackage = AppPackage.latest
     Logger.info("latest version code = %d".format(pkg.version_code))
-    if (version < pkg.version_code){
+    if (version < pkg.version_code) {
       Ok(Json.toJson(AppPackage.response(pkg)))
     }
     else Ok(Json.toJson(AppPackage.noUpdate))
 
+  }
+
+  case class ResetPassword(account_name: String, old_password: String, new_password: String)
+
+  implicit val read1 = Json.reads[ResetPassword]
+  implicit val write3 = Json.writes[ResetPasswordResponse]
+
+  def resetPassword = Action(parse.json) {
+    request =>
+      request.body.validate[ResetPassword].map {
+        case (request) =>
+          Ok(Json.toJson(ResetPasswordResponse.handle(request)))
+      }.recoverTotal {
+        e => BadRequest("Detected error:" + JsError.toFlatJson(e))
+      }
   }
 }
