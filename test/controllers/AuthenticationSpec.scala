@@ -44,7 +44,10 @@ class AuthenticationSpec extends Specification {
     implicit val bindingWrites = Json.writes[BindingNumber]
 
     "bind phone number" in new WithApplication {
-      private val json = Json.toJson(new BindingNumber("12345", "12334", "43211"))
+      val phone = "13333333333"
+      val user_id = "12334"
+      val channel_id = "000000"
+      private val json = Json.toJson(new BindingNumber(phone, user_id, channel_id))
 
       val bindingResponse = route(FakeRequest(POST, "/receiveBindInfo.do").withJsonBody(json)).get
 
@@ -53,6 +56,10 @@ class AuthenticationSpec extends Specification {
 
       val response: JsValue = Json.parse(contentAsString(bindingResponse))
       (response \ "error_code").as[Int] must equalTo(0)
+      (response \ "account_name").as[String] must equalTo(phone)
+      (response \ "access_token").as[String] mustNotEqual empty
+      (response \ "username").as[String] mustNotEqual empty
+      (response \ "school_id").as[Int] mustNotEqual 0
     }
 
     "reject mobile when wrong password" in new WithApplication {

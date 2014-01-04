@@ -21,7 +21,7 @@ object ChangePasswordResponse {
           SQL("update accountinfo set password={new_password}, pwd_change_time={timestamp} where accountid={username}")
             .on('username -> request.account_name,
               'new_password -> md5(request.new_password),
-              'timestamp -> System.currentTimeMillis
+              'timestamp -> updateTime
             ).executeUpdate
           new ChangePasswordResponse(0, updateTime.toString)
         case code if !isValidCode(code) => new ChangePasswordResponse(1232, "")
