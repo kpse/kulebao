@@ -46,7 +46,7 @@ object Authentication extends Controller {
 
   def bindNumber = Action(parse.json) {
     request =>
-      request.body.validate[CheckPhone].map {
+      request.body.validate[BindingNumber].map {
         case (login) =>
           Ok(Json.toJson(new BindNumberResponse(0, "111111111", "袋鼠", "13408654680", 93740362)))
       }.recoverTotal {

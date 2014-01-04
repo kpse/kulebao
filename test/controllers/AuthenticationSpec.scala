@@ -30,7 +30,7 @@ class AuthenticationSpec extends Specification {
     implicit val checkWrites = Json.writes[CheckPhone]
 
     "validate phone number" in new WithApplication {
-      private val json = Json.toJson(new CheckPhone("12345", "1", "1"))
+      private val json = Json.toJson(new CheckPhone("12345"))
 
       val validateResponse = route(FakeRequest(POST, "/checkphonenum.do").withJsonBody(json)).get
 
