@@ -68,13 +68,15 @@ object Authentication extends Controller {
   }
 
   implicit val read1 = Json.reads[ChangePassword]
+  implicit val read2 = Json.reads[ResetPassword]
   implicit val write3 = Json.writes[ChangePasswordResponse]
+
 
   def resetPassword = Action(parse.json) {
     request =>
-      request.body.validate[ChangePassword].map {
+      request.body.validate[ResetPassword].map {
         case (request) =>
-          Ok(Json.toJson(ChangePasswordResponse.handle(request)))
+          Ok(Json.toJson(ChangePasswordResponse.handleReset(request)))
       }.recoverTotal {
         e => BadRequest("Detected error:" + JsError.toFlatJson(e))
       }
