@@ -24,6 +24,7 @@ object ChangePasswordResponse {
               'timestamp -> System.currentTimeMillis
             ).executeUpdate
           new ChangePasswordResponse(0, updateTime.toString)
+        case code if !isValidCode(code) => new ChangePasswordResponse(1232, "")
         case _ => new ChangePasswordResponse(1, "")
       }
   }
