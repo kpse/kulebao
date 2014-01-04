@@ -12,8 +12,8 @@ uploadService = () ->
     xhr.onloadend = (e) ->
       response = JSON.parse(e.currentTarget.response)
       successCallback({
-      url: "http://suoqin-test.u.qiniudn.com/" + response.name
-      size: response.size
+        url: "http://suoqin-test.u.qiniudn.com/" + response.hash
+        size: response.size
       })
 
 
