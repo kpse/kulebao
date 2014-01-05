@@ -1,6 +1,9 @@
 <div class="panel-body">
   <form class="form-horizontal row" role="form">
     <div class="form-group">
+      <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait" ng-src="{{child.portrait}}" alt="照片"/></div>
+    </div>
+    <div class="form-group">
       <label for="child-name" class="col-sm-2 control-label">宝宝姓名</label>
 
       <div class="col-sm-3">
@@ -18,18 +21,18 @@
       <label for="parent-gender" class="col-sm-2 control-label">性别</label>
 
       <div class="col-sm-3">
-        <div class="btn-group" ng-model="parent.gender" bs-buttons-radio>
-          <button type="button" class="btn btn-default" value="0">男</button>
+        <div class="btn-group" ng-model="child.gender" bs-buttons-radio>
           <button type="button" class="btn btn-default" value="1">女</button>
+          <button type="button" class="btn btn-default" value="0">男</button>
         </div>
       </div>
       <label for="child-birthday" class="col-sm-2 control-label">生日</label>
 
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <div class="control-group input-append">
           <input type="text" ng-model="child.birthday" data-date="en" data-date-format="yyyy-mm-dd" bs-datepicker
-                 class="form-control">
-          <button type="button" class="btn" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button>
+                 class="form-control datepicker-input">
+          <button type="button" class="btn datepicker-button" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button>
         </div>
       </div>
     </div>
@@ -43,7 +46,7 @@
       <label for="child-parent-relationship" class="col-sm-2 control-label">与宝宝关系</label>
 
       <div class="col-sm-5">
-        <div class="btn-group" ng-model="child.parent_  relationship" bs-buttons-radio>
+        <div class="btn-group" ng-model="child.relationship" bs-buttons-radio>
           <button type="button" class="btn btn-default" value="妈妈">妈妈</button>
           <button type="button" class="btn btn-default" value="爸爸">爸爸</button>
           <button type="button" class="btn btn-default" value="奶奶">奶奶</button>

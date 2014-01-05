@@ -30,11 +30,10 @@ angular.module('kulebaoAdmin')
 
 angular.module('kulebaoAdmin').directive "fileChange", ->
   linker = ($scope, element) ->
-
     # onChange, push the files to $scope.files.
     element.bind "change", (event) ->
       $scope.file = event.target.files[0]
-      $scope.$apply( -> $scope.app.file_size = $scope.file.size)
+      $scope.$apply( -> $scope.app.file_size = $scope.file.size) if ($scope.app != undefined )
 
 
   restrict: "A"

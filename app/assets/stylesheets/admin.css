@@ -11,3 +11,20 @@
 .adding-button {
   margin: 10px 10px;
 }
+
+.datepicker-input {
+  width: 71%;
+}
+
+.datepicker-button {
+  margin: -34px 18px 0 0;
+  float: right;
+}
+
+.portrait-container {
+  .portrait {
+    max-height: 220px;
+    max-width: 180px;
+    vertical-align: middle;
+  }
+}
