@@ -6,6 +6,7 @@ import play.api.Logger
 import org.apache.commons.codec.digest.DigestUtils
 import play.api.Play.current
 import java.sql.Date
+import models.helper.MD5Helper.md5
 
 case class BindingNumber(phonenum: String, user_id: String, channel_id: String)
 
@@ -48,9 +49,4 @@ object BindNumberResponse {
       }
 
   }
-
-  def md5(s: String) = {
-    DigestUtils.md5Hex(s).toUpperCase
-  }
-
 }

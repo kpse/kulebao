@@ -5,6 +5,9 @@ import anorm._
 import java.security.MessageDigest
 import play.api.Play.current
 import org.apache.commons.codec.digest.DigestUtils
+import models.helper.MD5Helper.md5
+
+case class MobileLogin(account_name: String, password: String)
 
 case class MobileLoginResponse(error_code: Int,
                                username: String,
@@ -49,9 +52,5 @@ object MobileLoginResponse {
           .on('phone -> accountId).apply().head
         (firstRow[String]("name"), accountId, accountId)
     }
-  }
-
-  def md5(s: String) = {
-    DigestUtils.md5Hex(s).toUpperCase
   }
 }

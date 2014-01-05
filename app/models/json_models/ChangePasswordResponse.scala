@@ -1,10 +1,10 @@
 package models.json_models
 
-import org.apache.commons.codec.digest.DigestUtils
 import play.api.db.DB
 import anorm._
 import play.api.Play.current
 import play.api.Logger
+import models.helper.MD5Helper.md5
 
 case class ChangePassword(account_name: String, old_password: String, new_password: String)
 
@@ -55,9 +55,6 @@ object ChangePasswordResponse {
           new ChangePasswordResponse(1, "")
       }
   }
-
-  def md5(s: String) = {
-    DigestUtils.md5Hex(s).toUpperCase
-  }
 }
+
 

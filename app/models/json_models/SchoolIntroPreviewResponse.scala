@@ -34,5 +34,4 @@ object SchoolIntro {
         new SchoolIntroDetailResponse(0, schoolId(row), Some(new SchoolIntro(schoolId(row), phone(row), timestamp(row), desc(row), logoUrl(row), name(row))))
       }
   }
-
 }

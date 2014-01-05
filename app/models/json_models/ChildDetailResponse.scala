@@ -39,7 +39,6 @@ object Children {
     if (all.isEmpty) new ChildrenResponse(1, List())
     else {
       new ChildrenResponse(0, all)
-
     }
   }
 
@@ -60,6 +59,4 @@ object Children {
         new ChildDetailResponse(0, Some(new ChildDetail(uid(row), nick(row), iconUrl(row), birthday(row), childId(row), timestamp(row))))
       }
   }
-
-
 }
