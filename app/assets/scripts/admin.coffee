@@ -21,6 +21,21 @@ class Config
         templateUrl: 'templates/admin/parents.html',
         controller: 'ParentsCtrl'
       )
+    .state('kindergarten.parents.new_adult',
+        url: '/new_adult',
+        templateUrl: 'templates/admin/add_parent_adult.html',
+        controller: 'AddAdultInfoCtrl'
+      )
+    .state('kindergarten.parents.new_child',
+        url: '/new_child',
+        templateUrl: 'templates/admin/add_parent_child.html',
+        controller: 'AddChildInfoCtrl'
+      )
+    .state('kindergarten.parents.list',
+        url: '/list',
+        templateUrl: 'templates/admin/list_parents.html',
+        controller: 'ParentsCtrl'
+      )
     .state('kindergarten.swipingcard',
         url: '/swipingcard',
         templateUrl: 'templates/admin/swipingcard.html',

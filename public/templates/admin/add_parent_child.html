@@ -1,0 +1,98 @@
+<div class="panel-body">
+  <form class="form-horizontal row" role="form">
+    <div class="form-group">
+      <label for="child-name" class="col-sm-2 control-label">宝宝姓名</label>
+
+      <div class="col-sm-3">
+        <input id="child-name" type="text" ng-model="child.name"
+               class="editing-field form-control" required/>
+      </div>
+      <label for="child-nick" class="col-sm-2 control-label">小名</label>
+
+      <div class="col-sm-3">
+        <input id="child-nick" ng-model="child.nick"
+               class="editing-field form-control" required/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="parent-gender" class="col-sm-2 control-label">性别</label>
+
+      <div class="col-sm-3">
+        <div class="btn-group" ng-model="parent.gender" bs-buttons-radio>
+          <button type="button" class="btn btn-default" value="0">男</button>
+          <button type="button" class="btn btn-default" value="1">女</button>
+        </div>
+      </div>
+      <label for="child-birthday" class="col-sm-2 control-label">生日</label>
+
+      <div class="col-sm-3">
+        <div class="control-group input-append">
+          <input type="text" ng-model="child.birthday" data-date="en" data-date-format="yyyy-mm-dd" bs-datepicker
+                 class="form-control">
+          <button type="button" class="btn" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="parent" class="col-sm-2 control-label">家长</label>
+
+      <div class="col-sm-3">
+        <input id="parent" ng-model="child.parent"
+               class="editing-field form-control" required/>
+      </div>
+      <label for="child-parent-relationship" class="col-sm-2 control-label">与宝宝关系</label>
+
+      <div class="col-sm-5">
+        <div class="btn-group" ng-model="child.parent_  relationship" bs-buttons-radio>
+          <button type="button" class="btn btn-default" value="妈妈">妈妈</button>
+          <button type="button" class="btn btn-default" value="爸爸">爸爸</button>
+          <button type="button" class="btn btn-default" value="奶奶">奶奶</button>
+          <button type="button" class="btn btn-default" value="爷爷">爷爷</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="form-group">
+      <label for="child-class" class="col-sm-2 control-label">班级</label>
+
+      <div class="col-sm-3">
+        <input id="child-class" ng-model="child.class"
+               class="editing-field form-control"/>
+      </div>
+      <label for="child-school" class="col-sm-2 control-label">学校</label>
+
+      <div class="col-sm-3">
+        <input id="child-school" ng-model="child.school"
+               class="editing-field form-control" required/>
+      </div>
+
+
+    </div>
+    <div class="form-group">
+      <label for="child-address" class="col-sm-2 control-label">家庭住址</label>
+
+      <div class="col-sm-3">
+        <input id="child-address" ng-model="child.address"
+               class="editing-field form-control"/>
+      </div>
+
+      <label for="child-hukou" class="col-sm-2 control-label">户口</label>
+
+      <div class="col-sm-3">
+        <input id="child-hukou" ng-model="child.hukou"
+               class="editing-field form-control"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="child-pic" class="col-sm-2 control-label">上传头像</label>
+
+      <div class="col-sm-3">
+        <input type="file" id="child-pic" ng-model="child.pic" file-change/>
+        <span class="help-block">上传头像到服务器</span>
+      </div>
+
+    </div>
+    <a class="btn btn-primary pull-right adding-button" ng-click="save(child)">保存</a>
+    <a class="btn btn-warning pull-right adding-button" ng-click="preview(child)">预览</a>
+  </form>
+</div>
