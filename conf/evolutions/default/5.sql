@@ -5,7 +5,7 @@ CREATE TABLE childinfo (
   name varchar(20) NOT NULL,
   child_id varchar(40) NOT NULL,
   student_id varchar(20) NOT NULL,
-  gender tinyint(4) NOT NULL DEFAULT '2',
+  gender INT NOT NULL DEFAULT 2,
   class_id int(11) NOT NULL,
   classname varchar(40) NOT NULL DEFAULT '',
   picurl varchar(128) NOT NULL DEFAULT '',

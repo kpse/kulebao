@@ -6,7 +6,7 @@ CREATE TABLE parentinfo (
   parent_id    VARCHAR(40)  NOT NULL,
   relationship VARCHAR(20)  NOT NULL,
   phone        VARCHAR(16)  NOT NULL,
-  gender       TINYINT(4)   NOT NULL DEFAULT '2',
+  gender       INT   NOT NULL DEFAULT 2,
   company      VARCHAR(200) NOT NULL DEFAULT '',
   picurl       VARCHAR(128) NOT NULL DEFAULT '',
   birthday     DATE         NOT NULL DEFAULT '1800-01-01',

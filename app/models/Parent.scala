@@ -143,7 +143,7 @@ object Parent {
       get[String]("school_id") ~
       get[String]("parentinfo.name") ~
       get[Date]("birthday") ~
-      get[Byte]("gender") ~
+      get[Int]("gender") ~
       get[String]("picurl") ~
       get[String]("schoolinfo.name") ~
       get[String]("school_id") ~
@@ -151,7 +151,7 @@ object Parent {
       get[String]("childinfo.name") ~
       get[String]("nick") ~
       get[Date]("childinfo.birthday") ~
-      get[Byte]("childinfo.gender") ~
+      get[Int]("childinfo.gender") ~
       get[String]("childinfo.picurl") ~
       get[Int]("class_id") ~
       get[String]("phone") map {
