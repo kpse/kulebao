@@ -11,7 +11,7 @@ POST          /login.do                                                         
 POST          /checkphonenum.do                                                  controllers.Authentication.validateNumber
 POST          /receiveBindInfo.do                                                controllers.Authentication.bindNumber
 POST          /resetpwd.do                                                       controllers.Authentication.resetPassword
-POST          /changepwd.do                                                       controllers.Authentication.changePassword
+POST          /changepwd.do                                                      controllers.Authentication.changePassword
 GET           /upgrade                                                           controllers.Authentication.app(version: Long)
 
 #anglarjs template pages
@@ -39,6 +39,7 @@ GET           /kindergarten/:kg/parent/:parentId/news                           
 POST          /kindergarten/:kg/parent/:parentId/news/:newsId                    controllers.ReadingNewsController.create(kg: Long, parentId: Long, newsId: Long)
 
 GET           /kindergarten/:kg/parent/:parentId/child                           controllers.ChildController.index(kg: Long, parentId: String)
+POST          /kindergarten/:kg/child                                            controllers.ChildController.create(kg: Long)
 GET           /kindergarten/:kg/parent/:parentId/child/:childId                  controllers.ChildController.show(kg: Long, parentId: String, childId: Long)
 
 GET           /kindergarten/:kg/admin/:adminId/news_reading_count/:newsId        controllers.ReadingNewsController.countReading(kg: Long, adminId: Long, newsId: Long)

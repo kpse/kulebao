@@ -70,20 +70,21 @@ angular.module('kulebaoAdmin')
 
 angular.module('kulebaoAdmin')
 .controller 'AddChildInfoCtrl',
-    ['$scope', 'parentService', '$rootScope', '$location', ($scope, Parent, $rootScope, $location) ->
+    ['$scope', 'parentService', '$rootScope', '$location', 'childService', ($scope, Parent, $rootScope, $location, Child) ->
       if $rootScope.parent is undefined
         $location.path($location.path().replace(/\/[^\/]+$/, '/list'))
       else if $rootScope.child isnt undefined
           $scope.child = $rootScope.child
       else
-        $scope.child =
+        $scope.child = new Child(
           birthday: new Date(931153123123)
           relationship: '妈妈'
           gender: 1
           portrait: '/assets/images/portrait_placeholder.png'
-          school: $rootScope.parent.kindergarten
           parent: $rootScope.parent
-          class: 101
+          class_id: 101
+          school_id: parseInt($rootScope.parent.kindergarten.school_id)
+        )
         $rootScope.child = $scope.child
 
       $scope.kindergarten.classes = [
@@ -98,4 +99,7 @@ angular.module('kulebaoAdmin')
         $location.path($location.path().replace(/\/[^\/]+$/, '/list'))
         delete $rootScope.parent
         delete $rootScope.child
+
+      $scope.save = (child) ->
+        child.$save(() -> $scope.cancelCreating())
     ]

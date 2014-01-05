@@ -17,6 +17,7 @@ CREATE TABLE childinfo (
   hukou tinyint(4) NOT NULL DEFAULT '2',
   social_id varchar(20) NOT NULL DEFAULT ''  ,
   nick varchar(20) NOT NULL DEFAULT ''  ,
+  status       TINYINT      NOT NULL DEFAULT 1,
   update_at BIGINT NOT NULL DEFAULT 0,
   PRIMARY KEY (uid)
 );
