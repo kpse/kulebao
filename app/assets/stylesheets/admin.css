@@ -28,3 +28,7 @@
     vertical-align: middle;
   }
 }
+
+.select-button.active {
+  background-color: #47a447;
+}

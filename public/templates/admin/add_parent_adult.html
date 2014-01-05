@@ -1,5 +1,5 @@
 <div class="panel-body">
-  <form class="form-horizontal row" role="form">
+  <form class="form-horizontal row" role="form" name="newAdultForm">
     <div class="form-group">
       <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait" ng-src="{{parent.portrait}}" alt="照片"/></div>
     </div>
@@ -15,16 +15,16 @@
 
       <div class="col-sm-3">
         <input id="parent-name" ng-model="parent.name"
-               class="editing-field form-control"/>
+               class="editing-field form-control" required/>
       </div>
     </div>
     <div class="form-group">
       <label for="parent-gender" class="col-sm-2 control-label">性别</label>
 
       <div class="col-sm-3">
-        <div class="btn-group" ng-model="parent.gender" bs-buttons-radio>
-          <button type="button" class="btn btn-default" value="1">女</button>
-          <button type="button" class="btn btn-default" value="0">男</button>
+        <div class="btn-group">
+          <button type="button" class="btn gender" ng-model="parent.gender" btn-radio="1">女</button>
+          <button type="button" class="btn gender" ng-model="parent.gender" btn-radio="0">男</button>
         </div>
       </div>
       <label for="parent-company" class="col-sm-2 control-label">公司</label>
@@ -55,7 +55,7 @@
         </div>
       </div>
     </div>
-    <a class="btn btn-primary pull-right adding-button"
+    <a class="btn btn-primary pull-right adding-button" ng-disabled="newAdultForm.$invalid"
        ng-href="#/kindergarten/{{kindergarten.school_id}}/parents/new_child">添加小孩</a>
   </form>
 </div>
