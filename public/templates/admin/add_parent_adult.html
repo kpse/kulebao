@@ -1,7 +1,8 @@
 <div class="panel-body">
   <form class="form-horizontal row" role="form" name="newAdultForm">
     <div class="form-group">
-      <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait" ng-src="{{parent.portrait}}" alt="照片"/></div>
+      <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait" ng-src="{{parent.portrait}}"
+                                                                    alt="照片"/></div>
     </div>
     <div class="form-group">
       <label for="parent-phone" class="col-sm-2 control-label">电话号码</label>
@@ -23,8 +24,8 @@
 
       <div class="col-sm-3">
         <div class="btn-group">
-          <button type="button" class="btn gender" ng-model="parent.gender" btn-radio="1">女</button>
-          <button type="button" class="btn gender" ng-model="parent.gender" btn-radio="0">男</button>
+          <button type="button" class="btn select-button" ng-model="parent.gender" btn-radio="1">女</button>
+          <button type="button" class="btn select-button" ng-model="parent.gender" btn-radio="0">男</button>
         </div>
       </div>
       <label for="parent-company" class="col-sm-2 control-label">公司</label>
@@ -61,3 +62,4 @@
        ng-click="cancelCreating()">取消</a>
   </form>
 </div>
+

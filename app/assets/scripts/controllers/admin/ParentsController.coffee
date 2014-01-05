@@ -49,7 +49,7 @@ angular.module('kulebaoAdmin')
 
 angular.module('kulebaoAdmin')
 .controller 'AddAdultInfoCtrl', ['$scope', 'parentService', '$rootScope', '$location', ($scope, Parent, $rootScope, $location) ->
-    if $rootScope.parent != undefined
+    if $rootScope.parent isnt undefined
       $scope.parent = $rootScope.parent
     else
       $scope.parent = new Parent({school_id: $scope.kindergarten.name})
@@ -71,8 +71,10 @@ angular.module('kulebaoAdmin')
 angular.module('kulebaoAdmin')
 .controller 'AddChildInfoCtrl',
     ['$scope', 'parentService', '$rootScope', '$location', ($scope, Parent, $rootScope, $location) ->
-      if $rootScope.child != undefined
-        $scope.child = $rootScope.child
+      if $rootScope.parent is undefined
+        $location.path($location.path().replace(/\/[^\/]+$/, '/list'))
+      else if $rootScope.child isnt undefined
+          $scope.child = $rootScope.child
       else
         $scope.child =
           birthday: new Date(931153123123)
@@ -88,6 +90,9 @@ angular.module('kulebaoAdmin')
         {name: '西瓜班', id: 100},
         {name: '核桃班', id: 101}
       ]
+
+      $scope.getClassName = (id) ->
+        _.find($scope.kindergarten.classes, (c)-> c.id is id );
 
       $scope.cancelCreating = ->
         $location.path($location.path().replace(/\/[^\/]+$/, '/list'))

@@ -1,7 +1,8 @@
 <div class="panel-body">
   <form class="form-horizontal row" role="form" name="newChildForm">
     <div class="form-group">
-      <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait" ng-src="{{child.portrait}}" alt="照片"/></div>
+      <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait" ng-src="{{child.portrait}}"
+                                                                    alt="照片"/></div>
     </div>
     <div class="form-group">
       <label for="child-name" class="col-sm-2 control-label">宝宝姓名</label>
@@ -59,7 +60,9 @@
       <label for="child-class" class="col-sm-2 control-label">班级</label>
 
       <div class="col-sm-3">
-        <select class="form-control" ng-model="child.class" ng-options="value.id as value.name for (key, value) in kindergarten.classes" data-style="btn-primary"></select>
+        <select class="form-control" ng-model="child.class"
+                ng-options="value.id as value.name for (key, value) in kindergarten.classes"
+                data-style="btn-primary"></select>
       </div>
       <label for="child-school" class="col-sm-2 control-label">学校</label>
 
@@ -93,11 +96,148 @@
       </div>
 
     </div>
-    <a class="btn btn-primary pull-right adding-button" ng-disabled="newChildForm.$invalid" ng-click="save(child)">保存</a>
-    <a class="btn btn-warning pull-right adding-button" ng-disabled="newChildForm.$invalid" ng-click="preview(child)">预览</a>
+    <a class="btn btn-primary pull-right adding-button" ng-disabled="newChildForm.$invalid"
+       ng-click="save(child)">保存</a>
+    <a class="btn btn-warning pull-right adding-button" ng-disabled="newChildForm.$invalid" data-toggle="modal"
+       data-target="#myModal">预览</a>
     <a class="btn btn-info pull-right adding-button"
        ng-href="#/kindergarten/{{kindergarten.school_id}}/parents/new_adult">返回</a>
     <a class="btn btn-default pull-right adding-button"
        ng-click="cancelCreating()">取消</a>
   </form>
 </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     ng-controller="AddParentCtrl">
+  <div class="modal-dialog creating-summary">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">新增信息预览</h4>
+      </div>
+      <div class="modal-body">
+        <div class="well">
+          <form class="form-horizontal row" role="form">
+            <h3 class="summary-title">家长信息</h3>
+
+            <div class="form-group">
+              <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait-preview"
+                                                                            ng-src="{{child.parent.portrait}}"
+                                                                            alt="照片"/></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">电话号码</label>
+
+              <div class="col-sm-3">
+                <p class="form-control-static">{{child.parent.phone}}</p>
+              </div>
+              <label class="col-sm-2 control-label">家长姓名</label>
+
+              <div class="col-sm-3">
+                <p class="form-control-static">{{child.parent.name}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">性别</label>
+
+              <div class="col-sm-3">
+                <p class="form-control-static">{{child.parent.gender == 0 ? '男': '女'}}</p>
+              </div>
+              <label class="col-sm-2 control-label">公司</label>
+
+              <div class="col-sm-3">
+                <p class="form-control-static">{{child.parent.company}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+
+              <label class="col-sm-2 control-label">生日</label>
+
+              <div class="col-sm-4">
+                <div class="control-group input-append">
+                  <p class="form-control-static">{{child.parent.birthday | date: 'yyyy年MM月dd日'}}</p>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="well">
+          <form class="form-horizontal row" role="form">
+            <h3 class="summary-title">宝宝信息</h3>
+
+            <div class="form-group">
+              <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait-preview"
+                                                                            ng-src="{{child.portrait}}"
+                                                                            alt="照片"/></div>
+            </div>
+            <div class="form-group">
+              <label for="child-name" class="col-sm-2 control-label">宝宝姓名</label>
+
+              <div class="col-sm-3">
+                <p class="form-control-static">{{child.name}}</p>
+              </div>
+              <label for="child-nick" class="col-sm-2 control-label">小名</label>
+
+              <div class="col-sm-3">
+                <p class="form-control-static">{{child.nick}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">性别</label>
+
+              <div class="col-sm-3">
+                <p class="form-control-static">{{child.gender == 0 ? '男孩': '女孩'}}</p>
+              </div>
+              <label class="col-sm-2 control-label">生日</label>
+
+              <div class="col-sm-4">
+                <div class="control-group input-append">
+                  <p class="form-control-static">{{child.birthday | date: 'yyyy年MM月dd日'}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">家长</label>
+
+              <div class="col-sm-7">
+                <p class="form-control-static">{{child.parent.name}}是{{child.gender == 0 ? '他':
+                  '她'}}的{{child.relationship}}</p>
+              </div>
+
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">班级</label>
+
+              <div class="col-sm-3">
+                <p class="form-control-static">{{getClassName(child.class).name}}</p>
+              </div>
+              <label class="col-sm-2 control-label">学校</label>
+
+              <div class="col-sm-3">
+                <p class="form-control-static">{{child.school.name}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">家庭住址</label>
+
+              <div class="col-sm-3">
+                <p class="form-control-static">{{child.address}}</p>
+              </div>
+
+              <label for="child-hukou" class="col-sm-2 control-label">户口</label>
+
+              <div class="col-sm-3">
+                <p class="form-control-static">{{child.hukou}}</p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
