@@ -7,8 +7,7 @@ import models.helper.FieldHelper.{uid, nick, iconUrl, birthday, timestamp, child
 import play.api.Play.current
 import java.util.Date
 import models.json_models.BindNumberResponse.generateNewPassword
-import java.text.SimpleDateFormat
-import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
+import org.joda.time.format.DateTimeFormat
 import org.joda.time.DateTime
 
 case class ChildResponse(error_code: Int,
