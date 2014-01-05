@@ -1,20 +1,20 @@
 <div class="panel-body">
   <form class="form-horizontal row" role="form" name="newChildForm">
     <div class="form-group">
-      <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait" ng-src="{{child.portrait}}"
+      <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait" ng-src="{{parent.child.portrait}}"
                                                                     alt="照片"/></div>
     </div>
     <div class="form-group">
       <label for="child-name" class="col-sm-2 control-label">宝宝姓名</label>
 
       <div class="col-sm-3">
-        <input id="child-name" type="text" ng-model="child.name"
+        <input id="child-name" type="text" ng-model="parent.child.name"
                class="editing-field form-control" ng-bk-focus required/>
       </div>
       <label for="child-nick" class="col-sm-2 control-label">小名</label>
 
       <div class="col-sm-3">
-        <input id="child-nick" ng-model="child.nick"
+        <input id="child-nick" ng-model="parent.child.nick"
                class="editing-field form-control" required/>
       </div>
     </div>
@@ -23,15 +23,15 @@
 
       <div class="col-sm-3">
         <div class="btn-group">
-          <button type="button" class="btn gender select-button" ng-model="child.gender" btn-radio="1">女</button>
-          <button type="button" class="btn gender select-button" ng-model="child.gender" btn-radio="0">男</button>
+          <button type="button" class="btn gender select-button" ng-model="parent.child.gender" btn-radio="1">女</button>
+          <button type="button" class="btn gender select-button" ng-model="parent.child.gender" btn-radio="0">男</button>
         </div>
       </div>
       <label for="child-birthday" class="col-sm-2 control-label">生日</label>
 
       <div class="col-sm-4">
         <div class="control-group input-append">
-          <input type="text" ng-model="child.birthday" data-date="en" data-date-format="yyyy-mm-dd" bs-datepicker
+          <input type="text" ng-model="parent.child.birthday" data-date="en" data-date-format="yyyy-mm-dd" bs-datepicker
                  class="form-control datepicker-input">
           <button type="button" class="btn datepicker-button" data-toggle="datepicker"><i
             class="glyphicon glyphicon-calendar"></i></button>
@@ -42,16 +42,16 @@
       <label for="child-parent" class="col-sm-2 control-label">家长</label>
 
       <div class="col-sm-3">
-        <p class="form-control-static">{{child.parent.name}}</p>
+        <p class="form-control-static">{{parent.name}}</p>
       </div>
       <label for="child-parent-relationship" class="col-sm-2 control-label">与宝宝关系</label>
 
       <div class="col-sm-5">
         <div class="btn-group">
-          <button type="button" class="btn select-button" ng-model="child.relationship" btn-radio="'妈妈'">妈妈</button>
-          <button type="button" class="btn select-button" ng-model="child.relationship" btn-radio="'爸爸'">爸爸</button>
-          <button type="button" class="btn select-button" ng-model="child.relationship" btn-radio="'奶奶'">奶奶</button>
-          <button type="button" class="btn select-button" ng-model="child.relationship" btn-radio="'爷爷'">爷爷</button>
+          <button type="button" class="btn select-button" ng-model="parent.relationship" btn-radio="'妈妈'">妈妈</button>
+          <button type="button" class="btn select-button" ng-model="parent.relationship" btn-radio="'爸爸'">爸爸</button>
+          <button type="button" class="btn select-button" ng-model="parent.relationship" btn-radio="'奶奶'">奶奶</button>
+          <button type="button" class="btn select-button" ng-model="parent.relationship" btn-radio="'爷爷'">爷爷</button>
         </div>
       </div>
 
@@ -60,7 +60,7 @@
       <label for="child-class" class="col-sm-2 control-label">班级</label>
 
       <div class="col-sm-3">
-        <select class="form-control" ng-model="child.class_id"
+        <select class="form-control" ng-model="parent.child.class_id"
                 ng-options="value.id as value.name for (key, value) in kindergarten.classes"
                 data-style="btn-primary"></select>
       </div>
@@ -76,14 +76,14 @@
       <label for="child-address" class="col-sm-2 control-label">家庭住址</label>
 
       <div class="col-sm-3">
-        <input id="child-address" ng-model="child.address"
+        <input id="child-address" ng-model="parent.child.address"
                class="editing-field form-control"/>
       </div>
 
       <label for="child-hukou" class="col-sm-2 control-label">户口</label>
 
       <div class="col-sm-3">
-        <input id="child-hukou" ng-model="child.hukou"
+        <input id="child-hukou" ng-model="parent.child.hukou"
                class="editing-field form-control"/>
       </div>
     </div>
@@ -91,13 +91,13 @@
       <label for="child-pic" class="col-sm-2 control-label">上传头像</label>
 
       <div class="col-sm-3">
-        <input type="file" id="child-pic" ng-model="child.pic"/>
+        <input type="file" id="child-pic" ng-model="parent.child.pic"/>
         <span class="help-block">上传头像到服务器</span>
       </div>
 
     </div>
     <a class="btn btn-primary pull-right adding-button" ng-disabled="newChildForm.$invalid"
-       ng-click="save(child)">保存</a>
+       ng-click="save(parent)">保存</a>
     <a class="btn btn-warning pull-right adding-button" ng-disabled="newChildForm.$invalid" data-toggle="modal"
        data-target="#myModal">预览</a>
     <a class="btn btn-info pull-right adding-button"
@@ -120,31 +120,31 @@
 
             <div class="form-group">
               <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait-preview"
-                                                                            ng-src="{{child.parent.portrait}}"
+                                                                            ng-src="{{parent.portrait}}"
                                                                             alt="照片"/></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">电话号码</label>
 
               <div class="col-sm-3">
-                <p class="form-control-static">{{child.parent.phone}}</p>
+                <p class="form-control-static">{{parent.phone}}</p>
               </div>
               <label class="col-sm-2 control-label">家长姓名</label>
 
               <div class="col-sm-3">
-                <p class="form-control-static">{{child.parent.name}}</p>
+                <p class="form-control-static">{{parent.name}}</p>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">性别</label>
 
               <div class="col-sm-3">
-                <p class="form-control-static">{{child.parent.gender == 0 ? '男': '女'}}</p>
+                <p class="form-control-static">{{parent.gender == 0 ? '男': '女'}}</p>
               </div>
               <label class="col-sm-2 control-label">公司</label>
 
               <div class="col-sm-3">
-                <p class="form-control-static">{{child.parent.company}}</p>
+                <p class="form-control-static">{{parent.company}}</p>
               </div>
             </div>
             <div class="form-group">
@@ -153,7 +153,7 @@
 
               <div class="col-sm-4">
                 <div class="control-group input-append">
-                  <p class="form-control-static">{{child.parent.birthday | date: 'yyyy年MM月dd日'}}</p>
+                  <p class="form-control-static">{{parent.birthday | date: 'yyyy年MM月dd日'}}</p>
                 </div>
               </div>
             </div>
@@ -166,32 +166,32 @@
 
             <div class="form-group">
               <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait-preview"
-                                                                            ng-src="{{child.portrait}}"
+                                                                            ng-src="{{parent.child.portrait}}"
                                                                             alt="照片"/></div>
             </div>
             <div class="form-group">
               <label for="child-name" class="col-sm-2 control-label">宝宝姓名</label>
 
               <div class="col-sm-3">
-                <p class="form-control-static">{{child.name}}</p>
+                <p class="form-control-static">{{parent.child.name}}</p>
               </div>
               <label for="child-nick" class="col-sm-2 control-label">小名</label>
 
               <div class="col-sm-3">
-                <p class="form-control-static">{{child.nick}}</p>
+                <p class="form-control-static">{{parent.child.nick}}</p>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">性别</label>
 
               <div class="col-sm-3">
-                <p class="form-control-static">{{child.gender == 0 ? '男孩': '女孩'}}</p>
+                <p class="form-control-static">{{parent.child.gender == 0 ? '男孩': '女孩'}}</p>
               </div>
               <label class="col-sm-2 control-label">生日</label>
 
               <div class="col-sm-4">
                 <div class="control-group input-append">
-                  <p class="form-control-static">{{child.birthday | date: 'yyyy年MM月dd日'}}</p>
+                  <p class="form-control-static">{{parent.child.birthday | date: 'yyyy年MM月dd日'}}</p>
                 </div>
               </div>
             </div>
@@ -199,8 +199,8 @@
               <label class="col-sm-2 control-label">家长</label>
 
               <div class="col-sm-7">
-                <p class="form-control-static">{{child.parent.name}}是{{child.gender == 0 ? '他':
-                  '她'}}的{{child.relationship}}</p>
+                <p class="form-control-static">{{parent.name}}是{{parent.child.gender == 0 ? '他':
+                  '她'}}的{{parent.relationship}}</p>
               </div>
 
             </div>
@@ -208,25 +208,25 @@
               <label class="col-sm-2 control-label">班级</label>
 
               <div class="col-sm-3">
-                <p class="form-control-static">{{getClassName(child.class_id).name}}</p>
+                <p class="form-control-static">{{getClassName(parent.child.class_id).name}}</p>
               </div>
               <label class="col-sm-2 control-label">学校</label>
 
               <div class="col-sm-3">
-                <p class="form-control-static">{{child.parent.kindergarten.name}}</p>
+                <p class="form-control-static">{{parent.kindergarten.name}}</p>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">家庭住址</label>
 
               <div class="col-sm-3">
-                <p class="form-control-static">{{child.address}}</p>
+                <p class="form-control-static">{{parent.child.address}}</p>
               </div>
 
               <label for="child-hukou" class="col-sm-2 control-label">户口</label>
 
               <div class="col-sm-3">
-                <p class="form-control-static">{{child.hukou}}</p>
+                <p class="form-control-static">{{parent.child.hukou}}</p>
               </div>
             </div>
           </form>

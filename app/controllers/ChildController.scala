@@ -12,6 +12,7 @@ import play.api.data.Forms._
 import models.json_models.ChildrenResponse
 import models.json_models.ChildDetailResponse
 import models.json_models.ChildDetail
+import models.{School, ParentInfo}
 
 object ChildController extends Controller {
 
@@ -25,22 +26,5 @@ object ChildController extends Controller {
 
   def index(kg: Long, phone: String) = Action {
     Ok(Json.toJson(Children.index(kg, phone)))
-  }
-
-  implicit val read3 = Json.reads[School]
-  implicit val read2 = Json.reads[ParentInfo]
-  implicit val read1 = Json.reads[CreateChild]
-
-  def create(kg: Long) = Action(parse.json) {
-    request =>
-      Logger.info(request.body.toString)
-      request.body.validate[CreateChild].map {
-        case (child) =>
-          Logger.info(child.toString)
-          val created = Children.create(kg, child)
-          Ok(Json.toJson(Children.show(kg.toLong, child.parent.phone, created.id)))
-      }.recoverTotal {
-        e => BadRequest("Detected error:" + JsError.toFlatJson(e))
-      }
   }
 }

@@ -9,6 +9,7 @@ import java.util.Date
 import models.json_models.BindNumberResponse.generateNewPassword
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.DateTime
+import models.ParentInfo
 
 case class ChildResponse(error_code: Int,
                          username: String,
@@ -22,73 +23,10 @@ case class ChildDetail(id: Long, nick: String, icon_url: String, birthday: Long,
 
 case class ChildDetailResponse(error_code: Int, child_info: Option[ChildDetail])
 
-case class School(school_id: Long, name: String)
-case class ParentInfo(birthday: String, gender: Int, portrait: String, name: String, phone: String, kindergarten: School)
-case class CreateChild(name: String, nick: String, birthday: String, relationship: String, gender: Int, portrait: String, parent: ParentInfo, class_id: Int)
+case class ChildInfo(name: String, nick: String, birthday: String, gender: Int, portrait: String, class_id: Int)
 
 
 object Children {
-  def create(kg: Long, child: CreateChild) = DB.withConnection {
-    implicit c =>
-      val parent = child.parent
-      val timestamp = System.currentTimeMillis
-      val parent_id = "2_%d".format(timestamp)
-      SQL("INSERT INTO parentinfo(name, parent_id, relationship, phone, gender, company, picurl, birthday, school_id, status, update_at) " +
-        "VALUES ({name},{parent_id},{relationship},{phone},{gender},{company},{picurl},{birthday},{school_id},{status},{timestamp})")
-        .on('name -> parent.name,
-          'parent_id -> parent_id,
-          'relationship -> child.relationship,
-          'phone -> parent.phone,
-          'gender -> parent.gender,
-          'company -> "",
-          'picurl -> parent.portrait,
-          'birthday -> getDateOnly(parent.birthday),
-          'school_id -> parent.kindergarten.school_id,
-          'status -> 1,
-          'timestamp -> timestamp).executeInsert()
-
-      val child_id = "1_%d".format(timestamp)
-      val child_uid : Option[Long] = SQL("INSERT INTO childinfo(name, child_id, student_id, gender, classname, picurl, birthday, indate, school_id, address, stu_type, hukou, social_id, nick, status, update_at, class_id) " +
-        "VALUES ({name},{child_id},{student_id},{gender},{classname},{picurl},{birthday},{indate},{school_id},{address},{stu_type},{hukou},{social_id},{nick},{status},{timestamp},{class_id})")
-        .on('name -> "",
-          'child_id -> child_id,
-          'student_id -> "%d".format(timestamp).take(5),
-          'gender -> child.gender,
-          'classname -> "水果班",
-          'picurl -> child.portrait,
-          'birthday -> getDateOnly(child.birthday),
-          'indate -> getDateOnly(child.birthday),
-          'school_id -> parent.kindergarten.school_id,
-          'address -> "address",
-          'stu_type -> 2,
-          'hukou -> 1,
-          'social_id -> "social_id",
-          'nick -> child.nick,
-          'status -> 1,
-          'class_id -> child.class_id,
-          'timestamp -> timestamp).executeInsert()
-
-      SQL("INSERT INTO relationmap(child_id, parent_id) VALUES ({child_id},{parent_id})")
-        .on('child_id -> child_id,
-          'parent_id -> parent_id
-        ).executeInsert()
-      SQL("INSERT INTO accountinfo(accountid, password, pushid, active, pwd_change_time) " +
-        "VALUES ({accountid},{password},'',0,0)")
-    .on('accountid -> parent.phone,
-        'password -> generateNewPassword(parent.phone)).executeInsert()
-      new ChildDetail(child_uid.get, child.nick, child.portrait,
-        parseDate(child.birthday).getMillis,
-        timestamp, child.class_id)
-  }
-
-
-  def parseDate(dateString: String): DateTime = {
-    DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.000Z").parseDateTime(dateString)
-  }
-  def getDateOnly(dateString: String): String = {
-    parseDate(dateString).toString(DateTimeFormat.forPattern("yyyy-MM-dd"))
-  }
-
   val simple = {
     get[Long]("uid") ~
       get[String]("nick") ~
