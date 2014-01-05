@@ -47,17 +47,30 @@ angular.module('kulebaoAdmin')
   ]
 
 angular.module('kulebaoAdmin')
-.controller 'AddAdultInfoCtrl', ['$scope', 'parentService', '$timeout', ($scope, Parent, $timeout) ->
-    $scope.parent = new Parent({school_id: $scope.kindergarten.name})
-    $scope.parent.birthday = new Date
-    $scope.parent.gender = 1
-    $scope.parent.portrait = '/assets/images/portrait_placeholder.png'
+.controller 'AddAdultInfoCtrl', ['$scope', 'parentService', '$rootScope', ($scope, Parent, $rootScope) ->
+    if $rootScope.parent != undefined
+      $scope.parent = $rootScope.parent
+    else
+      $scope.parent = new Parent({school_id: $scope.kindergarten.name})
+      $scope.parent.birthday = new Date(10123123123)
+      $scope.parent.gender = 1
+      $scope.parent.portrait = '/assets/images/portrait_placeholder.png'
+      $scope.parent.name = '马大帅'
+      $scope.parent.kindergarten = name : '石家庄火车站幼儿园'
+      $rootScope.parent = $scope.parent
+
   ]
 
 angular.module('kulebaoAdmin')
-.controller 'AddChildInfoCtrl', ['$scope', 'parentService', '$timeout', ($scope, Parent, $timeout) ->
+.controller 'AddChildInfoCtrl', ['$scope', 'parentService', '$rootScope', ($scope, Parent, $rootScope) ->
     $scope.child =
+      birthday : new Date(931153123123)
       relationship: '妈妈'
       gender : 1
       portrait : '/assets/images/portrait_placeholder.png'
+      school : $rootScope.parent.kindergarten
+      parent : $rootScope.parent
+      class : 101
+
+    $scope.kindergarten.classes = [{name: '西瓜班', id: 100}, {name: '核桃班', id: 101}]
   ]

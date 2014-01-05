@@ -9,7 +9,7 @@
       <div class="col-sm-3">
         <input id="parent-phone" type="text" ng-model="parent.phone"
                ui-mask="{{'999-9999-9999'}}"
-               class="editing-field form-control"/>
+               class="editing-field form-control" ng-bk-focus required/>
       </div>
       <label for="parent-name" class="col-sm-2 control-label">家长姓名</label>
 
@@ -40,7 +40,7 @@
       <label for="parent-pic" class="col-sm-2 control-label">上传头像</label>
 
       <div class="col-sm-3">
-        <input type="file" id="parent-pic" ng-model="parent.pic" file-change/>
+        <input type="file" id="parent-pic" ng-model="parent.pic"/>
         <span class="help-block">上传头像到服务器</span>
       </div>
 
