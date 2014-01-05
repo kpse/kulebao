@@ -59,7 +59,7 @@
       <label for="child-class" class="col-sm-2 control-label">班级</label>
 
       <div class="col-sm-3">
-        <select class="form-control" ng-model="child.class" ng-options="value.id as value.name for (key, value) in kindergarten.classes" data-style="btn-primary" bs-select></select>
+        <select class="form-control" ng-model="child.class" ng-options="value.id as value.name for (key, value) in kindergarten.classes" data-style="btn-primary"></select>
       </div>
       <label for="child-school" class="col-sm-2 control-label">学校</label>
 
@@ -95,9 +95,9 @@
     </div>
     <a class="btn btn-primary pull-right adding-button" ng-disabled="newChildForm.$invalid" ng-click="save(child)">保存</a>
     <a class="btn btn-warning pull-right adding-button" ng-disabled="newChildForm.$invalid" ng-click="preview(child)">预览</a>
-    <a class="btn btn-primary pull-right adding-button"
+    <a class="btn btn-info pull-right adding-button"
        ng-href="#/kindergarten/{{kindergarten.school_id}}/parents/new_adult">返回</a>
-    <a class="btn btn-primary pull-right adding-button"
+    <a class="btn btn-default pull-right adding-button"
        ng-click="cancelCreating()">取消</a>
   </form>
 </div>

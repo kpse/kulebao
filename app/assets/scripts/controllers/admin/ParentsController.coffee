@@ -48,7 +48,7 @@ angular.module('kulebaoAdmin')
   ]
 
 angular.module('kulebaoAdmin')
-.controller 'AddAdultInfoCtrl', ['$scope', 'parentService', '$rootScope', ($scope, Parent, $rootScope) ->
+.controller 'AddAdultInfoCtrl', ['$scope', 'parentService', '$rootScope', '$location', ($scope, Parent, $rootScope, $location) ->
     if $rootScope.parent != undefined
       $scope.parent = $rootScope.parent
     else
@@ -62,6 +62,10 @@ angular.module('kulebaoAdmin')
         school_id: 93740362
       $rootScope.parent = $scope.parent
 
+    $scope.cancelCreating = ->
+      $location.path($location.path().replace(/\/[^\/]+$/, '/list'))
+      delete $rootScope.parent
+      delete $rootScope.child
   ]
 
 angular.module('kulebaoAdmin')
@@ -84,7 +88,9 @@ angular.module('kulebaoAdmin')
         {name: '西瓜班', id: 100},
         {name: '核桃班', id: 101}
       ]
+
       $scope.cancelCreating = ->
-        $location.path('/kindergarten/' + $scope.child.school.school_id + '/parents/list')
+        $location.path($location.path().replace(/\/[^\/]+$/, '/list'))
         delete $rootScope.parent
+        delete $rootScope.child
     ]
