@@ -32,8 +32,8 @@ DELETE        /kindergarten/:kg/admin/:adminId/news/:newsId                     
 
 GET           /kindergarten/:kg/parent                                           controllers.ParentController.index(kg: Long)
 POST          /kindergarten/:kg/parent                                           controllers.ParentController.create(kg: Long)
-GET           /kindergarten/:kg/parent/:parentId                                    controllers.ParentController.show(kg: Long, parentId: String)
-POST           /kindergarten/:kg/parent/:parentId                                    controllers.ParentController.update(kg: Long, parentId: String)
+GET           /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.show(kg: Long, parentId: String)
+POST          /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.update(kg: Long, parentId: String)
 DELETE        /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.delete(kg: Long, parentId: Long)
 
 GET           /kindergarten/:kg/parent/:parentId/news                            controllers.ReadingNewsController.index(kg: Long, parentId: String)
@@ -52,6 +52,8 @@ GET           /kindergarten/:kg/class/:classId/schedule/:scheduleId             
 
 GET           /kindergarten/:kg/cookbook/preview                                 controllers.CookbookController.preview(kg: Long)
 GET           /kindergarten/:kg/cookbook/:cookbookId                             controllers.CookbookController.show(kg: Long, cookbookId: Long)
+
+POST          /kindergarten/:kg/check                                            controllers.CheckInController.create(kg: Long)
 
 GET           /ws/swipe                                                          controllers.WSController.call
 POST          /ws/swipe                                                          controllers.WSController.sendMessage

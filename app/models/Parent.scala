@@ -50,8 +50,8 @@ object Parent {
       Logger.info("child_id = %s".format(childId))
       SQL("update childinfo set name={name}, gender={gender}, " +
         "picurl={picurl}, birthday={birthday}, indate={indate}, " +
-        "nick={nick}, update_at={timestamp}, class_id={class_id}" +
-        "where child_id={child_id}")
+        "nick={nick}, update_at={timestamp}, class_id={class_id} " +
+        " where child_id={child_id}")
         .on('name -> child.name,
           'gender -> child.gender,
           'picurl -> child.portrait,
