@@ -19,7 +19,7 @@ object CheckInController extends Controller {
   def create(kg: Long) = Action.async(parse.json) {
     request =>
       request.body.validate[CheckInfo].map {
-        case check =>
+        case (check) =>
           val notification = CheckingMessage.convert(check)
           notification match {
             case Some(c) =>
@@ -33,9 +33,7 @@ object CheckInController extends Controller {
                 Ok(Json.toJson(new CheckingInAndOutResponse(1, "未找到与卡号(%s)匹配的数据。".format(check.card_no))))
               }
           }
-        case _ => Future {
-          BadRequest("No such message.")
-        }
+
       }.getOrElse(Future {
         NotFound
       })
