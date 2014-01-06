@@ -21,15 +21,15 @@ class Config
         templateUrl: 'templates/admin/parents.html',
         controller: 'ParentsCtrl'
       )
-    .state('kindergarten.parents.new_adult',
-        url: '/new_adult',
+    .state('kindergarten.parents.edit_adult',
+        url: '/edit_adult',
         templateUrl: 'templates/admin/add_parent_adult.html',
-        controller: 'AddAdultInfoCtrl'
+        controller: 'EditParentCtrl'
       )
-    .state('kindergarten.parents.new_child',
-        url: '/new_child',
+    .state('kindergarten.parents.edit_child',
+        url: '/edit_child',
         templateUrl: 'templates/admin/add_parent_child.html',
-        controller: 'AddChildInfoCtrl'
+        controller: 'EditParentCtrl'
       )
     .state('kindergarten.parents.list',
         url: '/list',

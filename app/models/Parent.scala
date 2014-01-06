@@ -10,6 +10,7 @@ import models.json_models.ChildInfo
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import java.util.Date
+import play.Logger
 
 case class Parent(id: Long, schoolId: Long, name: String, phone: String)
 
@@ -31,7 +32,7 @@ object Parent {
       SQL("update parentinfo set name={name}, " +
         "relationship={relationship}, phone={phone}, " +
         "gender={gender}, company={company}, picurl={picurl}, birthday={birthday}, " +
-        "school_id={school_id}, update_at={timestamp} where uid={uid})")
+        "update_at={timestamp} where uid={uid}")
         .on('name -> parent.name,
           'relationship -> parent.relationship,
           'phone -> parent.phone,
@@ -39,21 +40,16 @@ object Parent {
           'company -> "",
           'picurl -> parent.portrait,
           'birthday -> getDateOnly(parent.birthday),
-          'school_id -> parent.kindergarten.school_id,
           'uid -> parent.id,
           'timestamp -> timestamp).executeUpdate()
 
-
-      val getChildId = get[String]("child_id") map {
-        case childId => childId
-      }
-
       val childId = SQL("select child_id from relationmap r, parentinfo p where p.parent_id = r.parent_id and p.uid={uid}")
         .on('uid -> parent.id
-        ).as(getChildId singleOpt)
+        ).as(get[String]("child_id") singleOpt)
 
+      Logger.info("child_id = %s".format(childId))
       SQL("update childinfo set name={name}, gender={gender}, " +
-        "classname={classname}, picurl={picurl}, birthday={birthday}, indate={indate}, " +
+        "picurl={picurl}, birthday={birthday}, indate={indate}, " +
         "nick={nick}, update_at={timestamp}, class_id={class_id}" +
         "where child_id={child_id}")
         .on('name -> child.name,
@@ -96,9 +92,9 @@ object Parent {
           'school_id -> parent.kindergarten.school_id,
           'status -> 1,
           'timestamp -> timestamp).executeInsert()
-
+      Logger.info("created parent %s".format(createdId))
       val child_id = "1_%d".format(timestamp)
-      SQL("INSERT INTO childinfo(name, child_id, student_id, gender, classname, picurl, birthday, indate, school_id, address, stu_type, hukou, social_id, nick, status, update_at, class_id) " +
+      val childUid = SQL("INSERT INTO childinfo(name, child_id, student_id, gender, classname, picurl, birthday, indate, school_id, address, stu_type, hukou, social_id, nick, status, update_at, class_id) " +
         "VALUES ({name},{child_id},{student_id},{gender},{classname},{picurl},{birthday},{indate},{school_id},{address},{stu_type},{hukou},{social_id},{nick},{status},{timestamp},{class_id})")
         .on('name -> child.name,
           'child_id -> child_id,
@@ -117,15 +113,17 @@ object Parent {
           'status -> 1,
           'class_id -> child.class_id,
           'timestamp -> timestamp).executeInsert()
-
-      SQL("INSERT INTO relationmap(child_id, parent_id) VALUES ({child_id},{parent_id})")
+      Logger.info("created childinfo %s".format(childUid))
+      val relationmapUid = SQL("INSERT INTO relationmap(child_id, parent_id) VALUES ({child_id},{parent_id})")
         .on('child_id -> child_id,
           'parent_id -> parent_id
         ).executeInsert()
-      SQL("INSERT INTO accountinfo(accountid, password, pushid, active, pwd_change_time) " +
+      Logger.info("created relationmap %s".format(relationmapUid))
+      val accountinfoUid = SQL("INSERT INTO accountinfo(accountid, password, pushid, active, pwd_change_time) " +
         "VALUES ({accountid},{password},'',0,0)")
         .on('accountid -> parent.phone,
           'password -> generateNewPassword(parent.phone)).executeInsert()
+      Logger.info("created accountinfo %s".format(accountinfoUid))
       findById(kg)(createdId.getOrElse(-1))
   }
 
@@ -139,7 +137,7 @@ object Parent {
   }
 
   val withRelationship = {
-    get[Long]("uid") ~
+    get[Long]("parentinfo.uid") ~
       get[String]("school_id") ~
       get[String]("parentinfo.name") ~
       get[Date]("birthday") ~
