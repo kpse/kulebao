@@ -140,12 +140,12 @@ object Parent {
     get[Long]("parentinfo.uid") ~
       get[String]("school_id") ~
       get[String]("parentinfo.name") ~
-      get[Date]("birthday") ~
-      get[Int]("gender") ~
-      get[String]("picurl") ~
+      get[Date]("parentinfo.birthday") ~
+      get[Int]("parentinfo.gender") ~
+      get[String]("parentinfo.picurl") ~
       get[String]("schoolinfo.name") ~
-      get[String]("school_id") ~
-      get[String]("relationship") ~
+      get[String]("parentinfo.school_id") ~
+      get[String]("parentinfo.relationship") ~
       get[String]("childinfo.name") ~
       get[String]("nick") ~
       get[Date]("childinfo.birthday") ~
