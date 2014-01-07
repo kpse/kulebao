@@ -41,7 +41,7 @@
       <label for="parent-pic" class="col-sm-2 control-label">上传头像</label>
 
       <div class="col-sm-3">
-        <input type="file" id="parent-pic" ng-model="parent.pic"/>
+        <input type="file" id="parent-pic" ng-model="parent.pic" fileupload="parentPic"/>
         <span class="help-block">上传头像到服务器</span>
       </div>
 
@@ -57,7 +57,7 @@
       </div>
     </div>
     <a class="btn btn-primary pull-right adding-button" ng-disabled="newAdultForm.$invalid"
-       ng-href="#/kindergarten/{{kindergarten.school_id}}/parents/edit_child">编辑宝宝信息</a>
+       ng-click="nextPage(parent, parentPic)">编辑宝宝信息</a>
     <a class="btn btn-default pull-right adding-button"
        ng-click="cancelCreating()">取消</a>
   </form>

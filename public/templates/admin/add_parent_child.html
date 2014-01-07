@@ -91,13 +91,13 @@
       <label for="child-pic" class="col-sm-2 control-label">上传头像</label>
 
       <div class="col-sm-3">
-        <input type="file" id="child-pic" ng-model="parent.child.pic"/>
+        <input type="file" id="child-pic" ng-model="parent.child.pic" fileupload="childPic"/>
         <span class="help-block">上传头像到服务器</span>
       </div>
 
     </div>
     <a class="btn btn-primary pull-right adding-button" ng-disabled="newChildForm.$invalid"
-       ng-click="save(parent)">保存</a>
+       ng-click="save(parent, childPic)">保存</a>
     <a class="btn btn-warning pull-right adding-button" ng-disabled="newChildForm.$invalid" data-toggle="modal"
        data-target="#myModal">预览</a>
     <a class="btn btn-info pull-right adding-button"

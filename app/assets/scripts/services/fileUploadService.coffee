@@ -16,8 +16,6 @@ uploadService = () ->
         size: response.size
       })
 
-
-
     # Send to server, where we can then access it with $_FILES['file].
     data.append "file", file
     data.append "token", token
@@ -28,13 +26,11 @@ angular.module('kulebaoAdmin')
 .factory('tokenService', ['$http', tokenService])
 .factory('uploadService', uploadService)
 
-angular.module('kulebaoAdmin').directive "fileChange", ->
-  linker = ($scope, element) ->
-    # onChange, push the files to $scope.files.
-    element.bind "change", (event) ->
-      $scope.file = event.target.files[0]
-      $scope.$apply( -> $scope.app.file_size = $scope.file.size) if ($scope.app != undefined )
 
-
-  restrict: "A"
-  link: linker
+angular.module('kulebaoAdmin').directive "fileupload", ->
+  link: (scope, element, attributes) ->
+    console.log(attributes)
+    element.bind "change", (e) ->
+      scope.$apply ->
+        scope[attributes.fileupload] = e.target.files[0]
+        scope.app.file_size = e.target.files[0].size if scope.app isnt undefined
