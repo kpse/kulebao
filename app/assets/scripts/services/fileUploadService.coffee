@@ -29,7 +29,7 @@ angular.module('kulebaoAdmin')
 
 angular.module('kulebaoAdmin').directive "fileupload", ->
   link: (scope, element, attributes) ->
-    console.log(attributes)
+
     element.bind "change", (e) ->
       scope.$apply ->
         scope[attributes.fileupload] = e.target.files[0]

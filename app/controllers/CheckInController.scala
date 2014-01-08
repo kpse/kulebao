@@ -7,6 +7,7 @@ import models.json_models.CheckInfo
 import play.api.libs.ws.WS
 import scala.concurrent.{ExecutionContext, Future}
 import ExecutionContext.Implicits.global
+import play.Logger
 
 object CheckInController extends Controller {
 
@@ -24,7 +25,9 @@ object CheckInController extends Controller {
           notification match {
             case Some(c) =>
               val url = "http://djcwebtest.duapp.com/forwardswipe.do"
-              WS.url(url).post(Json.toJson(c)).map {
+              val json = Json.toJson(c)
+              Logger.info("json sent to push server: %s".format(json.toString))
+              WS.url(url).post(json).map {
                 response =>
                   Ok(response.json)
               }

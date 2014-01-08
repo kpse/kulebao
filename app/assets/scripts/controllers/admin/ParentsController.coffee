@@ -2,8 +2,8 @@
 
 angular.module('kulebaoAdmin')
 .controller 'ParentsCtrl',
-    ['$scope', '$rootScope', 'parentService', '$stateParams', '$location', '$http', 'uploadService',
-      ($scope, $rootScope, Parent, $stateParams, $location, $http, uploadService) ->
+    ['$scope', '$rootScope', 'parentService', '$stateParams', '$location', '$http', 'uploadService', '$timeout'
+      ($scope, $rootScope, Parent, $stateParams, $location, $http, uploadService, $timeout) ->
         $rootScope.tabName = 'parents'
 
         $scope.kindergarten =
@@ -17,9 +17,16 @@ angular.module('kulebaoAdmin')
             parent.id == p.id)
           parent.$delete()
 
+        $scope.parent_changed = false
+
         $scope.startEditing = (parent) ->
           $rootScope.parent = parent
           $location.path $location.path().replace(/\/[^\/]+$/, '/edit_adult')
+          $rootScope.$watchCollection 'parent', (oldv, newv) ->
+              console.log(oldv)
+              console.log(newv)
+              $scope.parent_changed = true if newv isnt undefined
+
 
         $scope.newParent = () ->
           $rootScope.parent = new Parent
@@ -37,7 +44,7 @@ angular.module('kulebaoAdmin')
               gender: 1
               portrait: '/assets/images/portrait_placeholder.png'
               class_id: 101
-
+          $scope.parent_changed = true
           $location.path($location.path().replace(/\/[^\/]+$/, '/edit_adult'))
 
         $scope.backToList = ->
@@ -51,23 +58,29 @@ angular.module('kulebaoAdmin')
 
         $scope.save = (parent, childPic) ->
           upload childPic, (child_p_url) ->
-            $scope.$apply ->
-              parent.child.portrait = child_p_url if child_p_url isnt undefined
-              parent.$save ->
-                $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query ->
-                  $scope.backToList()
+            $timeout () ->
+                parent.child.portrait = child_p_url if child_p_url isnt undefined
+                if $scope.parent_changed
+                  $scope.parent_changed = false
+                  parent.$save ->
+                    $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query ->
+                      $scope.backToList()
+                else $scope.backToList()
+              , 0, true
 
 
         $scope.nextPage = (parent, parentPic) ->
           upload parentPic, (parent_p_url) ->
-            $scope.$apply ->
-              parent.portrait = parent_p_url if parent_p_url isnt undefined
+            $timeout () ->
+                parent.portrait = parent_p_url if parent_p_url isnt undefined
+              , 0, true
           $location.path($location.path().replace(/\/[^\/]+$/, '/edit_child'))
 
         $scope.preview = (parent, childPic) ->
           upload childPic, (child_p_url) ->
-            $scope.$apply ->
-              parent.child.portrait = child_p_url if child_p_url isnt undefined
+            $timeout () ->
+                parent.child.portrait = child_p_url if child_p_url isnt undefined
+              , 0, true
     ]
 
 angular.module('kulebaoAdmin')
@@ -82,6 +95,7 @@ angular.module('kulebaoAdmin')
         $scope.backToList()
 
       $scope.cancelCreating = ->
+        $scope.parent_changed = false
         $scope.backToList()
         delete $rootScope.parent
 
