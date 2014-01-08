@@ -6,9 +6,9 @@ angular.module('kulebaoAdmin')
       ($scope, $rootScope, Parent, $stateParams, $location, $http, uploadService) ->
         $rootScope.tabName = 'parents'
 
-        $scope.kindergarten = {
+        $scope.kindergarten =
           school_id: $stateParams.kindergarten
-        }
+
         $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query()
 
 
@@ -19,10 +19,10 @@ angular.module('kulebaoAdmin')
 
         $scope.startEditing = (parent) ->
           $rootScope.parent = parent
-          $location.path($location.path().replace(/\/[^\/]+$/, '/edit_adult'))
+          $location.path $location.path().replace(/\/[^\/]+$/, '/edit_adult')
 
         $scope.newParent = () ->
-          $rootScope.parent = new Parent(
+          $rootScope.parent = new Parent
             school_id: parseInt($scope.kindergarten.school_id)
             birthday: new Date(10123123123)
             gender: 1
@@ -37,32 +37,37 @@ angular.module('kulebaoAdmin')
               gender: 1
               portrait: '/assets/images/portrait_placeholder.png'
               class_id: 101
-          )
+
           $location.path($location.path().replace(/\/[^\/]+$/, '/edit_adult'))
 
-        $scope.backToList = () ->
+        $scope.backToList = ->
           $location.path($location.path().replace(/\/[^\/]+$/, '/list'))
 
         upload = (file, callback)->
           return callback(undefined) if file is undefined
-          $http.get('/ws/fileToken?bucket=suoqin-test').success((data)->
-            uploadService.send(file, data.token, (remoteFile) ->
+          $http.get('/ws/fileToken?bucket=suoqin-test').success (data)->
+            uploadService.send file, data.token, (remoteFile) ->
               callback(remoteFile.url)
-            )
-          )
 
         $scope.save = (parent, childPic) ->
-            upload(childPic, (child_p_url) ->
+          upload childPic, (child_p_url) ->
+            $scope.$apply ->
               parent.child.portrait = child_p_url if child_p_url isnt undefined
-              parent.$save($scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query(->
-                $scope.backToList())
-              )
-            )
+              parent.$save ->
+                $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query ->
+                  $scope.backToList()
+
+
         $scope.nextPage = (parent, parentPic) ->
-          upload(parentPic, (parent_p_url) ->
-            parent.portrait = parent_p_url if parent_p_url isnt undefined
-            $location.path($location.path().replace(/\/[^\/]+$/, '/edit_child'))
-          )
+          upload parentPic, (parent_p_url) ->
+            $scope.$apply ->
+              parent.portrait = parent_p_url if parent_p_url isnt undefined
+          $location.path($location.path().replace(/\/[^\/]+$/, '/edit_child'))
+
+        $scope.preview = (parent, childPic) ->
+          upload childPic, (child_p_url) ->
+            $scope.$apply ->
+              parent.child.portrait = child_p_url if child_p_url isnt undefined
     ]
 
 angular.module('kulebaoAdmin')
