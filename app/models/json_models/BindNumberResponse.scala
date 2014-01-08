@@ -18,7 +18,7 @@ case class BindNumberResponse(error_code: Int,
 
 object BindNumberResponse {
 
-  def generateNewPassword(number: String) = md5(number.drop(4))
+  def generateNewPassword(number: String) = md5(number.drop(3))
 
   def handle(request: BindingNumber) = DB.withConnection {
     implicit c =>
