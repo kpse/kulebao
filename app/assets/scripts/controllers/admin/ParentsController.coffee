@@ -23,8 +23,6 @@ angular.module('kulebaoAdmin')
           $rootScope.parent = parent
           $location.path $location.path().replace(/\/[^\/]+$/, '/edit_adult')
           $rootScope.$watchCollection 'parent', (oldv, newv) ->
-              console.log(oldv)
-              console.log(newv)
               $scope.parent_changed = true if newv isnt undefined
 
 
@@ -60,12 +58,10 @@ angular.module('kulebaoAdmin')
           upload childPic, (child_p_url) ->
             $timeout () ->
                 parent.child.portrait = child_p_url if child_p_url isnt undefined
-                if $scope.parent_changed
-                  $scope.parent_changed = false
-                  parent.$save ->
-                    $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query ->
-                      $scope.backToList()
-                else $scope.backToList()
+                console.log 'parent changed: ' + $scope.parent_changed
+                parent.$save ->
+                  $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query ->
+                    $scope.backToList()
               , 0, true
 
 
