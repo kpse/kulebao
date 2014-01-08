@@ -14,7 +14,7 @@ import play.Logger
 
 case class Parent(id: Long, schoolId: Long, name: String, phone: String)
 
-case class ParentInfo(id: Option[Long], birthday: String, gender: Int, portrait: String, name: String, phone: String, kindergarten: School, relationship: String, child: ChildInfo)
+case class ParentInfo(id: Option[Long], birthday: String, gender: Int, portrait: String, name: String, phone: String, kindergarten: School, relationship: String, child: ChildInfo, card: String)
 
 
 object Parent {
@@ -43,11 +43,13 @@ object Parent {
           'uid -> parent.id,
           'timestamp -> timestamp).executeUpdate()
 
-      val childId = SQL("select child_id from relationmap r, parentinfo p where p.parent_id = r.parent_id and p.uid={uid}")
+      val (childId, parentId) = SQL("select child_id, p.parent_id from relationmap r, parentinfo p where p.parent_id = r.parent_id and p.uid={uid}")
         .on('uid -> parent.id
-        ).as(get[String]("child_id") singleOpt)
-
-      Logger.info("child_id = %s".format(childId))
+        ).as((get[String]("child_id") ~ get[String]("parent_id") map {
+        case child ~ parent => (child, parent)
+        case _ => ("", "")
+      }) singleOpt).get
+      Logger.info("child: %s, parent: %s".format(childId, parentId))
       SQL("update childinfo set name={name}, gender={gender}, " +
         "picurl={picurl}, birthday={birthday}, indate={indate}, " +
         "nick={nick}, update_at={timestamp}, class_id={class_id} " +
@@ -59,9 +61,12 @@ object Parent {
           'indate -> getDateOnly(child.birthday),
           'nick -> child.nick,
           'class_id -> child.class_id,
-          'child_id -> childId,
+          'child_id -> childId.toString,
           'timestamp -> timestamp).executeUpdate()
-
+      SQL("update cardinfo set cardnum={cardnum} " +
+        "where userid={userid}")
+        .on('cardnum -> parent.card,
+          'userid -> parentId.toString).executeUpdate()
       findById(parent.kindergarten.school_id)(parent.id.get)
   }
 
@@ -70,7 +75,7 @@ object Parent {
     implicit c =>
       SQL(fullStructureSql + " and p.uid={id}")
         .on('kg -> kg,
-        'id -> id)
+          'id -> id)
         .as(withRelationship.singleOpt)
   }
 
@@ -124,6 +129,11 @@ object Parent {
         .on('accountid -> parent.phone,
           'password -> generateNewPassword(parent.phone)).executeInsert()
       Logger.info("created accountinfo %s".format(accountinfoUid))
+      val cardinfoUid = SQL("INSERT INTO cardinfo(cardnum, userid, expiredate) " +
+      "VALUES ({cardnum}, {userid}, '2200-01-01')")
+        .on('cardnum -> parent.card,
+      'userid -> parent_id).executeInsert()
+      Logger.info("created cardinfo %s".format(cardinfoUid))
       findById(kg)(createdId.getOrElse(-1))
   }
 
@@ -152,12 +162,13 @@ object Parent {
       get[Int]("childinfo.gender") ~
       get[String]("childinfo.picurl") ~
       get[Int]("class_id") ~
+      get[String]("cardnum") ~
       get[String]("phone") map {
       case id ~ k_id ~ name ~ birthday ~ gender ~ portrait ~
         schoolName ~ schoolId ~ relationship ~ childName ~
-        nick ~ childBirthday ~ childGender ~ childPortrait ~ classId ~ phone =>
+        nick ~ childBirthday ~ childGender ~ childPortrait ~ classId ~ card ~ phone =>
         new ParentInfo(Some(id), birthday.toString, gender.toInt, portrait, name, phone, new School(schoolId.toLong, schoolName), relationship,
-          new ChildInfo(childName, nick, childBirthday.toString, childGender.toInt, childPortrait, classId))
+          new ChildInfo(childName, nick, childBirthday.toString, childGender.toInt, childPortrait, classId), card)
     }
   }
 
@@ -169,9 +180,9 @@ object Parent {
         .as(withRelationship singleOpt)
   }
 
-  val fullStructureSql = "select p.*, s.name, c.* from parentinfo p, schoolinfo s, childinfo c, relationmap r " +
+  val fullStructureSql = "select p.*, s.name, c.*, card.cardnum from parentinfo p, schoolinfo s, childinfo c, relationmap r, cardinfo card " +
     "where p.school_id = s.school_id and s.school_id={kg} and p.status=1 " +
-    "and r.child_id = c.child_id and r.parent_id = p.parent_id"
+    "and r.child_id = c.child_id and r.parent_id = p.parent_id and card.userid = p.parent_id"
 
   def all(kg: Long): List[ParentInfo] = DB.withConnection {
     implicit c =>

@@ -33,6 +33,7 @@ angular.module('kulebaoAdmin')
             gender: 1
             portrait: '/assets/images/portrait_placeholder.png'
             name: '马大帅'
+            card: '1234567890'
             kindergarten:
               name: '石家庄火车站幼儿园'
               school_id: 93740362

@@ -23,14 +23,14 @@
 
     <td class=".col-xs-4" ng-if="editingId != parent.id" ng-click="startEditing(parent)">{{parent.phone | phone}}</td>
     <td class=".col-xs-3" ng-if="editingId != parent.id" ng-click="startEditing(parent)">{{parent.name}}</td>
-    <td class=".col-xs-2" ng-if="editingId != parent.id" ng-click="startEditing(parent)">{{parent.child.nick}}</td>
+    <td class=".col-xs-2" ng-if="editingId != parent.id" ng-click="startEditing(parent)">{{parent.child.name}}</td>
 
     <td class=".col-xs-4" ng-if="editingId == parent.id"><input type="text" ng-model="parent.phone"
                                                                 ui-mask="{{'999-9999-9999'}}"
                                                                 class="editing-field form-control"/></td>
     <td class=".col-xs-3" ng-if="editingId == parent.id"><input ng-model="parent.name"
                                                                 class="editing-field form-control"/></td>
-    <td class=".col-xs-2" ng-if="editingId == parent.id"><input ng-model="parent.child.nick"
+    <td class=".col-xs-2" ng-if="editingId == parent.id"><input ng-model="parent.child.name"
                                                                 class="editing-field form-control"/></td>
     <td class=".col-xs-2">
       <button class="btn btn-xs btn-warning" ng-click="startEditing(parent)">编辑</button>
