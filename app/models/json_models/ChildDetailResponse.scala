@@ -3,7 +3,7 @@ package models.json_models
 import play.api.db.DB
 import anorm._
 import anorm.SqlParser._
-import models.helper.FieldHelper.{uid, nick, iconUrl, birthday, timestamp, childId}
+import models.helper.FieldHelper.{uid, nick, iconUrl, birthday, timestamp, childId, classId}
 import play.api.Play.current
 import java.util.Date
 import models.json_models.BindNumberResponse.generateNewPassword
@@ -19,7 +19,7 @@ case class ChildResponse(error_code: Int,
 
 case class ChildrenResponse(error_code: Int, children: List[ChildDetail])
 
-case class ChildDetail(id: Long, nick: String, icon_url: String, birthday: Long, timestamp: Long, class_id: Long)
+case class ChildDetail(id: String, nick: String, icon_url: String, birthday: Long, timestamp: Long, class_id: Long)
 
 case class ChildDetailResponse(error_code: Int, child_info: Option[ChildDetail])
 
@@ -28,7 +28,7 @@ case class ChildInfo(name: String, nick: String, birthday: String, gender: Int, 
 
 object Children {
   val simple = {
-    get[Long]("uid") ~
+    get[String]("child_id") ~
       get[String]("nick") ~
       get[String]("picurl") ~
       get[Date]("birthday") ~
@@ -53,15 +53,15 @@ object Children {
         .on('phone -> phone).as(simple *)
   }
 
-  def show(schoolId: Long, phone: String, id: Long) = DB.withConnection {
+  def show(schoolId: Long, phone: String, child: String) = DB.withConnection {
     implicit c =>
-      val result = SQL("select * from childinfo where uid={uid}")
-        .on('uid -> id).apply()
+      val result = SQL("select * from childinfo where child_id={child_id}")
+        .on('child_id -> child).apply()
 
       if (result.isEmpty) new ChildDetailResponse(1, None)
       else {
         val row = result.head
-        new ChildDetailResponse(0, Some(new ChildDetail(uid(row), nick(row), iconUrl(row), birthday(row), childId(row), timestamp(row))))
+        new ChildDetailResponse(0, Some(new ChildDetail(childId(row), nick(row), iconUrl(row), birthday(row), timestamp(row), classId(row))))
       }
   }
 }

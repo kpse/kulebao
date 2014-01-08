@@ -20,7 +20,7 @@ object ChildController extends Controller {
   implicit val write2 = Json.writes[ChildDetailResponse]
   implicit val write3 = Json.writes[ChildrenResponse]
 
-  def show(kg: Long, phone: String, childId: Long) = Action {
+  def show(kg: Long, phone: String, childId: String) = Action {
     Ok(Json.toJson(Children.show(kg.toLong, phone, childId)))
   }
 

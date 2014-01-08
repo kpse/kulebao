@@ -40,7 +40,7 @@ GET           /kindergarten/:kg/parent/:parentId/news                           
 POST          /kindergarten/:kg/parent/:parentId/news/:newsId                    controllers.ReadingNewsController.create(kg: Long, parentId: Long, newsId: Long)
 
 GET           /kindergarten/:kg/parent/:parentId/child                           controllers.ChildController.index(kg: Long, parentId: String)
-GET           /kindergarten/:kg/parent/:parentId/child/:childId                  controllers.ChildController.show(kg: Long, parentId: String, childId: Long)
+GET           /kindergarten/:kg/parent/:parentId/child/:childId                  controllers.ChildController.show(kg: Long, parentId: String, childId: String)
 
 GET           /kindergarten/:kg/admin/:adminId/news_reading_count/:newsId        controllers.ReadingNewsController.countReading(kg: Long, adminId: Long, newsId: Long)
 
