@@ -27,7 +27,7 @@ object WSController extends Controller {
     Json.obj(
       "timestamp" -> System.currentTimeMillis,
       "notice_type" -> 0,
-      "child_id" -> 3,
+      "child_id" -> "1_93740362_374",
       "pushid" -> Json.toJson(pushId.getOrElse("925387477040814447")),
       "record_url" -> "http://a.hiphotos.baidu.com/image/w%3D2048/sign=0ae610304890f60304b09b470d2ab21b/10dfa9ec8a136327e2b45e32938fa0ec08fac752.jpg"
     )
