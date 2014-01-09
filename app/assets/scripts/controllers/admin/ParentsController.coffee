@@ -35,14 +35,14 @@ angular.module('kulebaoAdmin')
             name: '马大帅'
             card: '1234567890'
             kindergarten:
-              name: '石家庄火车站幼儿园'
+              name: '成都市第三军区幼儿园'
               school_id: 93740362
             relationship: '妈妈'
             child:
               birthday: new Date(931153123123)
               gender: 1
               portrait: '/assets/images/portrait_placeholder.png'
-              class_id: 101
+              class_id: 777666
           $scope.parent_changed = true
           $location.path($location.path().replace(/\/[^\/]+$/, '/edit_adult'))
 
@@ -82,24 +82,29 @@ angular.module('kulebaoAdmin')
 
 angular.module('kulebaoAdmin')
 .controller 'EditParentCtrl',
-    ['$scope', '$rootScope', '$location', ($scope, $rootScope, $location) ->
+    ['$scope', '$rootScope', '$location', 'classService', ($scope, $rootScope, $location, Class) ->
+
       $scope.backToList = () ->
         $location.path($location.path().replace(/\/[^\/]+$/, '/list'))
 
       if $rootScope.parent isnt undefined
         $scope.parent = $rootScope.parent
+        $scope.kindergarten.classes = Class.bind({school_id: $scope.parent.kindergarten.school_id}).query()
       else
         $scope.backToList()
+
+
 
       $scope.cancelCreating = ->
         $scope.parent_changed = false
         $scope.backToList()
         delete $rootScope.parent
 
-      $scope.kindergarten.classes = [
-        {name: '西瓜班', id: 100},
-        {name: '核桃班', id: 101},
-        {name: '菠萝班', id: 777888},
-        {name: '鬼畜班', id: 777999}
-      ]
+#      $scope.kindergarten.classes = [
+#        {name: '西瓜班', id: 100},
+#        {name: '核桃班', id: 101},
+#        {name: '菠萝班', id: 777888},
+#        {name: '鬼畜班', id: 777999}
+#      ]
+
     ]

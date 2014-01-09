@@ -68,7 +68,7 @@ object ParentController extends Controller {
         case (parent) =>
           val updated = Parent.update(parent)
           Ok(Json.toJson(updated)).as("application/json")
-      } getOrElse BadRequest
+      } getOrElse BadRequest("Detected error:" + request.body)
   }
 
   def delete(kg: Long, parentId: Long) = Action {

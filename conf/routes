@@ -21,6 +21,8 @@ GET           /*college/templates/*file                                         
 GET           /kindergarten/:kg/preview                                          controllers.SchoolSummaryController.preview(kg: String)
 GET           /kindergarten/:kg/detail                                           controllers.SchoolSummaryController.detail(kg: String)
 
+GET           /kindergarten/:kg/class                                           controllers.ClassController.index(kg: Long)
+
 GET           /kindergarten/:kg/news                                             controllers.NewsController.index(kg: Long, from: Option[Long], to: Option[Long], most:Option[Int])
 GET           /kindergarten/:kg/news/:newsId                                     controllers.NewsController.show(kg: Long, newsId: Long)
 POST          /kindergarten/:kg/news/:newsId                                     controllers.NewsController.update(kg: Long, newsId: Long)
