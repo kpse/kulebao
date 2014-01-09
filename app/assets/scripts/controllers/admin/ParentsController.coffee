@@ -14,19 +14,20 @@ angular.module('kulebaoAdmin')
             parent.id == p.id)
           parent.$delete()
 
-        $scope.parent_changed = false
+        $rootScope.parent_changed = false
 
         $scope.startEditing = (parent) ->
-          $rootScope.parent = parent
+          $rootScope.parent = angular.copy parent
+          $rootScope.$watch 'parent', (oldv, newv) ->
+              $rootScope.parent_changed = true if newv isnt oldv
+            , true
           $location.path $location.path().replace(/\/[^\/]+$/, '/edit_adult')
-          $rootScope.$watchCollection 'parent', (oldv, newv) ->
-              $scope.parent_changed = true if newv isnt undefined
 
 
         $scope.newParent = () ->
           $rootScope.parent = new Parent
             school_id: parseInt($scope.kindergarten.school_id)
-            birthday: new Date(10123123123)
+            birthday: '1980-1-1'
             gender: 1
             portrait: '/assets/images/portrait_placeholder.png'
             name: '马大帅'
@@ -36,11 +37,11 @@ angular.module('kulebaoAdmin')
               school_id: 93740362
             relationship: '妈妈'
             child:
-              birthday: new Date(931153123123)
+              birthday: '2009-1-1'
               gender: 1
               portrait: '/assets/images/portrait_placeholder.png'
               class_id: 777666
-          $scope.parent_changed = true
+          $rootScope.parent_changed = true
           $location.path($location.path().replace(/\/[^\/]+$/, '/edit_adult'))
 
         $scope.backToList = ->
@@ -56,10 +57,13 @@ angular.module('kulebaoAdmin')
           upload childPic, (child_p_url) ->
             $timeout () ->
                 parent.child.portrait = child_p_url if child_p_url isnt undefined
-                console.log 'parent changed: ' + $scope.parent_changed
-                parent.$save ->
-                  $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query ->
-                    $scope.backToList()
+                console.log 'parent changed: ' + $rootScope.parent_changed
+                if $rootScope.parent_changed
+                  parent.$save ->
+                    $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query ->
+                      $scope.backToList()
+                else
+                  $scope.backToList()
               , 0, true
 
 
@@ -91,7 +95,7 @@ angular.module('kulebaoAdmin')
         $scope.backToList()
 
       $scope.cancelCreating = ->
-        $scope.parent_changed = false
+        $rootScope.parent_changed = false
         $scope.backToList()
         delete $rootScope.parent
 

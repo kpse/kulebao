@@ -8,7 +8,7 @@ import models.json_models.BindNumberResponse._
 import anorm.~
 import models.json_models.ChildInfo
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
 import java.util.Date
 import play.Logger
 
@@ -143,7 +143,7 @@ object Parent {
   }
 
   def getDateOnly(dateString: String): String = {
-    parseDate(dateString).toString(DateTimeFormat.forPattern("yyyy-MM-dd"))
+    dateString
   }
 
   val withRelationship = {
@@ -167,9 +167,14 @@ object Parent {
       case id ~ k_id ~ name ~ birthday ~ gender ~ portrait ~
         schoolName ~ schoolId ~ relationship ~ childName ~
         nick ~ childBirthday ~ childGender ~ childPortrait ~ classId ~ card ~ phone =>
-        new ParentInfo(Some(id), birthday.toString, gender.toInt, portrait, name, phone, new School(schoolId.toLong, schoolName), relationship,
-          new ChildInfo(childName, nick, childBirthday.toString, childGender.toInt, childPortrait, classId), card)
+        new ParentInfo(Some(id), dayString(birthday), gender.toInt, portrait, name, phone, new School(schoolId.toLong, schoolName), relationship,
+          new ChildInfo(childName, nick, dayString(childBirthday), childGender.toInt, childPortrait, classId), card)
     }
+  }
+
+
+  def dayString(date: Date): String = {
+    new DateTime(date).toString(DateTimeFormat.forPattern("yyyy-MM-dd"))
   }
 
   def show(kg: Long, phone: String) = DB.withConnection {

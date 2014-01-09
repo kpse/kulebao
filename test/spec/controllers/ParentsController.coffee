@@ -19,16 +19,18 @@ describe 'Controller: ParentsCtrl', () ->
         kindergarten: 93740362
     }
     $httpBackend = _$httpBackend_
+    $httpBackend.expectGET('/kindergarten/93740362')
+    .respond
+        school_id: 93740362
+        name: 'school_name'
+
     $httpBackend.expectGET('/kindergarten/93740362/parent')
-    .respond(
-        [
-          {
+    .respond [
             id: 1
             name: 'name'
             school_id: 1
             phone: 123
-          }
-        ])
+        ]
 
   it 'should attach a list of parents to the scope', () ->
     $httpBackend.flush()
