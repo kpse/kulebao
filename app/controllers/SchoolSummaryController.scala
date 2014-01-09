@@ -9,11 +9,11 @@ object SchoolSummaryController extends Controller {
   implicit val writes2 = Json.writes[SchoolIntro]
   implicit val writes3 = Json.writes[SchoolIntroDetailResponse]
 
-  def preview(kg: String) = Action {
+  def preview(kg: Long) = Action {
     Ok(Json.toJson(SchoolIntro.preview(kg)))
   }
 
-  def detail(kg: String) = Action {
+  def detail(kg: Long) = Action {
     Ok(Json.toJson(SchoolIntro.detail(kg)))
   }
 }

@@ -2,15 +2,12 @@
 
 angular.module('kulebaoAdmin')
 .controller 'ParentsCtrl',
-    ['$scope', '$rootScope', 'parentService', '$stateParams', '$location', '$http', 'uploadService', '$timeout'
-      ($scope, $rootScope, Parent, $stateParams, $location, $http, uploadService, $timeout) ->
+    ['$scope', '$rootScope', 'parentService', '$stateParams', '$location', '$http', 'uploadService', '$timeout', 'schoolService',
+      ($scope, $rootScope, Parent, $stateParams, $location, $http, uploadService, $timeout, School) ->
         $rootScope.tabName = 'parents'
 
-        $scope.kindergarten =
-          school_id: $stateParams.kindergarten
-
-        $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query()
-
+        $scope.kindergarten = School.get school_id: $stateParams.kindergarten, ->
+          $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query()
 
         $scope.delete = (parent) ->
           $scope.parents = _.reject($scope.parents, (p) ->
@@ -93,18 +90,10 @@ angular.module('kulebaoAdmin')
       else
         $scope.backToList()
 
-
-
       $scope.cancelCreating = ->
         $scope.parent_changed = false
         $scope.backToList()
         delete $rootScope.parent
 
-#      $scope.kindergarten.classes = [
-#        {name: '西瓜班', id: 100},
-#        {name: '核桃班', id: 101},
-#        {name: '菠萝班', id: 777888},
-#        {name: '鬼畜班', id: 777999}
-#      ]
 
     ]

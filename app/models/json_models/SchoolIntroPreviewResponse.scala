@@ -14,19 +14,19 @@ case class SchoolIntroPreviewResponse(error_code: Int, timestamp: Long, school_i
 
 object SchoolIntro {
 
-  def preview(kg: String) = DB.withConnection {
+  def preview(kg: Long) = DB.withConnection {
     implicit c =>
       val result = SQL("select update_at, school_id from schoolinfo where school_id={school_id}")
-        .on('school_id -> kg).apply()
+        .on('school_id -> kg.toString).apply()
 
       if (result.isEmpty) new SchoolIntroPreviewResponse(1, 0, 0)
       else new SchoolIntroPreviewResponse(0, timestamp(result.head), schoolId(result.head))
   }
 
-  def detail(kg: String) = DB.withConnection {
+  def detail(kg: Long) = DB.withConnection {
     implicit c =>
       val result = SQL("select * from schoolinfo where school_id={school_id}")
-        .on('school_id -> kg).apply()
+        .on('school_id -> kg.toString).apply()
 
       if (result.isEmpty) new SchoolIntroDetailResponse(1, 0, None)
       else {
