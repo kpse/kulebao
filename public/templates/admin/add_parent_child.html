@@ -60,8 +60,8 @@
         <label for="child-pic" class="col-sm-4 control-label">上传头像</label>
 
         <div class="col-sm-8">
-          <input type="file" id="child-pic" ng-model="parent.child.pic" fileupload="childPic"/>
-          <span class="help-block">上传头像到服务器</span>
+          <input type="file" id="child-pic" fileupload="pic"/>
+          <button class="btn btn-success btn-xs" ng-disabled="pic === undefined" ng-click="uploadPic(parent.child, pic)">上传头像</button>
         </div>
 
       </div>
@@ -115,21 +115,19 @@
     <div class="col-sm-offset-6 col-sm-6">
       <div class="form-group">
         <a class="btn btn-primary pull-right adding-button" ng-disabled="newChildForm.$invalid"
-           ng-click="save(parent, childPic)">保存</a>
+           ng-click="save(parent)">保存</a>
         <a class="btn btn-warning pull-right adding-button" ng-disabled="newChildForm.$invalid" data-toggle="modal"
-           data-target="#myModal" ng-click="preview(parent, childPic)">预览</a>
+           data-target="#myModal">预览</a>
         <a class="btn btn-info pull-right adding-button"
            ng-href="#/kindergarten/{{kindergarten.school_id}}/parents/edit_adult">返回</a>
         <a class="btn btn-default pull-right adding-button"
            ng-click="cancelCreating()">取消</a>
       </div>
     </div>
-
-
-
-
   </form>
 </div>
+
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog creating-summary">
     <div class="modal-content">

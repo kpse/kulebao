@@ -17,7 +17,7 @@ angular.module('kulebaoAdmin')
         $rootScope.parent_changed = false
 
         $scope.startEditing = (parent) ->
-          $rootScope.parent = angular.copy parent
+          $rootScope.parent = parent
           $rootScope.$watch 'parent', (oldv, newv) ->
               $rootScope.parent_changed = true if newv isnt oldv
             , true
@@ -53,32 +53,26 @@ angular.module('kulebaoAdmin')
             uploadService.send file, data.token, (remoteFile) ->
               callback(remoteFile.url)
 
-        $scope.save = (parent, childPic) ->
-          upload childPic, (child_p_url) ->
-            $timeout () ->
-                parent.child.portrait = child_p_url if child_p_url isnt undefined
-                console.log 'parent changed: ' + $rootScope.parent_changed
-                if $rootScope.parent_changed
-                  parent.$save ->
-                    $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query ->
-                      $scope.backToList()
-                else
-                  $scope.backToList()
+        $scope.save = (parent) ->
+          console.log 'parent changed: ' + $rootScope.parent_changed
+          if $rootScope.parent_changed
+            $timeout ->
+                parent.$save ->
+                  $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query ->
+                    $scope.backToList()
               , 0, true
+          else
+            $scope.backToList()
 
 
-        $scope.nextPage = (parent, parentPic) ->
-          upload parentPic, (parent_p_url) ->
-            $timeout () ->
-                parent.portrait = parent_p_url if parent_p_url isnt undefined
-              , 0, true
+        $scope.nextPage = ->
           $location.path($location.path().replace(/\/[^\/]+$/, '/edit_child'))
 
-        $scope.preview = (parent, childPic) ->
-          upload childPic, (child_p_url) ->
-            $timeout () ->
-                parent.child.portrait = child_p_url if child_p_url isnt undefined
-              , 0, true
+        $scope.uploadPic = (person, pic) ->
+          upload pic, (url) ->
+            $scope.$apply ->
+              person.portrait = url if url isnt undefined
+
     ]
 
 angular.module('kulebaoAdmin')
