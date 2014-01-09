@@ -1,8 +1,9 @@
 'use strict'
 
 angular.module('kulebaoAdmin')
-.controller 'IntroCtrl', [ '$scope', '$rootScope', '$stateParams', '$location', 'schoolService', '$http', 'uploadService', '$timeout'
-  (scope, rootScope, stateParams, location, School, $http, uploadService, $timeout) ->
+.controller 'IntroCtrl', [ '$scope', '$rootScope', '$stateParams',
+                           '$location', 'schoolService', '$http', 'uploadService', '$timeout', '$cacheFactory',
+  (scope, rootScope, stateParams, location, School, $http, uploadService, $timeout, $cacheFactory) ->
     scope.kindergarten = School.get school_id: stateParams.kindergarten, ->
       scope.school = scope.kindergarten.school_info
 
@@ -19,9 +20,10 @@ angular.module('kulebaoAdmin')
       scope.isEditing = !scope.isEditing
       console.log 'scope.school changed: ' + scope.school_changed
       if scope.school_changed
+        $cacheFactory.get('$http').removeAll();
         $timeout ->
-            scope.kindergarten.$save()
-            scope.school_changed = false;
+            scope.kindergarten.$save -> scope.school = scope.kindergarten.school_info
+            scope.school_changed = false
           , 0, true
 
     upload = (file, callback)->

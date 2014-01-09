@@ -2,12 +2,13 @@
   <div class="panel-heading">
     <div class="btn-group">
       <button class="btn btn-warning" ng-show="!isEditing" ng-click="toggleEditing($event)">编辑</button>
-      <button class="btn btn-primary" ng-show="isEditing" ng-click="toggleEditing($event)">更新</button>
+      <button class="btn btn-primary" ng-show="isEditing" ng-disabled="schoolIntro.$invalid" ng-click="toggleEditing($event)">更新</button>
     </div>
     <h4>{{school.name}}</h4>
     <span class="issue-date">于{{school.timestamp | date:'yyyy年MM月dd日 HH:mm:ss'}}发布</span>
   </div>
   <div class="panel-body">
+    <form name="schoolIntro">
     <div class="col-sm-6">
       <div class="form-group">
         <label for="school-name" class="control-label">学校名称</label>
@@ -50,6 +51,7 @@
         <textarea id="school-desc" ng-model="school.desc" ng-disabled="!isEditing" class="editing-content" required/>
       </div>
     </div>
+    </form>
     <div class="panel-footer">
       <span class="issue-date">于{{school.timestamp | date:'yyyy年MM月dd日 HH:mm:ss'}}发布</span>
     </div>
