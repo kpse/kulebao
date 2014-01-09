@@ -14,7 +14,6 @@
     <textarea ng-model="current.news.content" ng-show="current.showEditBox" class="editing-content" ng-blur="current.save($event)" x-ng-target="editTarget"/>
   </div>
   <div class="panel-footer">
-    <span class="read-flag">阅读次数：{{current.readCount}} </span>
-    <span class="issue-date">于{{current.news.issueDate | date:'yyyy年MM月dd日'}}发布</span>
+    <span class="issue-date">于{{current.news.issueDate | date:'yyyy年MM月dd日 HH:mm:ss'}}发布</span>
   </div>
 </div>

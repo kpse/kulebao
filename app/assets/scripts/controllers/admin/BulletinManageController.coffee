@@ -1,21 +1,15 @@
 'use strict'
 
 class Controller
-  constructor: ($rootScope, $location, adminNewsService, $stateParams, GroupMessage) ->
-    @kindergarten =
-      id: 1,
-      school_id: $stateParams.kindergarten
-
+  constructor: ($rootScope, $location, adminNewsService, $stateParams, GroupMessage, School) ->
     @adminUser =
       id: 1
-      name: '豆瓣'
+      name: '学校某老师'
+
+    @kindergarten = School.get school_id: $stateParams.kindergarten, =>
+      @newsletters = adminNewsService.bind(school_id: @kindergarten.school_id, admin_id: @adminUser.id).query()
 
     $rootScope.tabName = 'bulletin'
-
-    @newsletters = adminNewsService.bind(school_id: @kindergarten.school_id, admin_id: @adminUser.id).query(() =>
-      for news in @newsletters
-        do (news) => news.readCount = 100
-    )
 
     @publish = (news) =>
       news.pushlished = true
@@ -44,4 +38,5 @@ class Controller
       $location.path('/kindergarten/' + @kindergarten.school_id + '/news/' + news.news_id )
 
 
-angular.module('kulebaoAdmin').controller 'BulletinManageCtrl', ['$rootScope', '$location', 'adminNewsService', '$stateParams', 'GroupMessage', Controller]
+angular.module('kulebaoAdmin').controller 'BulletinManageCtrl', ['$rootScope', '$location', 'adminNewsService',
+                                                                 '$stateParams', 'GroupMessage', 'schoolService', Controller]

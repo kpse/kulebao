@@ -1,8 +1,7 @@
 class Controller
-  constructor: ($rootScope, $stateParams) ->
-    @kindergarten =
-      school_id: $stateParams.kindergarten
-      desc: '成都市第二十三幼儿园'
+  constructor: ($rootScope, $stateParams, School) ->
+
+    @kindergarten = School.get school_id: $stateParams.kindergarten
 
     @adminUser =
       id: 1
@@ -11,4 +10,4 @@ class Controller
     @isSelected = (tab)->
       tab == $rootScope.tabName
 
-angular.module('kulebaoAdmin').controller 'KgManageCtrl', ['$rootScope', '$stateParams', Controller]
+angular.module('kulebaoAdmin').controller 'KgManageCtrl', ['$rootScope', '$stateParams', 'schoolService', Controller]

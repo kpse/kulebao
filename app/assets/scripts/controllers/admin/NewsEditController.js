@@ -4,30 +4,29 @@
   var Controller;
 
   Controller = (function() {
-    function Controller($stateParams, newsService, $location, GroupMessage) {
+    function Controller($stateParams, newsService, $location, GroupMessage, School) {
       var _this = this;
-      this.kindergarten = {
-        id: 1,
+      this.kindergarten = School.get({
         school_id: $stateParams.kindergarten
-      };
+      }, function() {
+        return _this.news = newsService.get({
+          school_id: _this.kindergarten.school_id,
+          news_id: $stateParams.news
+        });
+      });
       this.adminUser = {
         id: 1,
         name: '豆瓣'
       };
-      this.readCount = 100;
-      this.news = newsService.get({
-        school_id: this.kindergarten.school_id,
-        news_id: $stateParams.news
-      });
       this.showEditBox = false;
       this.startEditing = function(e) {
-        _this.backupContent = _this.news.content;
+        _this.backupContent = angular.copy(_this.news.content);
         e.stopPropagation();
         return _this.showEditBox = true;
       };
       this.cancelEditing = function(e) {
         e.stopPropagation();
-        _this.news.content = _this.backupContent;
+        angular.copy(_this.backupContent, _this.news.content);
         return _this.showEditBox = false;
       };
       this.save = function(e) {
@@ -60,7 +59,7 @@
         });
       };
       this.editingTitle = false;
-      this.backupTitle = this.news.title;
+      this.backupTitle = {};
       this.saveTitle = function(e) {
         e.stopPropagation();
         _this.editingTitle = false;
@@ -73,7 +72,7 @@
       };
       this.startEditingTitle = function(e) {
         e.stopPropagation();
-        _this.backupTitle = _this.news.title;
+        _this.backupTitle = angular.copy(_this.news.title);
         return _this.editingTitle = true;
       };
       this.deleteMe = function() {
@@ -89,6 +88,6 @@
 
   })();
 
-  angular.module('kulebaoAdmin').controller('NewsEditCtrl', ['$stateParams', 'newsService', '$location', 'GroupMessage', Controller]);
+  angular.module('kulebaoAdmin').controller('NewsEditCtrl', ['$stateParams', 'newsService', '$location', 'GroupMessage', 'schoolService', Controller]);
 
 }).call(this);

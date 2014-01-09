@@ -1,26 +1,25 @@
 'use strict'
 
 class Controller
-  constructor: ($stateParams, newsService, $location, GroupMessage) ->
-    @kindergarten =
-      id: 1,
-      school_id: $stateParams.kindergarten
+  constructor: ($stateParams, newsService, $location, GroupMessage, School) ->
+
+    @kindergarten = School.get school_id: $stateParams.kindergarten, =>
+      @news = newsService.get(school_id: @kindergarten.school_id, news_id: $stateParams.news)
+
     @adminUser =
       id: 1
       name: '豆瓣'
-    @readCount = 100
-    @news = newsService.get(school_id: @kindergarten.school_id, news_id: $stateParams.news)
 
     @showEditBox = false
 
     @startEditing = (e) =>
-      @backupContent = @news.content
+      @backupContent = angular.copy @news.content
       e.stopPropagation()
       @showEditBox = true
 
     @cancelEditing = (e) =>
       e.stopPropagation()
-      @news.content = @backupContent
+      angular.copy(@backupContent, @news.content)
       @showEditBox = false
 
     @save = (e) =>
@@ -41,7 +40,7 @@ class Controller
       news.$save(school_id: @kindergarten.school_id, news_id: news.news_id)
 
     @editingTitle = false
-    @backupTitle = @news.title
+    @backupTitle = {}
 
     @saveTitle = (e) =>
       e.stopPropagation()
@@ -50,7 +49,7 @@ class Controller
 
     @startEditingTitle = (e) =>
       e.stopPropagation()
-      @backupTitle = @news.title
+      @backupTitle = angular.copy @news.title
       @editingTitle = true
 
     @deleteMe = () =>
@@ -58,4 +57,4 @@ class Controller
       $location.path("/kindergarten/" + @kindergarten.school_id + "/bulletin");
 
 
-angular.module('kulebaoAdmin').controller 'NewsEditCtrl', [ '$stateParams', 'newsService', '$location', 'GroupMessage', Controller]
+angular.module('kulebaoAdmin').controller 'NewsEditCtrl', [ '$stateParams', 'newsService', '$location', 'GroupMessage', 'schoolService', Controller]
