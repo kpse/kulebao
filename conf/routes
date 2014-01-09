@@ -20,6 +20,7 @@ GET           /*college/templates/*file                                         
 
 GET           /kindergarten/:kg/detail                                           controllers.SchoolSummaryController.detail(kg: Long)
 GET           /kindergarten/:kg                                                  controllers.SchoolSummaryController.detail(kg: Long)
+POST           /kindergarten/:kg                                                  controllers.SchoolSummaryController.update(kg: Long)
 GET           /kindergarten/:kg/preview                                          controllers.SchoolSummaryController.preview(kg: Long)
 
 GET           /kindergarten/:kg/class                                            controllers.ClassController.index(kg: Long)

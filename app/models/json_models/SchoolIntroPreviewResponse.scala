@@ -4,15 +4,33 @@ import play.api.db.DB
 import anorm._
 import play.api.Play.current
 import models.helper.FieldHelper._
+import play.Logger
 
 case class SchoolIntro(school_id: Long, phone: String, timestamp: Long, desc: String, school_logo_url: String, name: String)
 
-case class SchoolIntroDetailResponse(error_code: Int, school_id: Long, school_info: Option[SchoolIntro])
+case class SchoolIntroDetail(error_code: Int, school_id: Long, school_info: Option[SchoolIntro])
 
 case class SchoolIntroPreviewResponse(error_code: Int, timestamp: Long, school_id: Long)
 
 
 object SchoolIntro {
+  def update(info: SchoolIntroDetail) = DB.withConnection {
+    implicit c =>
+      val timestamp = System.currentTimeMillis
+      val intro = info.school_info.get
+      Logger.info(info.toString)
+      SQL("update schoolinfo set name={name}, " +
+        "description={description}, phone={phone}, " +
+        "logo_url={logo_url}, update_at={timestamp} where school_id={id}")
+        .on('id -> info.school_id.toString,
+          'name -> intro.name,
+          'description -> intro.desc,
+          'phone -> intro.phone,
+          'logo_url -> intro.school_logo_url,
+          'timestamp -> timestamp).executeUpdate()
+      detail(info.school_id)
+  }
+
 
   def preview(kg: Long) = DB.withConnection {
     implicit c =>
@@ -28,10 +46,10 @@ object SchoolIntro {
       val result = SQL("select * from schoolinfo where school_id={school_id}")
         .on('school_id -> kg.toString).apply()
 
-      if (result.isEmpty) new SchoolIntroDetailResponse(1, 0, None)
+      if (result.isEmpty) new SchoolIntroDetail(1, 0, None)
       else {
         val row = result.head
-        new SchoolIntroDetailResponse(0, schoolId(row), Some(new SchoolIntro(schoolId(row), phone(row), timestamp(row), desc(row), logoUrl(row), name(row))))
+        new SchoolIntroDetail(0, schoolId(row), Some(new SchoolIntro(schoolId(row), phone(row), timestamp(row), desc(row), logoUrl(row), name(row))))
       }
   }
 }

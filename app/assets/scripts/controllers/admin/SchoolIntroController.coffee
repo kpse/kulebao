@@ -21,6 +21,7 @@ angular.module('kulebaoAdmin')
       if scope.school_changed
         $timeout ->
             scope.kindergarten.$save()
+            scope.school_changed = false;
           , 0, true
 
     upload = (file, callback)->
