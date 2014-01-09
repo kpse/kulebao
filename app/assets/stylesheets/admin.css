@@ -46,3 +46,12 @@
     margin-top: -25px;
   }
 }
+
+.logo-container {
+  margin-left: -10px;
+  vertical-align: middle;
+  .school-logo {
+    max-height: 300px;
+    max-width: 300px;
+  }
+}

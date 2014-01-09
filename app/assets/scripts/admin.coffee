@@ -1,46 +1,42 @@
 class Config
   constructor: ($stateProvider, $urlRouterProvider) ->
     $stateProvider
-    .state('kindergarten',
+    .state 'kindergarten',
         url: '/kindergarten/:kindergarten',
         templateUrl: 'templates/admin/kindergarten_manage.html',
         controller: 'KgManageCtrl'
-      )
-    .state('kindergarten.bulletin',
+    .state 'kindergarten.bulletin',
         url: '/bulletin',
         templateUrl: 'templates/admin/bulletin_manage.html',
         controller: 'BulletinManageCtrl'
-      )
-    .state('kindergarten.news',
+    .state 'kindergarten.news',
         url: '/news/:news',
         templateUrl: 'templates/admin/news_edit.html',
         controller: 'NewsEditCtrl'
-      )
-    .state('kindergarten.parents',
+    .state 'kindergarten.parents',
         url: '/parents',
         templateUrl: 'templates/admin/parents.html',
         controller: 'ParentsCtrl'
-      )
-    .state('kindergarten.parents.edit_adult',
+    .state 'kindergarten.parents.edit_adult',
         url: '/edit_adult',
         templateUrl: 'templates/admin/add_parent_adult.html',
         controller: 'EditParentCtrl'
-      )
-    .state('kindergarten.parents.edit_child',
+    .state 'kindergarten.parents.edit_child',
         url: '/edit_child',
         templateUrl: 'templates/admin/add_parent_child.html',
         controller: 'EditParentCtrl'
-      )
-    .state('kindergarten.parents.list',
+    .state 'kindergarten.parents.list',
         url: '/list',
         templateUrl: 'templates/admin/list_parents.html',
         controller: 'ParentsCtrl'
-      )
-    .state('kindergarten.swipingcard',
+    .state 'kindergarten.swipingcard',
         url: '/swipingcard',
         templateUrl: 'templates/admin/swipingcard.html',
         controller: 'AccountCtrl'
-      )
+    .state 'kindergarten.intro',
+        url: '/intro',
+        templateUrl: 'templates/admin/intro.html',
+        controller: 'IntroCtrl'
 
     .state('kindergarten.wip',
         url: '/wip',

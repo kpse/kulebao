@@ -20,6 +20,11 @@
           刷卡通知测试
         </a>
       </li>
+      <li class="action" ng-class="{active : kg.isSelected('intro')}">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/intro" class="btn btn-success">
+          学校简介设置
+        </a>
+      </li>
       <li class="action">
         <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/class-bulletin" class="btn btn-success">
           班级通知设置
@@ -45,8 +50,6 @@
           每日育情设置
         </a>
       </li>
-
-
     </ul>
 
   </div>
