@@ -34,4 +34,8 @@ object ScheduleController extends Controller {
       }
   }
 
+  def index(kg: Long, classId: Long) = Action {
+    Ok(Json.toJson(Schedule.all(kg, classId)))
+  }
+
 }

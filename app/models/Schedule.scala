@@ -16,6 +16,15 @@ case class ScheduleDetail(error_code: Int, school_id: Long, class_id: Long, sche
 
 
 object Schedule {
+  def all(kg: Long, classId: Long) = DB.withConnection {
+    implicit c =>
+      SQL("select * from scheduleinfo where status=1 and school_id={school_id} and class_id={class_id} limit 1")
+        .on('school_id -> kg.toString,
+          'class_id -> classId
+        ).as(detail *)
+  }
+
+
   def insertNew(schedule: ScheduleDetail)  = DB.withConnection {
     implicit c =>
       SQL("update scheduleinfo set status=0 where school_id={school_id} and class_id={class_id} and schedule_id={schedule_id}")

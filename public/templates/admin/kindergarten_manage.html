@@ -30,14 +30,14 @@
           每周食谱设置
         </a>
       </li>
-      <li class="action">
-        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/class-bulletin" class="btn btn-success">
-          班级通知设置
+      <li class="action" ng-class="{active : kg.isSelected('schedule')}">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/schedule" class="btn btn-success">
+          学习内容设置
         </a>
       </li>
       <li class="action">
-        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/learning" class="btn btn-success">
-          学习内容设置
+        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/class-bulletin" class="btn btn-success">
+          班级通知设置
         </a>
       </li>
       <li class="action">

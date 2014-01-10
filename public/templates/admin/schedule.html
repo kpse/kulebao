@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+
+    <h4>{{kindergarten.school_info.name}} {{777666}}课程表</h4>
+
+    <h5>班级</h5>
+
+    <select class="form-control class-select" ng-model="current_class"
+            ng-options="value as value.name for (key, value) in kindergarten.classes"
+            data-style="btn-primary"></select>
+  </div>
+  <div class="panel-body">
+    <div ui-view></div>
+  </div>
+</div>

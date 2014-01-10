@@ -41,6 +41,14 @@ class Config
         url: '/cookbook',
         templateUrl: 'templates/admin/cookbook.html',
         controller: 'CookbookCtrl'
+    .state 'kindergarten.schedule',
+        url: '/schedule',
+        templateUrl: 'templates/admin/schedule.html',
+        controller: 'ScheduleCtrl'
+    .state 'kindergarten.schedule.class',
+        url: '/class/:class_id',
+        templateUrl: 'templates/admin/class_schedule.html',
+        controller: 'ClassScheduleCtrl'
 
     .state('kindergarten.wip',
         url: '/wip',
