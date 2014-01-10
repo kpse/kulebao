@@ -59,7 +59,8 @@ function deploy_from_prod {
     srcFilename="$(pwd)/target/universal/kulebao-1.0-SNAPSHOT.zip"
     destFilename="kulebao-1.0-SNAPSHOT.$now.zip"
     play dist && \
-    unzip -x $srcFilename -d /var/play/$now/ && \
+    cp $srcFilename ~/$destFilename
+    unzip -x $destFilename -d /var/play/$now/ && \
     rm /var/play/kulebao && \
     ln -s /var/play/$now/kulebao-1.0-SNAPSHOT/ /var/play/kulebao && \
     echo coco999 | sudo -S service kulebao restart
