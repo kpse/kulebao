@@ -481,6 +481,44 @@ INSERT INTO cookbookinfo (school_id, cookbook_id, extra_tip, mon_breakfast,
    '土豆西红柿，野菜炖蘑菇', '啤酒，鹌鹑蛋，牛肉饼', '兰州拉面，京酱肉丝', '土豆西红柿，野菜炖蘑菇', '土豆西红柿，野菜炖蘑菇',
    '兰州烧饼', '兰州烧饼', '兰州烧饼', '兰州烧饼', '兰州烧饼');
 
+CREATE TABLE scheduleinfo (
+  uid        INT(11)          NOT NULL AUTO_INCREMENT,
+  school_id    VARCHAR(20)  NOT NULL,
+  class_id    INT(11)  NOT NULL,
+  schedule_id    INT(11)  NOT NULL,
+  mon_am    VARCHAR(40) COLLATE utf8_bin DEFAULT '',
+  tue_am    VARCHAR(40) COLLATE utf8_bin DEFAULT '',
+  wed_am    VARCHAR(40) COLLATE utf8_bin DEFAULT '',
+  thu_am    VARCHAR(40) COLLATE utf8_bin DEFAULT '',
+  fri_am    VARCHAR(40) COLLATE utf8_bin DEFAULT '',
+  mon_pm    VARCHAR(40) COLLATE utf8_bin DEFAULT '',
+  tue_pm    VARCHAR(40) COLLATE utf8_bin DEFAULT '',
+  wed_pm    VARCHAR(40) COLLATE utf8_bin DEFAULT '',
+  thu_pm    VARCHAR(40) COLLATE utf8_bin DEFAULT '',
+  fri_pm    VARCHAR(40) COLLATE utf8_bin DEFAULT '',
+  status     INT default 1,
+  timestamp BIGINT(20) NOT NULL DEFAULT 0,
+  PRIMARY KEY (uid)
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8
+  COLLATE =utf8_bin
+  AUTO_INCREMENT =2;
+
+INSERT INTO scheduleinfo (school_id, class_id, schedule_id, mon_am,
+                          tue_am, wed_am, thu_am, fri_am, mon_pm, tue_pm
+  , wed_pm, thu_pm, fri_pm, status) VALUES
+  ('93740362', 777666, 121,
+   '手工水蜜桃', '木工', '电工', '钳工', '车工',
+   '语文', '数学', '化学', '政治', '历史', 1),
+  ('93740362', 777888,123,
+   '手工大闸蟹', '木工', '电工', '钳工', '车工',
+   '语文', '数学', '化学', '政治', '历史', 1),
+  ('93740362', 777999,125,
+   '手工西瓜', '木工', '电工', '钳工', '车工',
+   '语文', '数学', '化学', '政治', '历史', 1);
+
+
 /*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS = @OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
