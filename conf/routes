@@ -18,9 +18,9 @@ GET           /upgrade                                                          
 GET           /templates/*file                                                   controllers.Static.at(path="/public/templates", file)
 GET           /*college/templates/*file                                          controllers.Static.ignoreCollege(path="/public/templates", file, college)
 
-GET           /kindergarten/:kg/detail                                           controllers.SchoolSummaryController.detail(kg: Long)
 GET           /kindergarten/:kg                                                  controllers.SchoolSummaryController.detail(kg: Long)
-POST           /kindergarten/:kg                                                  controllers.SchoolSummaryController.update(kg: Long)
+GET           /kindergarten/:kg/detail                                           controllers.SchoolSummaryController.detail(kg: Long)
+POST          /kindergarten/:kg                                                  controllers.SchoolSummaryController.update(kg: Long)
 GET           /kindergarten/:kg/preview                                          controllers.SchoolSummaryController.preview(kg: Long)
 
 GET           /kindergarten/:kg/class                                            controllers.ClassController.index(kg: Long)
@@ -54,8 +54,11 @@ GET           /kindergarten/:kg/account                                         
 GET           /kindergarten/:kg/class/:classId/schedule/preview                  controllers.ScheduleController.preview(kg: Long, classId: Long)
 GET           /kindergarten/:kg/class/:classId/schedule/:scheduleId              controllers.ScheduleController.show(kg: Long, classId: Long, scheduleId: Long)
 
+GET           /kindergarten/:kg/cookbook                                         controllers.CookbookController.index(kg: Long)
 GET           /kindergarten/:kg/cookbook/preview                                 controllers.CookbookController.preview(kg: Long)
 GET           /kindergarten/:kg/cookbook/:cookbookId                             controllers.CookbookController.show(kg: Long, cookbookId: Long)
+POST           /kindergarten/:kg/cookbook/:cookbookId                             controllers.CookbookController.update(kg: Long, cookbookId: Long)
+
 
 POST          /kindergarten/:kg/check                                            controllers.CheckInController.create(kg: Long)
 

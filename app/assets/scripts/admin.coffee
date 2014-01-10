@@ -37,6 +37,10 @@ class Config
         url: '/intro',
         templateUrl: 'templates/admin/intro.html',
         controller: 'IntroCtrl'
+    .state 'kindergarten.cookbook',
+        url: '/cookbook',
+        templateUrl: 'templates/admin/cookbook.html',
+        controller: 'CookbookCtrl'
 
     .state('kindergarten.wip',
         url: '/wip',

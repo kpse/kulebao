@@ -1,0 +1,102 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="btn-group">
+      <button class="btn btn-warning" ng-show="!isEditing" ng-click="toggleEditing($event)">编辑</button>
+      <button class="btn btn-primary" ng-show="isEditing" ng-disabled="cookbookForm.$invalid"
+              ng-click="toggleEditing($event)">更新
+      </button>
+    </div>
+    <h4>{{kindergarten.school_info.name}} 近期食谱</h4>
+    <span class="issue-date">于{{cookbook.timestamp | date:'yyyy年MM月dd日 HH:mm:ss'}}发布</span>
+  </div>
+  <div class="panel-body">
+    <form name="cookbookForm" class="form-horizontal">
+
+      <div class="form-group col-sm-offset-1 col-sm-5">
+        <h3>星期一</h3>
+        <label class="control-label">早餐</label>
+        <input ng-model="cookbook.week.mon.breakfast" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">午餐</label>
+        <input ng-model="cookbook.week.mon.lunch" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">碗餐</label>
+        <input ng-model="cookbook.week.mon.dinner" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">加餐</label>
+        <input ng-model="cookbook.week.mon.extra" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+      </div>
+      <div class="col-sm-1"></div>
+      <div class="form-group col-sm-5">
+        <h3>星期二</h3>
+        <label class="control-label">早餐</label>
+        <input ng-model="cookbook.week.tue.breakfast" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">午餐</label>
+        <input ng-model="cookbook.week.tue.lunch" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">碗餐</label>
+        <input ng-model="cookbook.week.tue.dinner" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">加餐</label>
+        <input ng-model="cookbook.week.tue.extra" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+      </div>
+      <div class="form-group col-sm-offset-1 col-sm-5">
+        <h3>星期三</h3>
+        <label class="control-label">早餐</label>
+        <input ng-model="cookbook.week.wed.breakfast" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">午餐</label>
+        <input ng-model="cookbook.week.wed.lunch" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">碗餐</label>
+        <input ng-model="cookbook.week.wed.dinner" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">加餐</label>
+        <input ng-model="cookbook.week.wed.extra" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+      </div>
+      <div class="col-sm-1"></div>
+      <div class="form-group col-sm-5">
+        <h3>星期四</h3>
+        <label class="control-label">早餐</label>
+        <input ng-model="cookbook.week.thu.breakfast" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">午餐</label>
+        <input ng-model="cookbook.week.thu.lunch" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">碗餐</label>
+        <input ng-model="cookbook.week.thu.dinner" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">加餐</label>
+        <input ng-model="cookbook.week.thu.extra" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+      </div>
+      <div class="form-group col-sm-offset-1 col-sm-5">
+        <h3>星期五</h3>
+        <label class="control-label">早餐</label>
+        <input ng-model="cookbook.week.fri.breakfast" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">午餐</label>
+        <input ng-model="cookbook.week.thu.lunch" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">碗餐</label>
+        <input ng-model="cookbook.week.thu.dinner" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+        <label class="control-label">加餐</label>
+        <input ng-model="cookbook.week.thu.extra" ng-disabled="!isEditing"
+               class="editing-title form-control" required/>
+      </div>
+
+
+      <div class="form-group col-sm-12">
+        <label for="extra-tip" class="control-label">备注</label>
+
+        <textarea id="extra-tip" ng-model="cookbook.extra_tip" ng-disabled="!isEditing" class="editing-content"
+                  required/>
+      </div>
+    </form>
+  </div>
+</div>
