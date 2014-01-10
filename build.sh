@@ -54,11 +54,28 @@ function deploy_prod {
 }
 
 
+function deploy_from_prod {
+    now=$(date +"%s")
+    srcFilename="$(pwd)/target/universal/kulebao-1.0-SNAPSHOT.zip"
+    destFilename="kulebao-1.0-SNAPSHOT.$now.zip"
+    play dist && \
+    unzip -x $srcFilename -d /var/play/$now/ && \
+    rm /var/play/kulebao && \
+    ln -s /var/play/$now/kulebao-1.0-SNAPSHOT/ /var/play/kulebao && \
+    echo coco999 | sudo -S service kulebao restart
+
+    retvalue=$?
+    echo "Return value: $retvalue"
+    echo "Done"
+}
+
+
 function main {
   	case $1 in
 		s) local_https_server ;;
 		a) all ;;
 		d) deploy ;;
+		d2) deploy_from_prod ;;
 		prod) deploy_prod ;;
 		p) build_and_push ;;
 		b) build_local ;;
