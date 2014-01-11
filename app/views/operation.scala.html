@@ -14,7 +14,10 @@
     <script src="@routes.Assets.at("javascripts/vendor/bootstrap-datepicker.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/vendor/angularjs/angular-strap.js")" type="text/javascript"></script>
 }
-@main("kulebaoOp")(scripts) {
+@styling = {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/op.css")">
+}
+@main("kulebaoOp")(scripts)(styling) {
+
     <div ui-view></div>
 }

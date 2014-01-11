@@ -8,8 +8,10 @@
     <script src="@routes.Assets.at("scripts/controllers/NewsController.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("scripts/controllers/WipController.js")" type="text/javascript"></script>
 }
-@main("kulebaoApp")(scripts) {
+@styling = {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+}
+@main("kulebaoApp")(scripts)(styling) {
     <div ui-view></div>
 }
 

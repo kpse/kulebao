@@ -30,7 +30,9 @@
     <script src="@routes.Assets.at("javascripts/vendor/bootstrap-datepicker.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/vendor/angularjs/angular-strap.js")" type="text/javascript"></script>
 }
-@main("kulebaoAdmin")(scripts) {
+@styling = {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/admin.css")">
+}
+@main("kulebaoAdmin")(scripts)(styling) {
     <div ui-view></div>
 }

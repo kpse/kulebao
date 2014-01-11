@@ -2,17 +2,23 @@ package controllers
 
 import play.api.mvc._
 
-object Application extends Controller {
+object Application extends Controller with Secured {
 
-  def index = Action {
-    Ok(views.html.index())
+  def index = IsAuthenticated {
+    username =>
+      _ =>
+        Ok(views.html.index())
   }
 
-  def admin = Action {
-    Ok(views.html.admin())
+  def admin = IsAuthenticated {
+    username =>
+      _ =>
+        Ok(views.html.admin())
   }
 
-  def operation() = Action {
-    Ok(views.html.operation())
+  def operation() = IsAuthenticated {
+    username =>
+      _ =>
+        Ok(views.html.operation())
   }
 }

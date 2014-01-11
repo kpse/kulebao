@@ -1,0 +1,44 @@
+@(form: Form[(String, String)])(implicit flash: Flash)
+    @styling = {
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
+    }
+    @scripts = {}
+@main("")(scripts)(styling) {
+    <header>
+        <a href="@routes.Application.admin" id="admin" class="main-entry">学校管理</a>
+        <a href="@routes.Application.operation" id="operation" class="main-entry">系统管理</a>
+    </header>
+
+    @helper.form(routes.Auth.authenticate) {
+
+        <h1>Sign in</h1>
+
+        @form.globalError.map { error =>
+            <p class="error">
+                @error.message
+            </p>
+        }
+
+        @flash.get("success").map { message =>
+            <p class="success">
+                @message
+            </p>
+        }
+
+        <p>
+            <input type="text" name="username" class="login-input" placeholder="Username" id="username" value="@form("username").value">
+        </p>
+        <p>
+            <input type="password" name="password" class="login-input" id="password" placeholder="Password">
+        </p>
+        <p>
+            <button type="submit" id="login-button" class="login-button">Login</button>
+        </p>
+
+    }
+
+    <p class="note">
+        Try <em>admin</em> with <em>secret</em> as password.
+    </p>
+}
