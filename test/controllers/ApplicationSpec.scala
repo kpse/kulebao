@@ -18,26 +18,33 @@ class ApplicationSpec extends Specification {
 
   "Application" should {
 
-    "send 404 on a bad request" in new WithApplication{
+    "send 404 on a bad request" in new WithApplication {
       route(FakeRequest(GET, "/boum")) must beNone
     }
 
-    "render the  page" in new WithApplication{
+
+    "render the  page" in new WithApplication {
       val sessionCookie = Session.encodeAsCookie(Session(Map("username" -> "admin")))
-       
-      val home = route(FakeRequest(GET,"/").withHeaders(play.api.http.HeaderNames.COOKIE -> Cookies.encode(Seq(sessionCookie)))).get
+
+      val home = route(FakeRequest(GET, "/").withHeaders(play.api.http.HeaderNames.COOKIE -> Cookies.encode(Seq(sessionCookie)))).get
 
       status(home) must equalTo(OK)
       contentType(home) must beSome.which(_ == "text/html")
-      contentAsString(home) must contain ("Welcome to Kulebao")
+      contentAsString(home) must contain("Welcome to Kulebao")
+    }
+
+    "redirecting wheile no cookie" in new WithApplication {
+      val login = route(FakeRequest(GET, "/")).get
+
+      status(login) must equalTo(SEE_OTHER)
+      contentType(login) must beNone
     }
 
     "render the login page" in new WithApplication{
       val login = route(FakeRequest(GET, "/")).get
 
-      status(login) must equalTo(TEMPORARY_REDIRECT)
-      contentType(login) must beSome.which(_ == "text/html")
-      contentAsString(login) must contain ("Sign in")
+      status(login) must equalTo(SEE_OTHER)
+      contentType(login) must beNone
     }
   }
 }
