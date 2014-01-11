@@ -37,14 +37,6 @@ object Children {
     }
   }
 
-  def index(school: Long, phone: String) = {
-    val all = findAll(school, phone)
-    if (all.isEmpty) new ChildrenResponse(1, List())
-    else {
-      new ChildrenResponse(0, all)
-    }
-  }
-
   def findAll(school: Long, phone: String): List[ChildDetail] = DB.withConnection {
     implicit c =>
       SQL("select c.*, c2.class_name from childinfo c, relationmap r, parentinfo p, classinfo c2 where c.class_id=c2.class_id and p.status=1 and c.status=1 and r.child_id = c.child_id and p.parent_id = r.parent_id and p.phone={phone}")
@@ -53,13 +45,7 @@ object Children {
 
   def show(schoolId: Long, phone: String, child: String) = DB.withConnection {
     implicit c =>
-      val result = SQL("select c.*, c2.class_name from childinfo c, classinfo c2 where c.class_id=c2.class_id and c.child_id={child_id}")
-        .on('child_id -> child).apply()
-      Logger.info(result.toString)
-      if (result.isEmpty) new ChildDetailResponse(1, None)
-      else {
-        val row = result.head
-        new ChildDetailResponse(0, Some(new ChildDetail(childId(row), nick(row), iconUrl(row), birthday(row), timestamp(row), classId(row), className(row))))
-      }
+      SQL("select c.*, c2.class_name from childinfo c, classinfo c2 where c.class_id=c2.class_id and c.child_id={child_id}")
+        .on('child_id -> child).as(simple *)
   }
 }

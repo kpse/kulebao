@@ -179,7 +179,7 @@ object Parent {
 
   def show(kg: Long, phone: String) = DB.withConnection {
     implicit c =>
-      SQL(fullStructureSql + " and phone = {phone}")
+      SQL(fullStructureSql + " and p.phone = {phone}")
         .on('kg -> kg,
           'phone -> phone)
         .as(withRelationship singleOpt)

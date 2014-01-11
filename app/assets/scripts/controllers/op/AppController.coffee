@@ -3,24 +3,23 @@ class Controller
     $scope.lastApp = appPackageService.latest( -> $scope.app.version_code = $scope.lastApp.version_code + 1)
     $scope.app = new appPackageService
 
+    upload = (file, callback)->
+      return callback(undefined) if file is undefined
+      $http.get('/ws/fileToken?bucket=suoqin-test').success (data)->
+        uploadService.send file, data.token, (remoteFile) ->
+          callback(remoteFile)
 
-    $scope.uploadme = {};
-    $scope.uploadme.src = ''
-
-    $scope.doUpload = ->
-      $http.get('/ws/fileToken?bucket=suoqin-test').success( (data)->
-        $scope.token = data.token
-        uploadService.send($scope.file, $scope.token, (remoteFile) ->
+    $scope.doUpload = (pic) ->
+      upload pic, (remoteFile) ->
+        $scope.$apply ->
           $scope.app.url = remoteFile.url
           $scope.app.file_size = remoteFile.size
           console.log $scope.app
           $scope.app.$save()
-          $scope.lastApp = appPackageService.latest( ->
+          $scope.lastApp = appPackageService.latest ->
             $scope.app = new appPackageService
-            $scope.app.version_code = $scope.lastApp.version_code + 1)
-        )
+            $scope.app.version_code = $scope.lastApp.version_code + 1
 
-      )
     $scope.cleanFields = ->
       $scope.app = new appPackageService
 

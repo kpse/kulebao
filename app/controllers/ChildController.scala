@@ -13,6 +13,9 @@ import models.json_models.ChildrenResponse
 import models.json_models.ChildDetailResponse
 import models.json_models.ChildDetail
 import models.{School, ParentInfo}
+import scala.collection.generic.SeqFactory
+import scala.collection.immutable.::
+import scala.::
 
 object ChildController extends Controller {
 
@@ -21,10 +24,16 @@ object ChildController extends Controller {
   implicit val write3 = Json.writes[ChildrenResponse]
 
   def show(kg: Long, phone: String, childId: String) = Action {
-    Ok(Json.toJson(Children.show(kg.toLong, phone, childId)))
+    Children.show(kg.toLong, phone, childId) match {
+      case Nil => Ok(Json.toJson(new ChildDetailResponse(1, None)))
+      case all : List[ChildDetail] => Ok(Json.toJson(new ChildDetailResponse(0, Some(all(0)))))
+    }
   }
 
   def index(kg: Long, phone: String) = Action {
-    Ok(Json.toJson(Children.index(kg, phone)))
+    Children.findAll(kg, phone) match {
+      case Nil => Ok(Json.toJson(ChildrenResponse(1, List())))
+      case all : List[ChildDetail] => Ok(Json.toJson(ChildrenResponse(0, all)))
+    }
   }
 }
