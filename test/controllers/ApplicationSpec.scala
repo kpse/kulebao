@@ -6,6 +6,7 @@ import org.junit.runner._
 
 import play.api.test._
 import play.api.test.Helpers._
+import play.api.mvc.{Cookies, Session}
 
 /**
  * Add your spec here.
@@ -21,12 +22,22 @@ class ApplicationSpec extends Specification {
       route(FakeRequest(GET, "/boum")) must beNone
     }
 
-    "render the index page" in new WithApplication{
-      val home = route(FakeRequest(GET, "/")).get
+    "render the  page" in new WithApplication{
+      val sessionCookie = Session.encodeAsCookie(Session(Map("username" -> "admin")))
+       
+      val home = route(FakeRequest(GET,"/").withHeaders(play.api.http.HeaderNames.COOKIE -> Cookies.encode(Seq(sessionCookie)))).get
 
       status(home) must equalTo(OK)
       contentType(home) must beSome.which(_ == "text/html")
       contentAsString(home) must contain ("Welcome to Kulebao")
+    }
+
+    "render the login page" in new WithApplication{
+      val login = route(FakeRequest(GET, "/")).get
+
+      status(login) must equalTo(TEMPORARY_REDIRECT)
+      contentType(login) must beSome.which(_ == "text/html")
+      contentAsString(login) must contain ("Sign in")
     }
   }
 }
