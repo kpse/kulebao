@@ -49,7 +49,7 @@ object Children {
 
   def findAll(school: Long, phone: String): List[ChildDetail] = DB.withConnection {
     implicit c =>
-      SQL("select c.* from childinfo c, relationmap r, parentinfo p where r.child_id = c.child_id and p.parent_id = r.parent_id and p.phone={phone}")
+      SQL("select c.* from childinfo c, relationmap r, parentinfo p where p.status=1 and c.status=1 and r.child_id = c.child_id and p.parent_id = r.parent_id and p.phone={phone}")
         .on('phone -> phone).as(simple *)
   }
 

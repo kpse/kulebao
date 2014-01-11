@@ -32,9 +32,7 @@ angular.module('kulebaoAdmin')
             portrait: '/assets/images/portrait_placeholder.png'
             name: '马大帅'
             card: '1234567890'
-            kindergarten:
-              name: '成都市第三军区幼儿园'
-              school_id: 93740362
+            kindergarten: $scope.kindergarten
             relationship: '妈妈'
             child:
               birthday: '2009-1-1'
