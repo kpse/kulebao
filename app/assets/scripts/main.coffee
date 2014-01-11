@@ -29,4 +29,4 @@ class Config
       then $location.path '/kindergarten/93740362'
       else $location.path path.replace /(kindergarten\/[^\/]+)\/.+$/g, '$1/wip'
 
-angular.module('kulebaoApp', ['ui.router', 'ngResource', 'ngRoute']).config ['$stateProvider', '$urlRouterProvider', Config]
+angular.module('kulebaoApp', ['ui.router', 'ngResource', 'ngRoute', 'angulartics', 'angulartics.google.analytics']).config ['$stateProvider', '$urlRouterProvider', Config]
