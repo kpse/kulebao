@@ -6,6 +6,7 @@ import anorm.SqlParser._
 import models.helper.FieldHelper.{nick, iconUrl, birthday, timestamp, childId, classId, className}
 import play.api.Play.current
 import java.util.Date
+import play.Logger
 
 case class ChildResponse(error_code: Int,
                          username: String,
@@ -46,15 +47,15 @@ object Children {
 
   def findAll(school: Long, phone: String): List[ChildDetail] = DB.withConnection {
     implicit c =>
-      SQL("select c.* from childinfo c, relationmap r, parentinfo p where p.status=1 and c.status=1 and r.child_id = c.child_id and p.parent_id = r.parent_id and p.phone={phone}")
+      SQL("select c.*, c2.class_name from childinfo c, relationmap r, parentinfo p, classinfo c2 where c.class_id=c2.class_id and p.status=1 and c.status=1 and r.child_id = c.child_id and p.parent_id = r.parent_id and p.phone={phone}")
         .on('phone -> phone).as(simple *)
   }
 
   def show(schoolId: Long, phone: String, child: String) = DB.withConnection {
     implicit c =>
-      val result = SQL("select * from childinfo c, classinfo class where c.class_id=class.class_id and child_id={child_id}")
+      val result = SQL("select c.*, c2.class_name from childinfo c, classinfo c2 where c.class_id=c2.class_id and c.child_id={child_id}")
         .on('child_id -> child).apply()
-
+      Logger.info(result.toString)
       if (result.isEmpty) new ChildDetailResponse(1, None)
       else {
         val row = result.head
