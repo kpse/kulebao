@@ -3,13 +3,9 @@ package models.json_models
 import play.api.db.DB
 import anorm._
 import anorm.SqlParser._
-import models.helper.FieldHelper.{uid, nick, iconUrl, birthday, timestamp, childId, classId}
+import models.helper.FieldHelper.{nick, iconUrl, birthday, timestamp, childId, classId, className}
 import play.api.Play.current
 import java.util.Date
-import models.json_models.BindNumberResponse.generateNewPassword
-import org.joda.time.format.DateTimeFormat
-import org.joda.time.DateTime
-import models.ParentInfo
 
 case class ChildResponse(error_code: Int,
                          username: String,
@@ -19,7 +15,7 @@ case class ChildResponse(error_code: Int,
 
 case class ChildrenResponse(error_code: Int, children: List[ChildDetail])
 
-case class ChildDetail(id: String, nick: String, icon_url: String, birthday: Long, timestamp: Long, class_id: Long)
+case class ChildDetail(id: String, nick: String, icon_url: String, birthday: Long, timestamp: Long, class_id: Long, class_name: String)
 
 case class ChildDetailResponse(error_code: Int, child_info: Option[ChildDetail])
 
@@ -33,9 +29,10 @@ object Children {
       get[String]("picurl") ~
       get[Date]("birthday") ~
       get[Long]("class_id") ~
+      get[String]("class_name") ~
       get[Long]("update_at") map {
-      case id ~ nick ~ icon_url ~ birth ~ classId ~ t =>
-        new ChildDetail(id, nick, icon_url, birth.getTime, t, classId)
+      case id ~ nick ~ icon_url ~ birth ~ classId ~ className ~ t =>
+        new ChildDetail(id, nick, icon_url, birth.getTime, t, classId, className)
     }
   }
 
@@ -55,13 +52,13 @@ object Children {
 
   def show(schoolId: Long, phone: String, child: String) = DB.withConnection {
     implicit c =>
-      val result = SQL("select * from childinfo where child_id={child_id}")
+      val result = SQL("select * from childinfo c, classinfo class where c.class_id=class.class_id and child_id={child_id}")
         .on('child_id -> child).apply()
 
       if (result.isEmpty) new ChildDetailResponse(1, None)
       else {
         val row = result.head
-        new ChildDetailResponse(0, Some(new ChildDetail(childId(row), nick(row), iconUrl(row), birthday(row), timestamp(row), classId(row))))
+        new ChildDetailResponse(0, Some(new ChildDetail(childId(row), nick(row), iconUrl(row), birthday(row), timestamp(row), classId(row), className(row))))
       }
   }
 }

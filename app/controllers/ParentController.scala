@@ -27,15 +27,6 @@ object ParentController extends Controller {
     )
   )
 
-  //  def create(kg: Long) = Action {
-  //    implicit request =>
-  //      parentForm.bindFromRequest.value map {
-  //        parent =>
-  //          val created = Parent.create(kg)(parent)
-  //          Ok(Json.toJson(created)).as("application/json")
-  //      } getOrElse BadRequest
-  //  }
-
   implicit val read1 = Json.reads[School]
   implicit val read2 = Json.reads[ChildInfo]
   implicit val read3 = Json.reads[ParentInfo]

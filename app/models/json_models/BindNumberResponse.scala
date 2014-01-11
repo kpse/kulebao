@@ -14,7 +14,7 @@ case class BindNumberResponse(error_code: Int,
                               access_token: String,
                               username: String,
                               account_name: String,
-                              school_id: Long)
+                              school_id: Long, school_name: String)
 
 object BindNumberResponse {
 
@@ -22,13 +22,13 @@ object BindNumberResponse {
 
   def handle(request: BindingNumber) = DB.withConnection {
     implicit c =>
-      val firstRow = SQL("select a.*, p.name, p.school_id from accountinfo a, parentinfo p where a.accountid = p.phone and accountid={accountid}")
+      val firstRow = SQL("select a.*, p.name, p.school_id, s.name from accountinfo a, parentinfo p, schoolinfo s where s.school_id=p.school_id and a.accountid = p.phone and accountid={accountid}")
         .on('accountid -> request.phonenum
         ).apply
       Logger.info(firstRow.toString)
       firstRow match {
         case row if row.isEmpty =>
-          new BindNumberResponse(1, "", "", "", 0)
+          new BindNumberResponse(1, "", "", "", 0, "")
         case row if row(0)[Int]("active") == 0 =>
           val updateTime = System.currentTimeMillis
           SQL("update accountinfo set password={new_password}, pwd_change_time={timestamp}, pushid={pushid}, active=1 where accountid={accountid}")
@@ -38,14 +38,14 @@ object BindNumberResponse {
               'timestamp -> updateTime
             ).executeUpdate
           Logger.info("binding: first activate..phone: %s at %s".format(request.phonenum, new Date(updateTime).toString))
-          new BindNumberResponse(0, updateTime.toString, row(0)[String]("name"), request.phonenum, row(0)[String]("school_id").toLong)
+          new BindNumberResponse(0, updateTime.toString, row(0)[String]("name"), request.phonenum, row(0)[String]("school_id").toLong, row(0)[String]("schoolinfo.name"))
         case row if row(0)[Int]("active") == 1 =>
           SQL("update accountinfo set pushid={pushid}, active=1 where accountid={accountid}")
             .on('accountid -> request.phonenum,
               'pushid -> request.user_id
             ).executeUpdate
           Logger.info("binding: refresh token %s..phone: %s".format(request.user_id, request.phonenum))
-          new BindNumberResponse(0, row(0)[Long]("pwd_change_time").toString, row(0)[String]("name"), request.phonenum, row(0)[String]("school_id").toLong)
+          new BindNumberResponse(0, row(0)[Long]("pwd_change_time").toString, row(0)[String]("name"), request.phonenum, row(0)[String]("school_id").toLong, row(0)[String]("schoolinfo.name"))
       }
 
   }

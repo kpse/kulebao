@@ -27,4 +27,6 @@ object FieldHelper {
   def childId(row: SqlRow) = row[String]("child_id")
 
   def classId(row: SqlRow) = row[Long]("class_id")
+
+  def className(row: SqlRow) = row[String]("class_name")
 }
