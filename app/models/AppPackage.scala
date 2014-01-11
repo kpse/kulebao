@@ -46,6 +46,6 @@ object AppPackage {
 
   def latest = DB.withConnection {
     implicit c =>
-      SQL("select * from appinfo order by release_time DESC limit 1").as(simple.singleOpt).get
+      SQL("select * from appinfo where version_code=(SELECT MAX(version_code) FROM appinfo)").as(simple.singleOpt).get
   }
 }

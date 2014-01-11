@@ -13,8 +13,8 @@
     <div class="form-group">
       <label for="summary" class="col-sm-4 control-label">概要</label>
 
-      <div class="col-sm-8">
-        <p class="form-control-static">{{lastApp.summary}}</p>
+      <div class="col-sm-7">
+        <textarea class="form-control-static form-control version-summary" readonly>{{lastApp.summary}}</textarea>
       </div>
     </div>
     <div class="form-group">
@@ -49,7 +49,7 @@
     <label for="store-version-code" class="col-sm-4 control-label">版本序号</label>
 
     <div class="col-sm-8">
-      <input id="store-version-code" class="form-control" type="number" ng-model="app.version_code" ng-bk-focus required min="app.version_code | number"/>
+      <input id="store-version-code" class="form-control" type="number" ng-model="app.version_code" ng-bk-focus required min="{{lastApp.version_code + 1}}"/>
     </div>
   </div>
 
