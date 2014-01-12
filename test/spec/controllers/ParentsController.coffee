@@ -10,11 +10,12 @@ describe 'Controller: ParentsCtrl', () ->
   $httpBackend = {}
 
   # Initialize the controller and a mock scope
-  beforeEach inject ($controller, $rootScope, parentService, _$httpBackend_) ->
+  beforeEach inject ($controller, $rootScope, classService, schoolService, _$httpBackend_) ->
     scope = $rootScope.$new()
-    ParentsCtrl = $controller 'ParentsCtrl', {
+    ParentsCtrl = $controller 'ParentsInClassCtrl', {
       $scope: scope
-      parentService: parentService
+      classService: classService
+      schoolService: schoolService
       $stateParams:
         kindergarten: 93740362
     }
@@ -24,13 +25,18 @@ describe 'Controller: ParentsCtrl', () ->
         school_id: 93740362
         name: 'school_name'
 
-    $httpBackend.expectGET('/kindergarten/93740362/parent')
+    $httpBackend.expectGET('/kindergarten/93740362/parent?')
     .respond [
             id: 1
             name: 'name'
             school_id: 1
             phone: 123
         ]
+    $httpBackend.expectGET('/kindergarten/93740362/class')
+    .respond              [
+        class_id: 123
+        name: 'class_name'
+      ]
 
   it 'should attach a list of parents to the scope', () ->
     $httpBackend.flush()

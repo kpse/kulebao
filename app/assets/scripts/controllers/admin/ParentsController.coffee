@@ -2,8 +2,8 @@
 
 angular.module('kulebaoAdmin')
 .controller 'ParentsCtrl',
-    ['$scope', '$rootScope', 'parentService', '$stateParams', '$location', 'uploadService', 'schoolService', 'classService',
-      ($scope, $rootScope, Parent, $stateParams, $location, uploadService, School, Class) ->
+    ['$scope', '$rootScope', '$stateParams', '$location', 'schoolService', 'classService',
+      ($scope, $rootScope, $stateParams, $location, School, Class) ->
         $rootScope.tabName = 'parents'
 
         $scope.kindergarten = School.get school_id: $stateParams.kindergarten, ->
