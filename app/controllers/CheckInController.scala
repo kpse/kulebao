@@ -19,6 +19,7 @@ object CheckInController extends Controller {
 
   def create(kg: Long) = Action.async(parse.json) {
     request =>
+      Logger.info("checking : " + request.body)
       request.body.validate[CheckInfo].map {
         case (check) =>
           val notification = CheckingMessage.convert(check)
@@ -38,7 +39,7 @@ object CheckInController extends Controller {
           }
 
       }.getOrElse(Future {
-        NotFound
+        BadRequest
       })
   }
 }

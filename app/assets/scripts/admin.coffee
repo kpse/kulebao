@@ -29,10 +29,6 @@ class Config
         url: '/list',
         templateUrl: 'templates/admin/list_parents.html',
         controller: 'ParentsCtrl'
-    .state 'kindergarten.swipingcard',
-        url: '/swipingcard',
-        templateUrl: 'templates/admin/swipingcard.html',
-        controller: 'AccountCtrl'
     .state 'kindergarten.intro',
         url: '/intro',
         templateUrl: 'templates/admin/intro.html',

@@ -71,6 +71,19 @@ angular.module('kulebaoAdmin')
             $scope.$apply ->
               person.portrait = url if url isnt undefined
 
+        generateCheckingInfo = (parent) ->
+          school_id: parseInt($stateParams.kindergarten)
+          card_no: parent.card
+          card_type: 0
+          notice_type: 2
+          record_url: 'http://suoqin-test.u.qiniudn.com/FoUJaV4r5L0bM0414mGWEIuCLEdL'
+          timestamp: new Date().getTime()
+
+        $scope.sendMessage = (parent) ->
+          check = generateCheckingInfo(parent)
+          $http({method: 'POST', url: '/kindergarten/'+$stateParams.kindergarten+'/check', data: check}).success (data) ->
+            alert 'error_code:' + data.error_code
+
     ]
 
 angular.module('kulebaoAdmin')
