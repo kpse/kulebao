@@ -189,10 +189,20 @@ object Parent {
     "where p.school_id = s.school_id and s.school_id={kg} and p.status=1 " +
     "and r.child_id = c.child_id and r.parent_id = p.parent_id and card.userid = p.parent_id"
 
-  def all(kg: Long): List[ParentInfo] = DB.withConnection {
+  def all(kg: Long, classId: Option[Long]): List[ParentInfo] = DB.withConnection {
     implicit c =>
-      SQL(fullStructureSql)
-        .on('kg -> kg)
-        .as(withRelationship *)
+      classId match {
+        case Some(id) =>
+          Logger.info("id = " + id.toString)
+          SQL(fullStructureSql + " and c.class_id={class_id}")
+            .on('kg -> kg,
+              'class_id -> id.toString)
+            .as(withRelationship *)
+        case None =>
+          SQL(fullStructureSql)
+            .on('kg -> kg)
+            .as(withRelationship *)
+      }
+
   }
 }

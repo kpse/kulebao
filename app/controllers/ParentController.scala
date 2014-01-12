@@ -14,8 +14,9 @@ object ParentController extends Controller {
   implicit val write2 = Json.writes[ChildInfo]
   implicit val write1 = Json.writes[ParentInfo]
 
-  def index(kg: Long) = Action {
-    val jsons = Parent.all(kg)
+  def index(kg: Long, classId: Option[Long]) = Action {
+    val jsons = Parent.all(kg, classId)
+    Logger.info(jsons.toString)
     Ok(Json.toJson(jsons)).as("application/json")
   }
 

@@ -17,18 +17,26 @@ class Config
         url: '/parents',
         templateUrl: 'templates/admin/parents.html',
         controller: 'ParentsCtrl'
-    .state 'kindergarten.parents.edit_adult',
+    .state 'kindergarten.parents.class',
+        url: '/class/:classId',
+        templateUrl: 'templates/admin/classes.html',
+        controller: 'ParentsInClassCtrl'
+    .state 'kindergarten.parents.class.list',
+        url: '/list',
+        templateUrl: 'templates/admin/list_parents.html',
+        controller: 'ParentsInClassCtrl'
+    .state 'kindergarten.parents.class.edit_adult',
         url: '/edit_adult',
         templateUrl: 'templates/admin/add_parent_adult.html',
         controller: 'EditParentCtrl'
-    .state 'kindergarten.parents.edit_child',
+    .state 'kindergarten.parents.class.edit_child',
         url: '/edit_child',
         templateUrl: 'templates/admin/add_parent_child.html',
         controller: 'EditParentCtrl'
-    .state 'kindergarten.parents.list',
-        url: '/list',
-        templateUrl: 'templates/admin/list_parents.html',
-        controller: 'ParentsCtrl'
+    .state 'kindergarten.swipingcard',
+        url: '/swipingcard',
+        templateUrl: 'templates/admin/swipingcard.html',
+        controller: 'AccountCtrl'
     .state 'kindergarten.intro',
         url: '/intro',
         templateUrl: 'templates/admin/intro.html',
