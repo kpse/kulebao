@@ -38,9 +38,10 @@
 
         <div class="col-sm-8">
           <input type="file" id="school-pic" fileupload="pic" ng-disabled="!isEditing"/>
-          <button class="btn btn-success btn-xs" ng-disabled="pic === undefined" ng-click="uploadPic(pic)">
+          <button class="btn btn-success btn-xs" ng-disabled="pic === undefined || pic.size > 200000" ng-click="uploadPic(pic)">
             上传
           </button>
+          <span ng-class="{error : pic.size > 200000}" class="help-block">图片大小请不要超过200k</span>
         </div>
       </div>
     </div>

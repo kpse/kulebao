@@ -61,7 +61,8 @@
 
         <div class="col-sm-8">
           <input type="file" id="child-pic" fileupload="pic"/>
-          <button class="btn btn-success btn-xs" ng-disabled="pic === undefined" ng-click="uploadPic(parent.child, pic)">上传头像</button>
+          <button class="btn btn-success btn-xs" ng-disabled="pic === undefined || pic.size > 200000" ng-click="uploadPic(parent.child, pic)">上传头像</button>
+          <span ng-class="{error : pic.size > 200000}"  class="help-block">图片大小请不要超过200k</span>
         </div>
 
       </div>
@@ -86,7 +87,7 @@
         <label for="child-class" class="col-sm-4 control-label">班级</label>
 
         <div class="col-sm-8">
-          <select class="form-control" ng-model="parent.child.class_id"
+          <select class="form-control class-select" ng-model="parent.child.class_id"
                   ng-options="value.class_id as value.name for (key, value) in kindergarten.classes"
                   data-style="btn-primary"></select>
         </div>
@@ -140,8 +141,8 @@
           <form class="form-horizontal row" role="form">
             <h3 class="summary-title">家长信息</h3>
 
-            <div class="form-group">
-              <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait-preview"
+            <div class="form-group row">
+              <div class="portrait-container col-sm-offset-7 col-sm-2"><img class="portrait-preview"
                                                                             ng-src="{{parent.portrait}}"
                                                                             alt="照片"/></div>
             </div>
@@ -194,8 +195,8 @@
           <form class="form-horizontal row" role="form">
             <h3 class="summary-title">宝宝信息</h3>
 
-            <div class="form-group">
-              <div class="portrait-container col-lg-offset-7 col-sm-2"><img class="portrait-preview"
+            <div class="form-group row">
+              <div class="portrait-container col-sm-offset-7 col-sm-2"><img class="portrait-preview"
                                                                             ng-src="{{parent.child.portrait}}"
                                                                             alt="照片"/></div>
             </div>
@@ -253,11 +254,6 @@
                 <p class="form-control-static">{{parent.child.address}}</p>
               </div>
 
-              <label for="child-hukou" class="col-sm-2 control-label">户口</label>
-
-              <div class="col-sm-3">
-                <p class="form-control-static">{{parent.child.hukou}}</p>
-              </div>
             </div>
           </form>
         </div>

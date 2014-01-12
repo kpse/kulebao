@@ -44,6 +44,7 @@
   }
   .portrait-container {
     margin-top: -25px;
+    margin-left: 333px;
   }
 }
 
@@ -58,4 +59,9 @@
 
 .class-select {
   max-width: 200px;
+  margin-left: 4px;
+}
+
+.help-block.error {
+  color: red;
 }

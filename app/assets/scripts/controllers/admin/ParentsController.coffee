@@ -104,5 +104,7 @@ angular.module('kulebaoAdmin')
         $scope.backToList()
         delete $rootScope.parent
 
+      $scope.getClassName = (id) ->
+        _.find $scope.kindergarten.classes, (c)-> c.class_id is id;
 
     ]
