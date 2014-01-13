@@ -14,6 +14,7 @@ describe 'Controller: ParentsCtrl', () ->
     scope = $rootScope.$new()
     ParentsCtrl = $controller 'ParentsInClassCtrl', {
       $scope: scope
+      $rootScope: $rootScope
       classService: classService
       schoolService: schoolService
       $stateParams:

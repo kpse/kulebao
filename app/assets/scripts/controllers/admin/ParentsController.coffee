@@ -2,26 +2,47 @@
 
 angular.module('kulebaoAdmin')
 .controller 'ParentsCtrl',
-    ['$scope', '$rootScope', '$stateParams', '$location', 'schoolService', 'classService',
-      ($scope, $rootScope, $stateParams, $location, School, Class) ->
+    ['$scope', '$rootScope', '$stateParams', '$location', 'schoolService', 'classService', 'parentService',
+      ($scope, $rootScope, $stateParams, $location, School, Class, Parent) ->
         $rootScope.tabName = 'parents'
 
         $scope.kindergarten = School.get school_id: $stateParams.kindergarten, ->
           $scope.kindergarten.classes = Class.bind({school_id: $stateParams.kindergarten}).query ->
             $location.path($location.path() + '/class/' + $scope.kindergarten.classes[0].class_id + '/list') if $location.path().indexOf("/class/", 0) < 0
 
+        $scope.newParent = () ->
+          $rootScope.parent = new Parent
+            school_id: parseInt($scope.kindergarten.school_id)
+            birthday: '1980-1-1'
+            gender: 1
+            portrait: '/assets/images/portrait_placeholder.png'
+            name: '马大帅'
+            card: ''
+            kindergarten: $scope.kindergarten.school_info
+            relationship: '妈妈'
+            child:
+              birthday: '2009-1-1'
+              gender: 1
+              portrait: '/assets/images/portrait_placeholder.png'
+              class_id: 0
+          $rootScope.parent_changed = true
+          $location.path($location.path().replace(/\/[^\/]+$/, '/edit_adult'))
     ]
 
 angular.module('kulebaoAdmin')
 .controller 'EditParentCtrl',
-    ['$scope', '$rootScope', '$location', 'classService', ($scope, $rootScope, $location, Class) ->
-
-      $scope.backToList = () ->
+    ['$scope', '$rootScope', '$location', 'classService', 'cardService', '$stateParams',
+      ($scope, $rootScope, $location, Class, Card, stateParams) ->
+        $scope.backToList = () ->
         $location.path($location.path().replace(/\/[^\/]+$/, '/list'))
 
       if $rootScope.parent isnt undefined
         $scope.parent = $rootScope.parent
-        $scope.kindergarten.classes = Class.bind({school_id: $scope.parent.kindergarten.school_id}).query()
+        $scope.parent.child.class_id = parseInt(stateParams.classId)
+        $scope.kindergarten.classes = Class.bind(school_id: $scope.parent.kindergarten.school_id).query()
+        $scope.allCards = Card.bind(school_id: $scope.parent.kindergarten.school_id).query ->
+          $scope.allCards = _.reject $scope.allCards, (c) ->
+            c.phone is $scope.parent.phone
       else
         $scope.backToList()
 
@@ -32,6 +53,11 @@ angular.module('kulebaoAdmin')
 
       $scope.getClassName = (id) ->
         _.find $scope.kindergarten.classes, (c)-> c.class_id is id;
+
+        $scope.isDuplicated = (card) ->
+          return false if card is undefined || card.length < 10
+          undefined isnt _.find $scope.allCards, (c) ->
+            c.card_id == card
 
     ]
 
@@ -101,22 +127,4 @@ angular.module('kulebaoAdmin')
           check = generateCheckingInfo(parent)
           $http({method: 'POST', url: '/kindergarten/'+$stateParams.kindergarten+'/check', data: check}).success (data) ->
             alert 'error_code:' + data.error_code
-
-        $scope.newParent = () ->
-          $rootScope.parent = new Parent
-            school_id: parseInt($scope.kindergarten.school_id)
-            birthday: '1980-1-1'
-            gender: 1
-            portrait: '/assets/images/portrait_placeholder.png'
-            name: '马大帅'
-            card: '1234567890'
-            kindergarten: $scope.kindergarten.school_info
-            relationship: '妈妈'
-            child:
-              birthday: '2009-1-1'
-              gender: 1
-              portrait: '/assets/images/portrait_placeholder.png'
-              class_id: $scope.current_class
-          $rootScope.parent_changed = true
-          $location.path($location.path().replace(/\/[^\/]+$/, '/edit_adult'))
     ]

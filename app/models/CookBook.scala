@@ -16,15 +16,15 @@ case class CookbookDetail(error_code: Int, school_id: Long, cookbook_id: Long, t
 
 
 object CookBook {
-  def insertNew(cookbook: CookbookDetail) : Option[CookbookDetail] = DB.withConnection {
+  def insertNew(cookbook: CookbookDetail): Option[CookbookDetail] = DB.withConnection {
     implicit c =>
       SQL("update cookbookinfo set status=0 where school_id={school_id} and cookbook_id={cookbook_id}")
         .on('school_id -> cookbook.school_id.toString,
           'cookbook_id -> cookbook.cookbook_id
         ).executeUpdate
 
-      val newId : Option[Long] = SQL("insert into cookbookinfo set school_id={school_id}, cookbook_id={cookbook_id}, extra_tip={extra_tip}," +
-        "timestamp={timestamp}, mon_breakfast={mon_breakfast}, mon_lunch={mon_lunch}, mon_dinner={mon_dinner}, mon_extra={mon_extra}, " +
+      val newId: Option[Long] = SQL("insert into cookbookinfo set school_id={school_id}, cookbook_id={cookbook_id}, extra_tip={extra_tip}," +
+        "timestamp={timestamp}, status=1, mon_breakfast={mon_breakfast}, mon_lunch={mon_lunch}, mon_dinner={mon_dinner}, mon_extra={mon_extra}, " +
         "tue_breakfast={tue_breakfast}, tue_lunch={tue_lunch}, tue_dinner={tue_dinner}, tue_extra={tue_extra}, " +
         "wed_breakfast={wed_breakfast}, wed_lunch={wed_lunch}, wed_dinner={wed_dinner}, wed_extra={wed_extra}, " +
         "thu_breakfast={thu_breakfast}, thu_lunch={thu_lunch}, thu_dinner={thu_dinner}, thu_extra={thu_extra}, " +

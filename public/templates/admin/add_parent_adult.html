@@ -26,6 +26,7 @@
         <div class="col-sm-8">
           <input id="parent-card" ng-model="parent.card"
                  class="editing-field form-control" required ui-mask="{{'99999-99999'}}"/>
+          <span class="error-field" ng-show="isDuplicated(parent.card)">与现有卡号重复！</span>
         </div>
       </div>
       <div class="form-group">
@@ -87,7 +88,8 @@
     </div>
     <div class="col-sm-offset-7 col-sm-4">
       <div class="form-group">
-        <a class="btn btn-primary pull-right adding-button" ng-disabled="newAdultForm.$invalid"
+        <a class="btn btn-primary pull-right adding-button"
+           ng-disabled="newAdultForm.$invalid || isDuplicated(parent.card)"
            ng-click="nextPage()">编辑宝宝信息</a>
         <a class="btn btn-default pull-right adding-button"
            ng-click="cancelCreating()">取消</a>

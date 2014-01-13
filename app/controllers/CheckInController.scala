@@ -8,6 +8,7 @@ import play.api.libs.ws.WS
 import scala.concurrent.{ExecutionContext, Future}
 import ExecutionContext.Implicits.global
 import play.Logger
+import models.Card
 
 object CheckInController extends Controller {
 
@@ -41,5 +42,15 @@ object CheckInController extends Controller {
       }.getOrElse(Future {
         BadRequest
       })
+  }
+
+  implicit val write3 = Json.writes[Card]
+
+  def show(kg: Long, cardId: String) = Action {
+    Ok(Json.toJson(Card.show(kg, cardId)))
+  }
+
+  def index(kg: Long) = Action {
+    Ok(Json.toJson(Card.index(kg)))
   }
 }

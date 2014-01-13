@@ -7,87 +7,89 @@
       </button>
     </div>
     <h4>{{kindergarten.school_info.name}} 近期食谱</h4>
-    <span class="issue-date">于{{cookbook.timestamp | date:'yyyy年MM月dd日 HH:mm:ss'}}发布</span>
+    <span class="desc">家长可以随时从客户端查看更新后的食谱，</span>
+    最后一次于<span class="issue-date">{{cookbook.timestamp | date:'yyyy年MM月dd日 HH:mm:ss'}}</span>更新。
   </div>
   <div class="panel-body">
     <form name="cookbookForm" class="form-horizontal">
 
-      <div class="form-group col-sm-offset-1 col-sm-5">
+      <div class="form-group col-sm-offset-1 col-sm-6">
         <h3>星期一</h3>
         <label class="control-label">早餐</label>
-        <input ng-model="cookbook.week.mon.breakfast" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.mon.breakfast" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
         <label class="control-label">午餐</label>
-        <input ng-model="cookbook.week.mon.lunch" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
-        <label class="control-label">晚餐</label>
-        <input ng-model="cookbook.week.mon.dinner" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.mon.lunch" ng-disabled="!isEditing"
+                  class="editing-title form-control" required/>
         <label class="control-label">加餐</label>
-        <input ng-model="cookbook.week.mon.extra" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.mon.extra" ng-disabled="!isEditing"
+                  class="editing-title form-control" maxlength="40"/>
+        <label class="control-label">晚餐</label>
+        <textarea ng-model="cookbook.week.mon.dinner" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
       </div>
       <div class="col-sm-1"></div>
-      <div class="form-group col-sm-5">
+      <div class="form-group col-sm-6">
         <h3>星期二</h3>
         <label class="control-label">早餐</label>
-        <input ng-model="cookbook.week.tue.breakfast" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.tue.breakfast" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
         <label class="control-label">午餐</label>
-        <input ng-model="cookbook.week.tue.lunch" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
-        <label class="control-label">晚餐</label>
-        <input ng-model="cookbook.week.tue.dinner" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.tue.lunch" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
         <label class="control-label">加餐</label>
-        <input ng-model="cookbook.week.tue.extra" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.tue.extra" ng-disabled="!isEditing"
+                  class="editing-title form-control" maxlength="40"/>
+        <label class="control-label">晚餐</label>
+        <textarea ng-model="cookbook.week.tue.dinner" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
       </div>
-      <div class="form-group col-sm-offset-1 col-sm-5">
+      <div class="form-group col-sm-offset-1 col-sm-6">
         <h3>星期三</h3>
         <label class="control-label">早餐</label>
-        <input ng-model="cookbook.week.wed.breakfast" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.wed.breakfast" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
         <label class="control-label">午餐</label>
-        <input ng-model="cookbook.week.wed.lunch" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
-        <label class="control-label">晚餐</label>
-        <input ng-model="cookbook.week.wed.dinner" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.wed.lunch" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
         <label class="control-label">加餐</label>
-        <input ng-model="cookbook.week.wed.extra" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.wed.extra" ng-disabled="!isEditing"
+                  class="editing-title form-control" maxlength="40"/>
+        <label class="control-label">晚餐</label>
+        <textarea ng-model="cookbook.week.wed.dinner" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
       </div>
       <div class="col-sm-1"></div>
-      <div class="form-group col-sm-5">
+      <div class="form-group col-sm-6">
         <h3>星期四</h3>
         <label class="control-label">早餐</label>
-        <input ng-model="cookbook.week.thu.breakfast" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.thu.breakfast" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
         <label class="control-label">午餐</label>
-        <input ng-model="cookbook.week.thu.lunch" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
-        <label class="control-label">晚餐</label>
-        <input ng-model="cookbook.week.thu.dinner" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.thu.lunch" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
         <label class="control-label">加餐</label>
-        <input ng-model="cookbook.week.thu.extra" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.thu.extra" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
+        <label class="control-label">晚餐</label>
+        <textarea ng-model="cookbook.week.thu.dinner" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
+
       </div>
-      <div class="form-group col-sm-offset-1 col-sm-5">
+      <div class="form-group col-sm-offset-1 col-sm-6">
         <h3>星期五</h3>
         <label class="control-label">早餐</label>
-        <input ng-model="cookbook.week.fri.breakfast" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.fri.breakfast" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
         <label class="control-label">午餐</label>
-        <input ng-model="cookbook.week.thu.lunch" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
-        <label class="control-label">晚餐</label>
-        <input ng-model="cookbook.week.thu.dinner" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.thu.lunch" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
         <label class="control-label">加餐</label>
-        <input ng-model="cookbook.week.thu.extra" ng-disabled="!isEditing"
-               class="editing-title form-control" required/>
+        <textarea ng-model="cookbook.week.thu.extra" ng-disabled="!isEditing"
+                  class="editing-title form-control" maxlength="40"/>
+        <label class="control-label">晚餐</label>
+        <textarea ng-model="cookbook.week.thu.dinner" ng-disabled="!isEditing"
+                  class="editing-title form-control" required maxlength="40"/>
       </div>
 
 
