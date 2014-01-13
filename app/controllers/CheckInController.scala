@@ -45,7 +45,6 @@ object CheckInController extends Controller {
   }
 
   implicit val write3 = Json.writes[Card]
-
   def show(kg: Long, cardId: String) = Action {
     Ok(Json.toJson(Card.show(kg, cardId)))
   }

@@ -32,8 +32,9 @@ angular.module('kulebaoAdmin')
 angular.module('kulebaoAdmin')
 .controller 'EditParentCtrl',
     ['$scope', '$rootScope', '$location', 'classService', 'cardService', '$stateParams',
-      ($scope, $rootScope, $location, Class, Card, stateParams) ->
-        $scope.backToList = () ->
+    ($scope, $rootScope, $location, Class, Card, stateParams) ->
+
+      $scope.backToList = () ->
         $location.path($location.path().replace(/\/[^\/]+$/, '/list'))
 
       if $rootScope.parent isnt undefined
@@ -41,8 +42,7 @@ angular.module('kulebaoAdmin')
         $scope.parent.child.class_id = parseInt(stateParams.classId)
         $scope.kindergarten.classes = Class.bind(school_id: $scope.parent.kindergarten.school_id).query()
         $scope.allCards = Card.bind(school_id: $scope.parent.kindergarten.school_id).query ->
-          $scope.allCards = _.reject $scope.allCards, (c) ->
-            c.phone is $scope.parent.phone
+          $scope.allCards = _.reject $scope.allCards, (c) -> c.phone is $scope.parent.phone
       else
         $scope.backToList()
 
@@ -54,10 +54,10 @@ angular.module('kulebaoAdmin')
       $scope.getClassName = (id) ->
         _.find $scope.kindergarten.classes, (c)-> c.class_id is id;
 
-        $scope.isDuplicated = (card) ->
-          return false if card is undefined || card.length < 10
-          undefined isnt _.find $scope.allCards, (c) ->
-            c.card_id == card
+      $scope.isDuplicated = (card) ->
+        return false if card is undefined || card.length < 10
+        undefined isnt _.find $scope.allCards, (c) ->
+          c.card_id == card
 
     ]
 
