@@ -5,7 +5,6 @@ angular.module('kulebaoAdmin')
     ['$scope', '$rootScope', '$stateParams', '$location', 'schoolService', 'classService', 'parentService',
       ($scope, $rootScope, $stateParams, $location, School, Class, Parent) ->
         $rootScope.tabName = 'parents'
-
         $scope.kindergarten = School.get school_id: $stateParams.kindergarten, ->
           $scope.kindergarten.classes = Class.bind({school_id: $stateParams.kindergarten}).query ->
             $location.path($location.path() + '/class/' + $scope.kindergarten.classes[0].class_id + '/list') if $location.path().indexOf("/class/", 0) < 0
@@ -33,7 +32,6 @@ angular.module('kulebaoAdmin')
 .controller 'EditParentCtrl',
     ['$scope', '$rootScope', '$location', 'classService', 'cardService', '$stateParams',
     ($scope, $rootScope, $location, Class, Card, stateParams) ->
-
       $scope.backToList = () ->
         $location.path($location.path().replace(/\/[^\/]+$/, '/list'))
 
@@ -67,11 +65,12 @@ angular.module('kulebaoAdmin')
 .controller 'ParentsInClassCtrl',
     ['$scope', '$rootScope', 'parentService', '$stateParams', '$location', '$http', 'uploadService', '$timeout', 'schoolService', 'classService',
       ($scope, $rootScope, Parent, $stateParams, $location, $http, uploadService, $timeout, School, Class) ->
-
+        $scope.loading = true
         $scope.current_class = parseInt($stateParams.classId)
         $scope.kindergarten = School.get school_id: $stateParams.kindergarten, ->
           $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id, class_id: $stateParams.classId}).query()
-          $scope.kindergarten.classes = Class.bind({school_id: $stateParams.kindergarten}).query()
+          $scope.kindergarten.classes = Class.bind({school_id: $stateParams.kindergarten}).query ->
+            $scope.loading = false
 
         $scope.delete = (parent) ->
           $scope.parents = _.reject($scope.parents, (p) ->
@@ -81,6 +80,7 @@ angular.module('kulebaoAdmin')
         $rootScope.parent_changed = false
 
         $scope.startEditing = (parent) ->
+          $scope.loading = true
           $rootScope.parent = parent
           $rootScope.$watch 'parent', (oldv, newv) ->
             $rootScope.parent_changed = true if newv isnt oldv

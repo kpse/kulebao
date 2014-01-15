@@ -117,7 +117,7 @@
       <div class="form-group">
         <a class="btn btn-primary pull-right adding-button" ng-disabled="newChildForm.$invalid" ng-hide="saving"
            ng-click="save(parent)">保存</a>
-        <a class="btn btn-primary pull-right adding-button" ng-show="saving">保存中。。。</a>
+        <div class="loading" ng-show="saving"/>
         <a class="btn btn-warning pull-right adding-button" ng-disabled="newChildForm.$invalid || saving" data-toggle="modal"
            data-target="#myModal">预览</a>
         <a class="btn btn-info pull-right adding-button" ng-disabled="saving"

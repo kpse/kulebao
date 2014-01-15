@@ -1,13 +1,15 @@
 'use strict'
 
 class Controller
-  constructor: ($rootScope, $location, adminNewsService, $stateParams, GroupMessage, School) ->
+  constructor: (scope, $rootScope, $location, adminNewsService, $stateParams, GroupMessage, School) ->
+    scope.loading = true
     @adminUser =
       id: 1
       name: '学校某老师'
 
     @kindergarten = School.get school_id: $stateParams.kindergarten, =>
-      @newsletters = adminNewsService.bind(school_id: @kindergarten.school_id, admin_id: @adminUser.id).query()
+      @newsletters = adminNewsService.bind(school_id: @kindergarten.school_id, admin_id: @adminUser.id).query ->
+        scope.loading = false
 
     $rootScope.tabName = 'bulletin'
 
@@ -38,5 +40,5 @@ class Controller
       $location.path('/kindergarten/' + @kindergarten.school_id + '/news/' + news.news_id )
 
 
-angular.module('kulebaoAdmin').controller 'BulletinManageCtrl', ['$rootScope', '$location', 'adminNewsService',
+angular.module('kulebaoAdmin').controller 'BulletinManageCtrl', ['$scope', '$rootScope', '$location', 'adminNewsService',
                                                                  '$stateParams', 'GroupMessage', 'schoolService', Controller]
