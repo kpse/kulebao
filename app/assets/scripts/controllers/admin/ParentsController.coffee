@@ -89,6 +89,8 @@ angular.module('kulebaoAdmin')
 
 
         $scope.backToList = ->
+          $scope.loading = false
+          $scope.saving = false
           $location.path($location.path().replace(/\/[^\/]+$/, '/list'))
 
         upload = (file, callback)->
