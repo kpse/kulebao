@@ -59,6 +59,8 @@ angular.module('kulebaoAdmin')
         undefined isnt _.find $scope.allCards, (c) ->
           c.card_id == card
 
+      $scope.backToParent = ->
+        window.history.back()
     ]
 
 angular.module('kulebaoAdmin')
@@ -96,6 +98,7 @@ angular.module('kulebaoAdmin')
               callback(remoteFile.url)
 
         $scope.save = (parent) ->
+          $scope.saving = true
           console.log 'parent changed: ' + $rootScope.parent_changed
           if $rootScope.parent_changed
             $timeout ->

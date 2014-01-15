@@ -16,45 +16,54 @@ case class CookbookDetail(error_code: Int, school_id: Long, cookbook_id: Long, t
 
 
 object CookBook {
-  def insertNew(cookbook: CookbookDetail) : Option[CookbookDetail] = DB.withConnection {
+  def insertNew(cookbook: CookbookDetail) : Option[CookbookDetail] = DB.withTransaction {
     implicit c =>
-      SQL("update cookbookinfo set status=0 where school_id={school_id} and cookbook_id={cookbook_id}")
-        .on('school_id -> cookbook.school_id.toString,
-          'cookbook_id -> cookbook.cookbook_id
-        ).executeUpdate
+      try {
+        SQL("update cookbookinfo set status=0 where school_id={school_id} and cookbook_id={cookbook_id}")
+          .on('school_id -> cookbook.school_id.toString,
+            'cookbook_id -> cookbook.cookbook_id
+          ).executeUpdate
 
-      val newId : Option[Long] = SQL("insert into cookbookinfo set school_id={school_id}, cookbook_id={cookbook_id}, extra_tip={extra_tip}," +
-        "timestamp={timestamp}, status=1, mon_breakfast={mon_breakfast}, mon_lunch={mon_lunch}, mon_dinner={mon_dinner}, mon_extra={mon_extra}, " +
-        "tue_breakfast={tue_breakfast}, tue_lunch={tue_lunch}, tue_dinner={tue_dinner}, tue_extra={tue_extra}, " +
-        "wed_breakfast={wed_breakfast}, wed_lunch={wed_lunch}, wed_dinner={wed_dinner}, wed_extra={wed_extra}, " +
-        "thu_breakfast={thu_breakfast}, thu_lunch={thu_lunch}, thu_dinner={thu_dinner}, thu_extra={thu_extra}, " +
-        "fri_breakfast={fri_breakfast}, fri_lunch={fri_lunch}, fri_dinner={fri_dinner}, fri_extra={fri_extra}")
-        .on('school_id -> cookbook.school_id.toString,
-          'cookbook_id -> (cookbook.cookbook_id + 1),
-          'extra_tip -> cookbook.extra_tip,
-          'timestamp -> System.currentTimeMillis,
-          'mon_breakfast -> cookbook.week.mon.breakfast,
-          'mon_lunch -> cookbook.week.mon.lunch,
-          'mon_dinner -> cookbook.week.mon.dinner,
-          'mon_extra -> cookbook.week.mon.extra,
-          'tue_breakfast -> cookbook.week.tue.breakfast,
-          'tue_lunch -> cookbook.week.tue.lunch,
-          'tue_dinner -> cookbook.week.tue.dinner,
-          'tue_extra -> cookbook.week.tue.extra,
-          'wed_breakfast -> cookbook.week.wed.breakfast,
-          'wed_lunch -> cookbook.week.wed.lunch,
-          'wed_dinner -> cookbook.week.wed.dinner,
-          'wed_extra -> cookbook.week.wed.extra,
-          'thu_breakfast -> cookbook.week.thu.breakfast,
-          'thu_lunch -> cookbook.week.thu.lunch,
-          'thu_dinner -> cookbook.week.thu.dinner,
-          'thu_extra -> cookbook.week.thu.extra,
-          'fri_breakfast -> cookbook.week.fri.breakfast,
-          'fri_lunch -> cookbook.week.fri.lunch,
-          'fri_dinner -> cookbook.week.fri.dinner,
-          'fri_extra -> cookbook.week.fri.extra
-        ).executeInsert()
-      findById(newId.get)
+        val newId: Option[Long] = SQL("insert into cookbookinfo set school_id={school_id}, cookbook_id={cookbook_id}, extra_tip={extra_tip}," +
+          "timestamp={timestamp}, status=1, mon_breakfast={mon_breakfast}, mon_lunch={mon_lunch}, mon_dinner={mon_dinner}, mon_extra={mon_extra}, " +
+          "tue_breakfast={tue_breakfast}, tue_lunch={tue_lunch}, tue_dinner={tue_dinner}, tue_extra={tue_extra}, " +
+          "wed_breakfast={wed_breakfast}, wed_lunch={wed_lunch}, wed_dinner={wed_dinner}, wed_extra={wed_extra}, " +
+          "thu_breakfast={thu_breakfast}, thu_lunch={thu_lunch}, thu_dinner={thu_dinner}, thu_extra={thu_extra}, " +
+          "fri_breakfast={fri_breakfast}, fri_lunch={fri_lunch}, fri_dinner={fri_dinner}, fri_extra={fri_extra}")
+          .on('school_id -> cookbook.school_id.toString,
+            'cookbook_id -> (cookbook.cookbook_id + 1),
+            'extra_tip -> cookbook.extra_tip,
+            'timestamp -> System.currentTimeMillis,
+            'mon_breakfast -> cookbook.week.mon.breakfast,
+            'mon_lunch -> cookbook.week.mon.lunch,
+            'mon_dinner -> cookbook.week.mon.dinner,
+            'mon_extra -> cookbook.week.mon.extra,
+            'tue_breakfast -> cookbook.week.tue.breakfast,
+            'tue_lunch -> cookbook.week.tue.lunch,
+            'tue_dinner -> cookbook.week.tue.dinner,
+            'tue_extra -> cookbook.week.tue.extra,
+            'wed_breakfast -> cookbook.week.wed.breakfast,
+            'wed_lunch -> cookbook.week.wed.lunch,
+            'wed_dinner -> cookbook.week.wed.dinner,
+            'wed_extra -> cookbook.week.wed.extra,
+            'thu_breakfast -> cookbook.week.thu.breakfast,
+            'thu_lunch -> cookbook.week.thu.lunch,
+            'thu_dinner -> cookbook.week.thu.dinner,
+            'thu_extra -> cookbook.week.thu.extra,
+            'fri_breakfast -> cookbook.week.fri.breakfast,
+            'fri_lunch -> cookbook.week.fri.lunch,
+            'fri_dinner -> cookbook.week.fri.dinner,
+            'fri_extra -> cookbook.week.fri.extra
+          ).executeInsert()
+        c.commit
+        findById(newId.get)
+      }
+      catch {
+        case _ => c.rollback
+          findById(-1)
+      }
+
+
   }
 
   def show(kg: Long, cookbookId: Long): Option[CookbookDetail] = DB.withConnection {

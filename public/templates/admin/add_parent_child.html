@@ -115,13 +115,14 @@
     </div>
     <div class="col-sm-offset-6 col-sm-6">
       <div class="form-group">
-        <a class="btn btn-primary pull-right adding-button" ng-disabled="newChildForm.$invalid"
+        <a class="btn btn-primary pull-right adding-button" ng-disabled="newChildForm.$invalid" ng-hide="saving"
            ng-click="save(parent)">保存</a>
-        <a class="btn btn-warning pull-right adding-button" ng-disabled="newChildForm.$invalid" data-toggle="modal"
+        <a class="btn btn-primary pull-right adding-button" ng-show="saving">保存中。。。</a>
+        <a class="btn btn-warning pull-right adding-button" ng-disabled="newChildForm.$invalid || saving" data-toggle="modal"
            data-target="#myModal">预览</a>
-        <a class="btn btn-info pull-right adding-button"
-           ng-href="#/kindergarten/{{kindergarten.school_id}}/parents/edit_adult">返回</a>
-        <a class="btn btn-default pull-right adding-button"
+        <a class="btn btn-info pull-right adding-button" ng-disabled="saving"
+           ng-click="backToParent()">返回</a>
+        <a class="btn btn-default pull-right adding-button" ng-disabled="saving"
            ng-click="cancelCreating()">取消</a>
       </div>
     </div>
