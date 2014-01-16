@@ -32,8 +32,8 @@ object Authentication extends Controller {
   def validateNumber = Action(parse.json) {
     request =>
       request.body.validate[CheckPhone].map {
-        case (login) =>
-          Ok(Json.toJson(new CheckPhoneResponse("1102")))
+        case (phone) =>
+          Ok(Json.toJson(CheckPhoneResponse.handle(phone)))
       }.recoverTotal {
         e => BadRequest("Detected error:" + JsError.toFlatJson(e))
       }

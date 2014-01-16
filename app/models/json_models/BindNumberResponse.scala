@@ -3,7 +3,6 @@ package models.json_models
 import play.api.db.DB
 import anorm._
 import play.api.Logger
-import org.apache.commons.codec.digest.DigestUtils
 import play.api.Play.current
 import java.sql.Date
 import models.helper.MD5Helper.md5
