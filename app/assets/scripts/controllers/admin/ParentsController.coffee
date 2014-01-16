@@ -24,7 +24,7 @@ angular.module('kulebaoAdmin')
               gender: 1
               portrait: '/assets/images/portrait_placeholder.png'
               class_id: 0
-          $rootScope.parent_changed = true
+          $rootScope.parentChanged = true
           $location.path($location.path().replace(/\/[^\/]+$/, '/edit_adult'))
     ]
 
@@ -45,7 +45,7 @@ angular.module('kulebaoAdmin')
         $scope.backToList()
 
       $scope.cancelCreating = ->
-        $rootScope.parent_changed = false
+        $rootScope.parentChanged = false
         $scope.backToList()
         delete $rootScope.parent
 
@@ -77,13 +77,13 @@ angular.module('kulebaoAdmin')
             parent.id == p.id)
           parent.$delete()
 
-        $rootScope.parent_changed = false
+        $rootScope.parentChanged = false
 
         $scope.startEditing = (parent) ->
           $scope.loading = true
           $rootScope.parent = parent
           $rootScope.$watch 'parent', (oldv, newv) ->
-            $rootScope.parent_changed = true if newv isnt oldv
+            $rootScope.parentChanged = true if newv isnt oldv
           , true
           $location.path $location.path().replace(/\/[^\/]+$/, '/edit_adult')
 
@@ -101,8 +101,8 @@ angular.module('kulebaoAdmin')
 
         $scope.save = (parent) ->
           $scope.saving = true
-          console.log 'parent changed: ' + $rootScope.parent_changed
-          if $rootScope.parent_changed
+          console.log 'parent changed: ' + $rootScope.parentChanged
+          if $rootScope.parentChanged
             $timeout ->
               parent.$save ->
                 $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id}).query ->
