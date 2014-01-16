@@ -25,12 +25,24 @@ class AuthenticationSpec extends Specification {
       (response \ "error_code").as[Int] must equalTo(0)
       (response \ "account_name").as[String] must equalTo("13333333333")
       (response \ "access_token").as[String] must equalTo("13333333333")
-      (response \ "username").as[String] must equalTo("测试")
+      (response \ "username").as[String] must not beEmpty
     }
     implicit val checkWrites = Json.writes[CheckPhone]
 
-    "validate phone number" in new WithApplication {
-      private val json = Json.toJson(new CheckPhone("12345"))
+    "validate phone number for first time" in new WithApplication {
+      private val json = Json.toJson(new CheckPhone("13880498549"))
+
+      val validateResponse = route(FakeRequest(POST, "/checkphonenum.do").withJsonBody(json)).get
+
+      status(validateResponse) must equalTo(OK)
+      contentType(validateResponse) must beSome.which(_ == "application/json")
+
+      val response: JsValue = Json.parse(contentAsString(validateResponse))
+      (response \ "check_phone_result").as[String] must equalTo("1101")
+    }
+
+    "validate phone number for active number" in new WithApplication {
+      private val json = Json.toJson(new CheckPhone("13402815317"))
 
       val validateResponse = route(FakeRequest(POST, "/checkphonenum.do").withJsonBody(json)).get
 
@@ -40,6 +52,19 @@ class AuthenticationSpec extends Specification {
       val response: JsValue = Json.parse(contentAsString(validateResponse))
       (response \ "check_phone_result").as[String] must equalTo("1102")
     }
+
+    "validate phone number for wrong number" in new WithApplication {
+      private val json = Json.toJson(new CheckPhone("9191919"))
+
+      val validateResponse = route(FakeRequest(POST, "/checkphonenum.do").withJsonBody(json)).get
+
+      status(validateResponse) must equalTo(OK)
+      contentType(validateResponse) must beSome.which(_ == "application/json")
+
+      val response: JsValue = Json.parse(contentAsString(validateResponse))
+      (response \ "check_phone_result").as[String] must equalTo("1100")
+    }
+
 
     implicit val bindingWrites = Json.writes[BindingNumber]
 
@@ -59,7 +84,7 @@ class AuthenticationSpec extends Specification {
       (response \ "account_name").as[String] must equalTo(phone)
       (response \ "access_token").as[String] mustNotEqual empty
       (response \ "username").as[String] mustNotEqual empty
-      (response \ "school_id").as[Int] mustNotEqual 0
+      (response \ "school_id").as[Long] must equalTo(93740362)
     }
 
     "reject mobile when wrong password" in new WithApplication {

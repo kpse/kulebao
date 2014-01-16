@@ -5,6 +5,7 @@ import anorm._
 import anorm.SqlParser._
 import anorm.~
 import play.api.Play.current
+import play.Logger
 
 case class SchedulePreviewResponse(error_code: Int, school_id: Long, class_id: Long, schedule_id: Long, timestamp: Long)
 
@@ -60,7 +61,9 @@ object Schedule {
         findById(newId.get)
       }
       catch {
-        case _ => c.rollback
+        case t: Throwable =>
+          Logger.info("error %s".format(t.toString))
+          c.rollback
           findById(-1)
       }
 

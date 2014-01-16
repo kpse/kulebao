@@ -15,10 +15,10 @@ object CheckPhoneResponse {
       val result = SQL("select * from accountinfo where accountid={phone}")
         .on('phone -> request.phonenum).as(get[Int]("active") singleOpt)
       result match {
-        case Some(1) =>
-          new CheckPhoneResponse("1102")
         case Some(0) =>
           new CheckPhoneResponse("1101")
+        case Some(n) =>
+          new CheckPhoneResponse("1102")
         case None =>
           new CheckPhoneResponse("1100")
       }

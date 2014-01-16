@@ -5,6 +5,7 @@ import anorm._
 import play.api.Play.current
 import anorm.SqlParser._
 import anorm.~
+import play.Logger
 
 case class CookbookPreviewResponse(error_code: Int, school_id: Long, cookbook_id: Long, timestamp: Long)
 
@@ -59,7 +60,9 @@ object CookBook {
         findById(newId.get)
       }
       catch {
-        case _ => c.rollback
+        case t: Throwable  =>
+          Logger.info("error %s".format(t.toString))
+          c.rollback
           findById(-1)
       }
 
