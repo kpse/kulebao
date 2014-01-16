@@ -38,14 +38,14 @@ object BindNumberResponse {
               'timestamp -> updateTime
             ).executeUpdate
           Logger.info("binding: first activate..phone: %s at %s".format(request.phonenum, new Date(updateTime).toString))
-          new BindNumberResponse(0, updateTime.toString, row(0)[String]("name"), request.phonenum, row(0)[String]("school_id").toLong, row(0)[String]("schoolinfo.name"))
+          new BindNumberResponse(0, updateTime.toString, row(0)[String]("parentinfo.name"), request.phonenum, row(0)[String]("school_id").toLong, row(0)[String]("schoolinfo.name"))
         case row if row(0)[Int]("active") == 1 =>
           SQL("update accountinfo set pushid={pushid}, active=1 where accountid={accountid}")
             .on('accountid -> request.phonenum,
               'pushid -> request.user_id
             ).executeUpdate
           Logger.info("binding: refresh token %s..phone: %s".format(request.user_id, request.phonenum))
-          new BindNumberResponse(0, row(0)[Long]("pwd_change_time").toString, row(0)[String]("name"), request.phonenum, row(0)[String]("school_id").toLong, row(0)[String]("schoolinfo.name"))
+          new BindNumberResponse(0, row(0)[Long]("pwd_change_time").toString, row(0)[String]("parentinfo.name"), request.phonenum, row(0)[String]("school_id").toLong, row(0)[String]("schoolinfo.name"))
       }
 
   }
