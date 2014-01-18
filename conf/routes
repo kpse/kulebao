@@ -50,6 +50,7 @@ POST          /kindergarten/:kg/parent/:parentId/news/:newsId                   
 
 GET           /kindergarten/:kg/parent/:parentId/child                           controllers.ChildController.index(kg: Long, parentId: String)
 GET           /kindergarten/:kg/parent/:parentId/child/:childId                  controllers.ChildController.show(kg: Long, parentId: String, childId: String)
+POST          /kindergarten/:kg/parent/:parentId/child/:childId                  controllers.ChildController.update(kg: Long, parentId: String, childId: String)
 
 GET           /kindergarten/:kg/admin/:adminId/news_reading_count/:newsId        controllers.ReadingNewsController.countReading(kg: Long, adminId: Long, newsId: Long)
 

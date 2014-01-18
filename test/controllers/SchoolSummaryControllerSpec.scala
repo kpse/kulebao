@@ -23,6 +23,7 @@ class SchoolSummaryControllerSpec extends Specification {
       (response \ "school_id").as[Long] must equalTo(93740362)
       (response \ "timestamp").as[Long] must greaterThan(0L)
     }
+
     "report detail" in new WithApplication {
 
       val detailResponse = route(FakeRequest(GET, "/kindergarten/93740362/detail")).get

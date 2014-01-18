@@ -7,10 +7,9 @@ import play.api.Play.current
 import models.json_models.BindNumberResponse._
 import anorm.~
 import models.json_models.ChildInfo
-import org.joda.time.DateTime
-import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
 import java.util.Date
 import play.Logger
+import models.helper.TimeHelper.any2DateTime
 
 case class Parent(id: Long, schoolId: Long, name: String, phone: String)
 
@@ -40,7 +39,7 @@ object Parent {
             'gender -> parent.gender,
             'company -> "",
             'picurl -> parent.portrait,
-            'birthday -> getDateOnly(parent.birthday),
+            'birthday -> parent.birthday,
             'uid -> parent.id,
             'timestamp -> timestamp).executeUpdate()
 
@@ -58,8 +57,8 @@ object Parent {
           .on('name -> child.name,
             'gender -> child.gender,
             'picurl -> child.portrait,
-            'birthday -> getDateOnly(child.birthday),
-            'indate -> getDateOnly(child.birthday),
+            'birthday -> child.birthday,
+            'indate -> child.birthday,
             'nick -> child.nick,
             'class_id -> child.class_id,
             'child_id -> childId.toString,
@@ -72,7 +71,7 @@ object Parent {
         findById(parent.kindergarten.school_id)(parent.id.get)
       }
       catch {
-        case t : Throwable =>
+        case t: Throwable =>
           Logger.info("error %s".format(t.toString))
           c.rollback
           findById(parent.kindergarten.school_id)(-1)
@@ -104,7 +103,7 @@ object Parent {
             'gender -> parent.gender,
             'company -> "",
             'picurl -> parent.portrait,
-            'birthday -> getDateOnly(parent.birthday),
+            'birthday -> parent.birthday,
             'school_id -> parent.kindergarten.school_id,
             'status -> 1,
             'timestamp -> timestamp).executeInsert()
@@ -118,8 +117,8 @@ object Parent {
             'gender -> child.gender,
             'classname -> "水果班",
             'picurl -> child.portrait,
-            'birthday -> getDateOnly(child.birthday),
-            'indate -> getDateOnly(child.birthday),
+            'birthday -> child.birthday,
+            'indate -> child.birthday,
             'school_id -> parent.kindergarten.school_id,
             'address -> "address",
             'stu_type -> 2,
@@ -156,21 +155,12 @@ object Parent {
         findById(kg)(createdId.getOrElse(-1))
       }
       catch {
-        case t : Throwable =>
+        case t: Throwable =>
           Logger.info("error %s".format(t.toString))
           c.rollback
           findById(kg)(-1)
       }
 
-  }
-
-
-  def parseDate(dateString: String): DateTime = {
-    DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.000Z").parseDateTime(dateString)
-  }
-
-  def getDateOnly(dateString: String): String = {
-    dateString
   }
 
   val withRelationship = {
@@ -194,15 +184,11 @@ object Parent {
       case id ~ k_id ~ name ~ birthday ~ gender ~ portrait ~
         schoolName ~ schoolId ~ relationship ~ childName ~
         nick ~ childBirthday ~ childGender ~ childPortrait ~ classId ~ card ~ phone =>
-        new ParentInfo(Some(id), dayString(birthday), gender.toInt, portrait, name, phone, new School(schoolId.toLong, schoolName), relationship,
-          new ChildInfo(childName, nick, dayString(childBirthday), childGender.toInt, childPortrait, classId), card)
+        new ParentInfo(Some(id), birthday.toDateOnly, gender.toInt, portrait, name, phone, new School(schoolId.toLong, schoolName), relationship,
+          new ChildInfo(childName, nick, childBirthday.toDateOnly, childGender.toInt, childPortrait, classId), card)
     }
   }
 
-
-  def dayString(date: Date): String = {
-    new DateTime(date).toString(DateTimeFormat.forPattern("yyyy-MM-dd"))
-  }
 
   def show(kg: Long, phone: String) = DB.withConnection {
     implicit c =>

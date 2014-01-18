@@ -3,10 +3,11 @@ package models.json_models
 import play.api.db.DB
 import anorm._
 import anorm.SqlParser._
-import models.helper.FieldHelper.{nick, iconUrl, birthday, timestamp, childId, classId, className}
 import play.api.Play.current
 import java.util.Date
 import play.Logger
+import models.helper.ObjectFieldHelper.any2FieldValues
+import models.helper.TimeHelper.any2DateTime
 
 case class ChildResponse(error_code: Int,
                          username: String,
@@ -22,8 +23,38 @@ case class ChildDetailResponse(error_code: Int, child_info: Option[ChildDetail])
 
 case class ChildInfo(name: String, nick: String, birthday: String, gender: Int, portrait: String, class_id: Int)
 
+case class ChildUpdate(nick: Option[String], birthday: Option[Long], icon_url: Option[String])
 
 object Children {
+
+  def generateUpdate(update: ChildUpdate) = {
+    Logger.info(update.toString)
+    val iterable = for (
+      (k, v) <- update.fieldValues
+      if v != None
+    ) yield "%s={%s}".format(k, k)
+    val result = iterable.map(_.replace("icon_url", "picurl")).mkString(",")
+    Logger.info(result)
+    result
+  }
+
+  def update(kg: Long, phone: String, childId: String, update: ChildUpdate) = DB.withConnection {
+    implicit c =>
+      show(kg, phone, childId) flatMap {
+        r =>
+          SQL("update childinfo set " + generateUpdate(update) + " where child_id={child_id}")
+            .on('phone -> phone,
+              'nick -> update.nick.getOrElse(""),
+              'birthday -> update.birthday.getOrElse(0L).toDateOnly,
+              'picurl -> update.icon_url.getOrElse(""),
+              'child_id -> r.id
+            ).executeUpdate
+          val result = show(kg, phone, childId)
+          Logger.info(result.toString)
+          result
+      }
+  }
+
   val simple = {
     get[String]("child_id") ~
       get[String]("nick") ~
@@ -43,9 +74,11 @@ object Children {
         .on('phone -> phone).as(simple *)
   }
 
-  def show(schoolId: Long, phone: String, child: String) = DB.withConnection {
+  def show(schoolId: Long, phone: String, child: String): Option[ChildDetail] = DB.withConnection {
     implicit c =>
       SQL("select c.*, c2.class_name from childinfo c, classinfo c2 where c.class_id=c2.class_id and c.child_id={child_id}")
-        .on('child_id -> child).as(simple *)
+        .on('child_id -> child).as(simple singleOpt)
   }
+
+
 }

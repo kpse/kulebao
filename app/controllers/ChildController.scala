@@ -25,15 +25,29 @@ object ChildController extends Controller {
 
   def show(kg: Long, phone: String, childId: String) = Action {
     Children.show(kg.toLong, phone, childId) match {
-      case Nil => Ok(Json.toJson(new ChildDetailResponse(1, None)))
-      case all : List[ChildDetail] => Ok(Json.toJson(new ChildDetailResponse(0, Some(all(0)))))
+      case Some(one: ChildDetail) => Ok(Json.toJson(new ChildDetailResponse(0, Some(one))))
+      case None => Ok(Json.toJson(new ChildDetailResponse(1, None)))
     }
   }
 
   def index(kg: Long, phone: String) = Action {
     Children.findAll(kg, phone) match {
       case Nil => Ok(Json.toJson(ChildrenResponse(1, List())))
-      case all : List[ChildDetail] => Ok(Json.toJson(ChildrenResponse(0, all)))
+      case all: List[ChildDetail] => Ok(Json.toJson(ChildrenResponse(0, all)))
     }
+  }
+
+  implicit val read1 = Json.reads[ChildUpdate]
+
+  def update(kg: Long, phone: String, childId: String) = Action(parse.json) {
+    implicit request =>
+      request.body.validate[ChildUpdate].map {
+        case (update) =>
+          Children.update(kg, phone, childId, update) match {
+            case Some(one: ChildDetail) => Ok(Json.toJson(new ChildDetailResponse(0, Some(one))))
+            case None => Ok(Json.toJson(new ChildDetailResponse(1, None)))
+          }
+      }.getOrElse(BadRequest)
+
   }
 }

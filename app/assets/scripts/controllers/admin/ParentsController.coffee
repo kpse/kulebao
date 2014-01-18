@@ -68,9 +68,10 @@ angular.module('kulebaoAdmin')
         $scope.loading = true
         $scope.current_class = parseInt($stateParams.classId)
         $scope.kindergarten = School.get school_id: $stateParams.kindergarten, ->
-          $scope.parents = Parent.bind({school_id: $scope.kindergarten.school_id, class_id: $stateParams.classId}).query()
+          $scope.parents = Parent.bind(school_id: $scope.kindergarten.school_id, class_id: $stateParams.classId).query()
           $scope.kindergarten.classes = Class.bind({school_id: $stateParams.kindergarten}).query ->
             $scope.loading = false
+            $location.path($location.path() + '/class/' + $scope.kindergarten.classes[0].class_id + '/list') if $location.path().indexOf("/class/", 0) < 0
 
         $scope.delete = (parent) ->
           $scope.parents = _.reject($scope.parents, (p) ->

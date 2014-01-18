@@ -23,7 +23,7 @@ class ApplicationSpec extends Specification {
     }
 
 
-    "render the  page" in new WithApplication {
+    "render the page" in new WithApplication {
       val sessionCookie = Session.encodeAsCookie(Session(Map("username" -> "admin")))
 
       val home = route(FakeRequest(GET, "/").withHeaders(play.api.http.HeaderNames.COOKIE -> Cookies.encode(Seq(sessionCookie)))).get
@@ -33,7 +33,7 @@ class ApplicationSpec extends Specification {
       contentAsString(home) must contain("Welcome to Kulebao")
     }
 
-    "redirecting wheile no cookie" in new WithApplication {
+    "redirecting while no cookie" in new WithApplication {
       val login = route(FakeRequest(GET, "/")).get
 
       status(login) must equalTo(SEE_OTHER)
