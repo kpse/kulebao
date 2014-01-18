@@ -1,23 +1,44 @@
 <div class="main-frame" ng-controller="KgManageCtrl as kg">
-  <h2>{{kg.kindergarten.school_info.name}} 后台管理系统</h2>
 
-  <h3>{{kg.adminUser.name}}</h3>
-  <a href="/logout">退出登陆</a>
+  <div class="header">
+    <div class="product-logo-container">
+      <div class="product-logo"></div>
+      <div class="rainbow-logo"></div>
+    </div>
+    <div class="title">
+      <h2 class="content">{{kg.kindergarten.school_info.name}} 后台管理系统</h2>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-warning dropdown-toggle admin-user" data-toggle="dropdown">
+          {{kg.adminUser.name}} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li><a class="logout-link" href="/logout">退出登陆</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <span class="clearfix"></span>
 
   <div class="row modules-list-container">
     <ul class="nav nav-tabs modules-list actions">
       <li class="action" ng-class="{active : kg.isSelected('bulletin')}">
-        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/bulletin" class="btn btn-success">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/bulletin" class="btn btn-danger">
           园内公告设置
         </a>
       </li>
       <li class="action" ng-class="{active : kg.isSelected('parents')}">
-        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/parents" class="btn btn-success">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/parents" class="btn btn-warning">
           家长联系方式管理
         </a>
       </li>
       <li class="action" ng-class="{active : kg.isSelected('intro')}">
-        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/intro" class="btn btn-success">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/intro" class="btn btn-primary">
           学校简介设置
         </a>
       </li>
@@ -27,17 +48,17 @@
         </a>
       </li>
       <li class="action" ng-class="{active : kg.isSelected('schedule')}">
-        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/schedule" class="btn btn-success">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/schedule" class="btn btn-danger">
           学习内容设置
         </a>
       </li>
       <li class="action">
-        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/class-bulletin" class="btn btn-success">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/class-bulletin" class="btn btn-warning">
           班级通知设置
         </a>
       </li>
       <li class="action">
-        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/growing" class="btn btn-success">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/growing" class="btn btn-primary">
           成长档案设置
         </a>
       </li>

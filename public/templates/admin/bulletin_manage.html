@@ -2,7 +2,7 @@
   <div class="loading" ng-show="loading"/>
   <div class="row">
     <ul class="list-group col-sm-11">
-      <li class="list-group-item read-{{news.read}}"
+      <li class="list-group-item read-{{news.read}} news-item"
           ng-repeat="news in bulletin.newsletters | orderBy:'timestamp':true">
         <div class="btn-group">
           <button class="btn btn-warning" ng-click="bulletin.edit(news)">编辑</button>
