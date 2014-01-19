@@ -5,6 +5,9 @@ import anorm._
 import play.api.Play.current
 import models.helper.FieldHelper._
 import play.Logger
+import anorm.~
+import scala.Some
+import anorm.SqlParser._
 
 case class SchoolIntro(school_id: Long, phone: String, timestamp: Long, desc: String, school_logo_url: String, name: String)
 
@@ -14,6 +17,11 @@ case class SchoolIntroPreviewResponse(error_code: Int, timestamp: Long, school_i
 
 
 object SchoolIntro {
+  def index = DB.withConnection {
+    implicit c =>
+      SQL("select * from schoolinfo").as(sample *)
+  }
+
   def update(info: SchoolIntroDetail) = DB.withConnection {
     implicit c =>
       val timestamp = System.currentTimeMillis
@@ -40,6 +48,20 @@ object SchoolIntro {
       if (result.isEmpty) new SchoolIntroPreviewResponse(1, 0, 0)
       else new SchoolIntroPreviewResponse(0, timestamp(result.head), schoolId(result.head))
   }
+
+  val sample = {
+    get[String]("school_id") ~
+      get[String]("phone") ~
+      get[Long]("update_at") ~
+      get[String]("description") ~
+      get[String]("logo_url") ~
+      get[String]("name") map {
+      case id ~ phone ~ timestamp ~ desc ~ logoUrl ~ name =>
+        SchoolIntro(id.toLong, phone, timestamp, desc, logoUrl, name)
+    }
+
+  }
+
 
   def detail(kg: Long) = DB.withConnection {
     implicit c =>

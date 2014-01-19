@@ -1,0 +1,33 @@
+<h2>所有学校信息</h2>
+<div class="loading" ng-show="loading" />
+<table class="table table-hover table-condensed schools-list">
+  <thead>
+  <tr class="row">
+    <th class=".col-xs-1">#</th>
+    <th class=".col-xs-3">学校名字</th>
+    <th class=".col-xs-4">班级信息</th>
+    <th class=".col-xs-3">管理员</th>
+    <th class=".col-xs-2">操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="class in classes | filter: searchText" class="row">
+    <td class=".col-xs-1">{{class.class_id}}</td>
+    <td class=".col-xs-2">{{class.school.name}}</td>
+    <td class=".col-xs-4">{{class.name}}</td>
+    <td class=".col-xs-3">{{kindergarten.manager.name}}</td>
+
+
+    <td class=".col-xs-2">
+      <button class="btn btn-xs btn-danger" ng-confirm-msg="你确定要删除吗?"
+              ng-confirm-click="delete(parent)">删除 </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div class="form-group button-group">
+  <div class="col-sm-offset-3 col-sm-4">
+    <button type="submit" class="btn btn-default" ng-disabled="newAppform.$invalid || saving" ng-click="doUpload(uploadfile)">增加学校</button>
+    <button type="submit" class="btn btn-default" ng-disabled="newAppform.$invalid || saving" ng-click="doUpload(uploadfile)">增加班级</button>
+  </div>
+</div>

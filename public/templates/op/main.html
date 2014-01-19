@@ -5,8 +5,13 @@
 
   <div class="row modules-list-container">
     <ul class="nav nav-tabs modules-list actions">
-      <li class="action active">
-        <a ng-href="#/main/app" class="btn btn-success">
+      <li class="action" ng-class="{active : isSelected('school')}">
+        <a ng-href="#/main/school" class="btn btn-danger">
+          学校管理
+        </a>
+      </li>
+      <li class="action" ng-class="{active : isSelected('app')}">
+        <a ng-href="#/main/app" class="btn btn-primary">
           客户端版本管理
         </a>
       </li>

@@ -3,6 +3,7 @@ class Controller
     $scope.lastApp = appPackageService.latest( -> $scope.app.version_code = $scope.lastApp.version_code + 1)
     $scope.app = new appPackageService
 
+    $rootScope.tabName = 'app'
 
     upload = (file, callback)->
       return callback(undefined) if file is undefined

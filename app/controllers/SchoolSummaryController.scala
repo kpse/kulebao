@@ -29,4 +29,7 @@ object SchoolSummaryController extends Controller {
       }
   }
 
+  def index() = Action {
+    Ok(Json.toJson(SchoolIntro.index))
+  }
 }

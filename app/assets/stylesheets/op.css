@@ -1,7 +1,8 @@
 @import "btnUpload.less";
 
 .upload-form,
-.old-version {
+.old-version,
+.schools-list {
   width: 750px;
 }
 

@@ -8,7 +8,7 @@ class Controller
       name: '豆瓣老师'
 
     @isSelected = (tab)->
-      tab == $rootScope.tabName
+      tab is $rootScope.tabName
 
     scope.goParents = ->
       location.path('/kindergarten/' + $stateParams.kindergarten + '/parents') if location.path().indexOf("parents/class") < 0
