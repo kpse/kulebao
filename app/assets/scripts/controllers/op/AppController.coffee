@@ -1,5 +1,5 @@
 class Controller
-  constructor: ($scope, $rootScope, $stateParams, $http, uploadService, appPackageService) ->
+  constructor: ($scope, $rootScope, $stateParams, $http, uploadService, appPackageService, timeout) ->
     $scope.lastApp = appPackageService.latest( -> $scope.app.version_code = $scope.lastApp.version_code + 1)
     $scope.app = new appPackageService
 
@@ -18,11 +18,11 @@ class Controller
           $scope.app.url = remoteFile.url
           $scope.app.file_size = remoteFile.size
           console.log $scope.app
-          $scope.app.$save()
-          $scope.lastApp = appPackageService.latest ->
-            $scope.app = new appPackageService
-            $scope.app.version_code = $scope.lastApp.version_code + 1
-            $scope.saving = false
+          $scope.app.$save ->
+            $scope.lastApp = appPackageService.latest ->
+              $scope.app = new appPackageService
+              $scope.app.version_code = $scope.lastApp.version_code + 1
+              $scope.saving = false
 
     $scope.cleanFields = ->
       $scope.app = new appPackageService
@@ -33,5 +33,5 @@ class Controller
 
 angular.module('kulebaoOp').controller 'OpAppCtrl', ['$scope', '$rootScope',
                                                      '$stateParams', '$http',
-                                                     'uploadService', 'appPackageService', Controller]
+                                                     'uploadService', 'appPackageService', '$timeout', Controller]
 
