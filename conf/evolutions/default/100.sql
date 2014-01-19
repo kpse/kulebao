@@ -522,7 +522,9 @@ CREATE TABLE feedback (
   uid         INT(11)          NOT NULL AUTO_INCREMENT,
   phone       VARCHAR(16) NOT NULL,
   content     TEXT COLLATE utf8_bin,
-  update_at   BIGINT(20) DEFAULT 0,
+  comment     TEXT COLLATE utf8_bin,
+  status     TINYINT          NOT NULL DEFAULT 1,
+  update_at   BIGINT(20) NOT NULL DEFAULT 0,
   PRIMARY KEY (uid)
 )
   ENGINE =InnoDB

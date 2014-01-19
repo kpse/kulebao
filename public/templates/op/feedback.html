@@ -1,0 +1,45 @@
+<h2>反馈信息</h2>
+<div class="well feedback-search-panel">
+  <span>检索：</span>
+  <input ng-model="searchText"/>
+
+  <div class="btn-group">
+    <button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="addSchool()">增加学校</button>
+    <button type="submit" class="btn btn-success" ng-disabled="loading" ng-click="addClass()">增加班级</button>
+  </div>
+</div>
+<table class="table table-hover table-condensed feedback-list">
+  <thead>
+  <tr class="row">
+    <th class=".col-xs-1">#</th>
+    <th class=".col-xs-1">手机号码</th>
+    <th class=".col-xs-4">反馈内容</th>
+    <th class=".col-xs-2">学校名称</th>
+    <th class=".col-xs-2">家长</th>
+    <th class=".col-xs-2">小孩</th>
+    <th class=".col-xs-2">备注</th>
+    <th class=".col-xs-1">操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <div class="loading" ng-show="loading"/>
+  <tr ng-repeat="feedback in allFeedback | filter: searchText" class="row">
+    <td class=".col-xs-1">{{feedback.id}}</td>
+    <td class=".col-xs-1">{{feedback.phone}}</td>
+    <td class=".col-xs-4">{{feedback.content}}</td>
+    <td class=".col-xs-2">{{feedback.parent.school.name}}</td>
+    <td class=".col-xs-2">{{feedback.parent.name}}</td>
+    <td class=".col-xs-2">{{feedback.parent.child.name}}</td>
+    <td class=".col-xs-2">{{feedback.comment}}</td>
+
+    <td class=".col-xs-2">
+      <button class="btn btn-xs btn-danger" ng-confirm-msg="标记后此条反馈将隐藏，你确定要继续吗?"
+              ng-confirm-click="delete(class)">标记为已处理
+      </button>
+      <button class="btn btn-xs btn-warning" ng-click="edit(class)">编辑
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+

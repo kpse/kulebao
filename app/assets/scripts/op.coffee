@@ -1,21 +1,22 @@
 class Config
   constructor: ($stateProvider, $urlRouterProvider) ->
     $stateProvider
-    .state('main',
-        url: '/main',
-        templateUrl: 'templates/op/main.html',
-        controller: 'OpCtrl'
-      )
-    .state('main.app',
-        url: '/app',
-        templateUrl: 'templates/op/app.html',
-        controller: 'OpAppCtrl'
-      )
-    .state('main.school',
-        url: '/school',
-        templateUrl: 'templates/op/school.html',
-        controller: 'OpSchoolCtrl'
-      )
+    .state 'main',
+      url: '/main',
+      templateUrl: 'templates/op/main.html',
+      controller: 'OpCtrl'
+    .state 'main.app',
+      url: '/app',
+      templateUrl: 'templates/op/app.html',
+      controller: 'OpAppCtrl'
+    .state 'main.school',
+      url: '/school',
+      templateUrl: 'templates/op/school.html',
+      controller: 'OpSchoolCtrl'
+    .state 'main.feedback',
+      url: '/feedback',
+      templateUrl: 'templates/op/feedback.html',
+      controller: 'OpFeedbackCtrl'
 
     $urlRouterProvider.otherwise ($injector, $location) ->
       $location.path '/main/app'

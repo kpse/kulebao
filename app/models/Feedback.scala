@@ -8,15 +8,17 @@ import anorm.~
 import play.Logger
 
 
-case class Feedback(phone: String, content: String, timestamp: Option[Long])
+case class Feedback(id: Option[Long], phone: String, content: String, timestamp: Option[Long], comment: Option[String])
 
 object Feedback {
   val simple = {
+    get[Option[Long]]("uid") ~
     get[String]("phone") ~
       get[String]("content") ~
-      get[Long]("update_at") map {
-      case phone ~ content ~ timestamp =>
-        Feedback(phone, content, Some(timestamp))
+      get[Option[Long]]("update_at") ~
+      get[Option[String]]("comment") map {
+      case id ~ phone ~ content ~ timestamp ~ comment =>
+        Feedback(id, phone, content, timestamp, comment)
     }
   }
 
