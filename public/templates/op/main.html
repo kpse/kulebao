@@ -1,7 +1,27 @@
 <div class="main-frame">
-  <h2>酷乐宝后台管理</h2>
+  <div class="header">
+    <div class="product-logo-container">
+      <div class="product-logo"></div>
+      <div class="rainbow-logo"></div>
+    </div>
+    <div class="title">
+      <h2 class="content">酷乐宝后台管理</h2>
 
-  <h3>{{kg.adminUser.name}}</h3>
+      <div class="btn-group">
+        <button type="button" class="btn btn-warning dropdown-toggle admin-user" data-toggle="dropdown">
+          {{adminUser.name}} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li><a class="logout-link" href="/logout">退出登陆</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
 
   <div class="row modules-list-container">
     <ul class="nav nav-tabs modules-list actions">

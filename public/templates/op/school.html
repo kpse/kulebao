@@ -1,11 +1,21 @@
 <h2>所有学校信息</h2>
-<div class="loading" ng-show="loading" />
+<div class="well schools-search-panel">
+  <span>检索：</span>
+  <input ng-model="searchText"/>
+
+  <div class="btn-group">
+    <button type="submit" class="btn btn-primary" ng-disabled="loading" ng-click="addSchool()">增加学校</button>
+    <button type="submit" class="btn btn-success" ng-disabled="loading" ng-click="addClass()">增加班级</button>
+  </div>
+</div>
+<div class="loading" ng-show="loading"/>
 <table class="table table-hover table-condensed schools-list">
   <thead>
   <tr class="row">
-    <th class=".col-xs-1">#</th>
+    <th class=".col-xs-1">班级编号</th>
     <th class=".col-xs-3">学校名字</th>
-    <th class=".col-xs-4">班级信息</th>
+    <th class=".col-xs-3">学校编号</th>
+    <th class=".col-xs-4">班级名称</th>
     <th class=".col-xs-3">管理员</th>
     <th class=".col-xs-2">操作</th>
   </tr>
@@ -14,20 +24,18 @@
   <tr ng-repeat="class in classes | filter: searchText" class="row">
     <td class=".col-xs-1">{{class.class_id}}</td>
     <td class=".col-xs-2">{{class.school.name}}</td>
+    <td class=".col-xs-2">{{class.school.school_id}}</td>
     <td class=".col-xs-4">{{class.name}}</td>
-    <td class=".col-xs-3">{{kindergarten.manager.name}}</td>
-
+    <td class=".col-xs-3">{{class.school.manager.name}}</td>
 
     <td class=".col-xs-2">
       <button class="btn btn-xs btn-danger" ng-confirm-msg="你确定要删除吗?"
-              ng-confirm-click="delete(parent)">删除 </button>
+              ng-confirm-click="delete(class)">删除
+      </button>
+      <button class="btn btn-xs btn-warning" ng-click="edit(class)">编辑
+      </button>
     </td>
   </tr>
   </tbody>
 </table>
-<div class="form-group button-group">
-  <div class="col-sm-offset-3 col-sm-4">
-    <button type="submit" class="btn btn-default" ng-disabled="newAppform.$invalid || saving" ng-click="doUpload(uploadfile)">增加学校</button>
-    <button type="submit" class="btn btn-default" ng-disabled="newAppform.$invalid || saving" ng-click="doUpload(uploadfile)">增加班级</button>
-  </div>
-</div>
+
