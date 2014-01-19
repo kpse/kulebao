@@ -41,6 +41,7 @@ object ChildController extends Controller {
 
   def update(kg: Long, phone: String, childId: String) = Action(parse.json) {
     implicit request =>
+      Logger.info(request.body.toString)
       request.body.validate[ChildUpdate].map {
         case (update) =>
           Children.update(kg, phone, childId, update) match {

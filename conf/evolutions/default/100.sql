@@ -518,6 +518,17 @@ INSERT INTO scheduleinfo (school_id, class_id, schedule_id, mon_am,
    '手工西瓜', '木工', '电工', '钳工', '车工',
    '语文', '数学', '化学', '政治', '历史', 1);
 
+CREATE TABLE feedback (
+  uid         INT(11)          NOT NULL AUTO_INCREMENT,
+  phone       VARCHAR(16) NOT NULL,
+  content     TEXT COLLATE utf8_bin,
+  update_at   BIGINT(20) DEFAULT 0,
+  PRIMARY KEY (uid)
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8
+  COLLATE =utf8_bin
+  AUTO_INCREMENT =2;
 
 /*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS = @OLD_CHARACTER_SET_RESULTS */;
