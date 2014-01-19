@@ -3,6 +3,7 @@ package controllers
 import play.api.mvc._
 import play.api.libs.json.{JsError, Json}
 import models.json_models.{CheckInfo, SchoolIntro, SchoolIntroDetail, SchoolIntroPreviewResponse}
+import play.Logger
 
 object SchoolSummaryController extends Controller {
   implicit val writes1 = Json.writes[SchoolIntroPreviewResponse]
@@ -21,6 +22,7 @@ object SchoolSummaryController extends Controller {
 
   def update(kg: Long) = Action(parse.json) {
     request =>
+      Logger.info(request.body.toString())
       request.body.validate[SchoolIntroDetail].map {
         case (detail) =>
           Ok(Json.toJson(SchoolIntro.update(detail)))

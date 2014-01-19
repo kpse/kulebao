@@ -23,12 +23,14 @@ class Controller
       alert('暂未实现')
 
     scope.addSchool = ->
-      newSchool = new School(school_id: '93999999')
+      newSchool = new School(school_id: 93999999)
       newClass = new Clazz(school_id: newSchool.school_id)
       newClass.school = newSchool
+      newClass.class_id = 111222
+      newClass.name = 'name'
+      newClass.school = newSchool.school_id
       newSchool.$save ->
         newClass.$save ->
-          scope.$apply ->
             scope.classes = scope.classes.concat newClass
 
 
