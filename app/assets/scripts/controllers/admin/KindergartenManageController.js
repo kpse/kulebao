@@ -3,7 +3,7 @@
   var Controller;
 
   Controller = (function() {
-    function Controller($rootScope, $stateParams, School) {
+    function Controller(scope, $rootScope, $stateParams, School, location) {
       this.kindergarten = School.get({
         school_id: $stateParams.kindergarten
       });
@@ -14,12 +14,17 @@
       this.isSelected = function(tab) {
         return tab === $rootScope.tabName;
       };
+      scope.goParents = function() {
+        if (location.path().indexOf("parents/class") < 0) {
+          return location.path('/kindergarten/' + $stateParams.kindergarten + '/parents');
+        }
+      };
     }
 
     return Controller;
 
   })();
 
-  angular.module('kulebaoAdmin').controller('KgManageCtrl', ['$rootScope', '$stateParams', 'schoolService', Controller]);
+  angular.module('kulebaoAdmin').controller('KgManageCtrl', ['$scope', '$rootScope', '$stateParams', 'schoolService', '$location', Controller]);
 
 }).call(this);

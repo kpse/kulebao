@@ -1,5 +1,5 @@
 class Controller
-  constructor: ($rootScope, $stateParams, School) ->
+  constructor: (scope, $rootScope, $stateParams, School, location) ->
 
     @kindergarten = School.get school_id: $stateParams.kindergarten
 
@@ -10,4 +10,7 @@ class Controller
     @isSelected = (tab)->
       tab == $rootScope.tabName
 
-angular.module('kulebaoAdmin').controller 'KgManageCtrl', ['$rootScope', '$stateParams', 'schoolService', Controller]
+    scope.goParents = ->
+      location.path('/kindergarten/' + $stateParams.kindergarten + '/parents') if location.path().indexOf("parents/class") < 0
+
+angular.module('kulebaoAdmin').controller 'KgManageCtrl', ['$scope', '$rootScope', '$stateParams', 'schoolService', '$location', Controller]
