@@ -22,3 +22,5 @@ app/assets/scripts/*.js
 karma.conf.js
 app/assets/scripts/controllers/admin/*.js
 app/assets/scripts/controllers/op/*.js
+app/assets/scripts/controllers/admin/KindergartenManageController.js
+

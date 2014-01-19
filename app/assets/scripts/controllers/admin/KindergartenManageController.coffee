@@ -11,6 +11,9 @@ class Controller
       tab is $rootScope.tabName
 
     scope.goParents = ->
-      location.path('/kindergarten/' + $stateParams.kindergarten + '/parents') if location.path().indexOf("parents/class") < 0
+      if location.path().indexOf("parents/class") < 0
+        location.path('/kindergarten/' + $stateParams.kindergarten + '/parents')
+      else
+        location.path(location.path().replace(/\/[^\/]+$/, '/list'))
 
 angular.module('kulebaoAdmin').controller 'KgManageCtrl', ['$scope', '$rootScope', '$stateParams', 'schoolService', '$location', Controller]
