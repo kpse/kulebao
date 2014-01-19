@@ -6,9 +6,10 @@ import org.specs2.mutable.Specification
 import play.api.test.{FakeRequest, WithApplication}
 import play.api.libs.json.{JsValue, Json}
 import play.api.test.Helpers._
+import helper.TestSupport
 
 @RunWith(classOf[JUnitRunner])
-class SchoolSummaryControllerSpec extends Specification {
+class SchoolSummaryControllerSpec extends Specification with TestSupport {
 
   "SchoolSummary" should {
     "report preview" in new WithApplication {

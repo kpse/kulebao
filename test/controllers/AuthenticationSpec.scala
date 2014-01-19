@@ -7,9 +7,10 @@ import play.api.test.{FakeRequest, WithApplication}
 import play.api.test.Helpers._
 import play.api.libs.json._
 import models.json_models.{MobileLogin, CheckPhone, BindingNumber}
+import helper.TestSupport
 
 @RunWith(classOf[JUnitRunner])
-class AuthenticationSpec extends Specification {
+class AuthenticationSpec extends Specification with TestSupport {
   implicit val loginWrites = Json.writes[MobileLogin]
   "Authentication" should {
     "log mobile in" in new WithApplication {
@@ -25,7 +26,7 @@ class AuthenticationSpec extends Specification {
       (response \ "error_code").as[Int] must equalTo(0)
       (response \ "account_name").as[String] must equalTo("13333333333")
       (response \ "access_token").as[String] must equalTo("13333333333")
-      (response \ "username").as[String] must not beEmpty
+      (response \ "username").as[String] must be matching("测试")
     }
     implicit val checkWrites = Json.writes[CheckPhone]
 
@@ -83,7 +84,7 @@ class AuthenticationSpec extends Specification {
       (response \ "error_code").as[Int] must equalTo(0)
       (response \ "account_name").as[String] must equalTo(phone)
       (response \ "access_token").as[String] mustNotEqual empty
-      (response \ "username").as[String] mustNotEqual empty
+      (response \ "username").as[String] must be matching("测试")
       (response \ "school_id").as[Long] must equalTo(93740362)
     }
 
