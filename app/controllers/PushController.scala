@@ -40,7 +40,6 @@ object PushController extends Controller {
       val request: PushUnicastMessageRequest = new PushUnicastMessageRequest
       request.setDeviceType(new Integer(3))
       request.setUserId(check.pushid)
-      request.setMessageType(new Integer(1))
       val string = Json.toJson(check).toString
       Logger.info(string)
       request.setMessage(string)
