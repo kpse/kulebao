@@ -63,7 +63,8 @@ function deploy_from_prod {
     unzip -x $destFilename -d /var/play/$now/ && \
     rm /var/play/kulebao && \
     ln -s /var/play/$now/kulebao-1.0-SNAPSHOT/ /var/play/kulebao && \
-    echo coco999 | sudo -S service kulebao restart
+    echo coco999 | sudo -S service kulebao restart  && \
+    echo coco999 | sudo -S /usr/sbin/nginx -s reload
 
     retvalue=$?
     echo "Return value: $retvalue"
