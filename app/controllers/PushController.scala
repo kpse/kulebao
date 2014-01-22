@@ -15,6 +15,7 @@ import models.json_models.CheckNotification
 import models.json_models.CheckInfo
 import models.ErrorResponse
 import play.api.mvc.SimpleResult
+import play.api.Play
 
 object PushController extends Controller {
   implicit val write1 = Json.writes[SuccessResponse]
@@ -64,8 +65,9 @@ object PushController extends Controller {
 
 
   def getClient = {
-    val apiKey: String = "O7Xwbt4DWOzsji57xybprqUc"
-    val secretKey: String = "UQN2mHFuSjpkX5oMul3Z1uj9yHbVsfFH"
+
+    val apiKey = Play.current.configuration.getString("push.ak").getOrElse("")
+    val secretKey = Play.current.configuration.getString("push.sk").getOrElse("")
 
     val pair: ChannelKeyPair = new ChannelKeyPair(apiKey, secretKey)
 
