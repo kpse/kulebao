@@ -1,5 +1,7 @@
 package models
 
-case class ErrorResponse(error_code:  Int = 1, error_msg : String)
+case class JsonResponse(error_code: Int)
 
-case class SuccessResponse(error_code: Int = 0)
+class ErrorResponse(error_msg: String) extends JsonResponse(1)
+
+class SuccessResponse(error_msg: String = "") extends JsonResponse(0)

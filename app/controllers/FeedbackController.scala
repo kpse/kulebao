@@ -2,11 +2,11 @@ package controllers
 
 import play.api.libs.json.{JsError, Json}
 import play.api.mvc._
-import models.{SuccessResponse, Feedback}
+import models.{JsonResponse, SuccessResponse, Feedback}
 
 object FeedbackController extends Controller {
 
-  implicit val write1 = Json.writes[SuccessResponse]
+  implicit val write1 = Json.writes[JsonResponse]
   implicit val write2 = Json.writes[Feedback]
   implicit val read1 = Json.reads[Feedback]
 
