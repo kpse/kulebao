@@ -85,7 +85,7 @@ POST          /feedback                                                         
 GET           /feedback                                                          controllers.FeedbackController.index
 
 GET           /push                                                              controllers.PushController.test
-#GET           /push/group                                                              controllers.PushController.testGroup
+GET           /push/group                                                              controllers.PushController.testGroup(newsId: Option[Long])
 POST          /forwardswipe.do                                                   controllers.PushController.forwardSwipe
 
 # Map static resources from the /public folder to the /assets URL path

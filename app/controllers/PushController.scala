@@ -2,7 +2,7 @@ package controllers
 
 import com.baidu.yun.channel.auth.ChannelKeyPair
 import com.baidu.yun.channel.client.BaiduChannelClient
-import com.baidu.yun.channel.model.{PushUnicastMessageRequest, PushUnicastMessageResponse}
+import com.baidu.yun.channel.model.{PushTagMessageResponse, PushTagMessageRequest, PushUnicastMessageRequest, PushUnicastMessageResponse}
 import com.baidu.yun.core.log.{YunLogEvent, YunLogHandler}
 import com.baidu.yun.channel.exception.{ChannelServerException, ChannelClientException}
 import play.Logger
@@ -10,10 +10,9 @@ import play.api.mvc._
 import play.api.libs.json.{JsError, Json}
 import models.json_models.CheckingMessage
 import scala.Predef._
-import models.{JsonResponse, SuccessResponse, ErrorResponse}
+import models.{News, JsonResponse, SuccessResponse, ErrorResponse}
 import models.json_models.CheckNotification
 import models.json_models.CheckInfo
-import play.api.mvc.SimpleResult
 import play.api.Play
 
 object PushController extends Controller {
@@ -25,13 +24,18 @@ object PushController extends Controller {
     Ok(Json.toJson(pushMessage(new CheckNotification(System.currentTimeMillis, 1, "1_93740362_374", "925387477040814447", ""))))
   }
 
-  //  def testGroup = Action {
-  ////    tagPushMsg(News.findById(93740362L, 1L).get)
-  //    Ok("1")
-  //  }
+  def testGroup(newsId: Option[Long]) = Action {
+    News.findById(93740362L, newsId.getOrElse(2L)) match {
+      case Some(n: News) =>
+        Ok(Json.toJson(tagPushMsg(n)))
+      case None =>
+        Ok(Json.toJson(new ErrorResponse("No such news")))
+    }
+
+  }
 
 
-  def pushMessage(check: CheckNotification) : JsonResponse = {
+  def pushMessage(check: CheckNotification): JsonResponse = {
     val channelClient = getClient
 
     try {
@@ -78,32 +82,31 @@ object PushController extends Controller {
   }
 
 
-  //  def tagPushMsg(news: News) = {
-  //    val channelClient: BaiduChannelClient = getClient
-  //    try {
-  //      val request: PushTagMessageRequest = new PushTagMessageRequest
-  //      request.setDeviceType(3)
-  //      request.setTagName(news.school_id.toString)
-  //      request.setMessageType(0)
-  //      request.setMessage("{\"notice_title\":\"" + news.title + "\",\"notice_body\":\"" + news.content + "\", \"notice_type\":2, \"timestamp\": " + System.currentTimeMillis + "}")
-  //      request.setMsgKey(System.currentTimeMillis.toString)
-  //      request.setMessageExpires(7 * 86400)
-  //      val response: PushTagMessageResponse = channelClient.pushTagMessage(request)
-  //      Logger.info("push amount : " + response.getSuccessAmount)
-  //      Ok(Json.toJson(new SuccessResponse))
-  //    }
-  //    catch {
-  //      case e: ChannelClientException => {
-  //        e.printStackTrace
-  //        Ok(Json.toJson(new ErrorResponse(1, e.printStackTrace.toString)))
-  //      }
-  //      case e: ChannelServerException => {
-  //        val error = "request_id: %d, error_code: %d, error_message: %s".format(e.getRequestId, e.getErrorCode, e.getErrorMsg)
-  //        Logger.info(error)
-  //        Ok(Json.toJson(new ErrorResponse(1, error)))
-  //      }
-  //    }
-  //  }
+  def tagPushMsg(news: News) = {
+    val channelClient: BaiduChannelClient = getClient
+    try {
+      val request: PushTagMessageRequest = new PushTagMessageRequest
+      request.setDeviceType(3)
+      request.setTagName(news.school_id.toString)
+      request.setMessageType(0)
+      request.setMessage("{\"notice_title\":\"" + news.title + "\",\"notice_body\":\"" + news.content + "\", \"notice_type\":2, \"timestamp\": " + System.currentTimeMillis + ", \"publisher\":\"老师\"}")
+      request.setMsgKey(System.currentTimeMillis.toString)
+      request.setMessageExpires(7 * 86400)
+      val response: PushTagMessageResponse = channelClient.pushTagMessage(request)
+      Logger.info("push amount : " + response.getSuccessAmount)
+      new SuccessResponse
+    }
+    catch {
+      case e: ChannelClientException => {
+        new ErrorResponse(e.printStackTrace.toString)
+      }
+      case e: ChannelServerException => {
+        val error = "request_id: %d, error_code: %d, error_message: %s".format(e.getRequestId, e.getErrorCode, e.getErrorMsg)
+        Logger.info(error)
+        new ErrorResponse(error)
+      }
+    }
+  }
 
   def createSwipeMessage(check: Option[CheckNotification]) = {
     check map {
