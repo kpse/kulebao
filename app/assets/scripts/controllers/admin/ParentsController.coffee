@@ -9,7 +9,9 @@ angular.module('kulebaoAdmin')
           $scope.kindergarten.classes = Class.bind({school_id: $stateParams.kindergarten}).query ->
             $location.path($location.path() + '/class/' + $scope.kindergarten.classes[0].class_id + '/list') if $location.path().indexOf("/class/", 0) < 0
 
-        $scope.newParent = () ->
+        $scope.inCreating = false
+
+        $scope.newParent = ->
           $rootScope.parent = new Parent
             school_id: parseInt($scope.kindergarten.school_id)
             birthday: '1980-1-1'
@@ -26,6 +28,11 @@ angular.module('kulebaoAdmin')
               class_id: 0
           $rootScope.parentChanged = true
           $location.path($location.path().replace(/\/[^\/]+$/, '/edit_adult'))
+          $scope.inCreating = true
+        $scope.$on "newParent", ->
+          $scope.inCreating = true
+        $scope.$on "stopCreatingParent", ->
+          $scope.inCreating = false
     ]
 
 angular.module('kulebaoAdmin')
@@ -59,6 +66,8 @@ angular.module('kulebaoAdmin')
 
       $scope.backToParent = ->
         window.history.back()
+
+      $scope.$emit 'newParent'
     ]
 
 angular.module('kulebaoAdmin')
@@ -133,4 +142,6 @@ angular.module('kulebaoAdmin')
           check = generateCheckingInfo(parent)
           $http({method: 'POST', url: '/kindergarten/'+$stateParams.kindergarten+'/check', data: check}).success (data) ->
             alert 'error_code:' + data.error_code
+
+        $scope.$emit "stopCreatingParent"
     ]
