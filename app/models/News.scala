@@ -65,9 +65,18 @@ object News {
     }
   }
 
+  val allNewsSql = "select * from news where school_id={kg} and published=1 and status=1 "
+
   def all(kg: Long): List[News] = DB.withConnection {
     implicit c =>
-      SQL("select * from news where school_id={kg} and published=1 and status=1 order by update_at DESC")
+      SQL(allNewsSql + " order by update_at DESC")
+        .on('kg -> kg.toString)
+        .as(simple *)
+  }
+
+  def allSortById(kg: Long): List[News] = DB.withConnection {
+    implicit c =>
+      SQL(allNewsSql + " order by uid DESC")
         .on('kg -> kg.toString)
         .as(simple *)
   }
