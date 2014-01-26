@@ -11,8 +11,8 @@ object NewsController extends Controller {
 
   type NewsFilter = (News) => Boolean
 
-  def olderThan(from: Option[Long]): NewsFilter = (n: News) => from.forall(n.news_id >= _)
-  def newerThan(to: Option[Long]): NewsFilter = (n: News) => to.forall(n.news_id <= _)
+  def olderThan(from: Option[Long]): NewsFilter = (n: News) => from.forall(n.news_id > _)
+  def newerThan(to: Option[Long]): NewsFilter = (n: News) => to.forall(n.news_id < _)
 
   def index(kg: Long, from: Option[Long], to: Option[Long], most: Option[Int]) = Action {
     val jsons = News.allSortById(kg).filter(olderThan(from)).filter(newerThan(to)).take(most.getOrElse(25))
