@@ -58,13 +58,12 @@ object Authentication extends Controller {
 
   def app(version: Long) = Action {
     //    {"summary":"测试版本","error_code":"0","url":"http://cocobabys.oss-cn-hangzhou.aliyuncs.com/app_release/release_2.apk","size":500000,"version":"V1.1"}
-    val pkg: AppPackage = AppPackage.latest
-    Logger.info("latest version code = %d".format(pkg.version_code))
-    if (version < pkg.version_code) {
-      Ok(Json.toJson(AppPackage.response(pkg)))
-    }
-    else Ok(Json.toJson(AppPackage.noUpdate))
-
+    AppPackage.latest map {
+      case pkg if version < pkg.version_code =>
+        Logger.info("latest version code = %d".format(pkg.version_code))
+        Ok(Json.toJson(AppPackage.response(pkg)))
+      case _ => Ok(Json.toJson(AppPackage.noUpdate))
+    } getOrElse BadRequest
   }
 
   implicit val read1 = Json.reads[ChangePassword]

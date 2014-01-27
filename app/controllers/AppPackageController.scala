@@ -37,7 +37,15 @@ object AppPackageController extends Controller {
       } getOrElse BadRequest
   }
 
-  def last(last: String) = Action {
-    Ok(Json.toJson(AppPackage.latest))
+  def last(redirect: Option[String]) = Action {
+    redirect.map {
+      case "true" =>
+        AppPackage.latest map {
+          case pkg if pkg.url.startsWith("http://suoqin-test.u.qiniudn.com/") =>
+            Redirect(pkg.url)
+        } getOrElse BadRequest
+      case _ => Ok(Json.toJson(AppPackage.latest))
+    } getOrElse BadRequest
+
   }
 }

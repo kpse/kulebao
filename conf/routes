@@ -75,7 +75,7 @@ GET           /kindergarten/:kg/card                                            
 GET           /ws/swipe                                                          controllers.WSController.call
 POST          /ws/swipe                                                          controllers.WSController.sendMessage
 
-GET           /app_package                                                       controllers.AppPackageController.last(last: String)
+GET           /app_package                                                       controllers.AppPackageController.last(redirect: Option[String])
 POST          /app_package                                                       controllers.AppPackageController.create
 
 POST          /ws/broadcast                                                      controllers.WSController.sendBroadcastMessage
