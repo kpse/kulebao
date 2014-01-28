@@ -23,7 +23,9 @@ object PushController extends Controller {
   implicit val read = Json.reads[CheckInfo]
 
   def test = Action {
-    Ok(Json.toJson(runWithLog(new CheckNotification(System.currentTimeMillis, 1, "1_93740362_374", "925387477040814447", ""), triggerSinglePush)))
+    val msg = new CheckNotification(System.currentTimeMillis, 1, "1_93740362_374", "925387477040814447", "")
+    DailyLog.create(Some(msg), CheckInfo(93740362L, "0001234569", 2, 0, "", System.currentTimeMillis))
+    Ok(Json.toJson(runWithLog(msg, triggerSinglePush)))
   }
 
   type Trigger[A] = (A) => ChannelResponse
@@ -112,7 +114,9 @@ object PushController extends Controller {
       Logger.info("checking : " + request.body)
       request.body.validate[CheckInfo].map {
         case (check) =>
-          Ok(Json.toJson(createSwipeMessage(CheckingMessage.convert(check))))
+          val message = CheckingMessage.convert(check)
+          DailyLog.create(message, check)
+          Ok(Json.toJson(createSwipeMessage(message)))
       }.recoverTotal {
         e => BadRequest("Detected error:" + JsError.toFlatJson(e))
       }

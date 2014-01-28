@@ -8,7 +8,7 @@ import play.api.libs.ws.WS
 import scala.concurrent.{ExecutionContext, Future}
 import ExecutionContext.Implicits.global
 import play.Logger
-import models.Card
+import models.{DailyLog, Card}
 
 object CheckInController extends Controller {
 
@@ -23,9 +23,9 @@ object CheckInController extends Controller {
       Logger.info("checking : " + request.body)
       request.body.validate[CheckInfo].map {
         case (check) =>
-          val notification = CheckingMessage.convert(check)
-          notification match {
-            case Some(c) =>
+          CheckingMessage.convert(check).map {
+            c =>
+              DailyLog.create(Some(c), check)
               val url = "http://djcwebtest.duapp.com/forwardswipe.do"
               val json = Json.toJson(c)
               Logger.info("json sent to push server: %s".format(json.toString))
@@ -33,10 +33,8 @@ object CheckInController extends Controller {
                 response =>
                   Ok(response.json)
               }
-            case None =>
-              Future {
-                Ok(Json.toJson(new CheckingInAndOutResponse(1, "未找到与卡号(%s)匹配的数据。".format(check.card_no))))
-              }
+          } getOrElse Future {
+            Ok(Json.toJson(new CheckingInAndOutResponse(1, "未找到与卡号(%s)匹配的数据。".format(check.card_no))))
           }
 
       }.getOrElse(Future {
@@ -45,6 +43,7 @@ object CheckInController extends Controller {
   }
 
   implicit val write3 = Json.writes[Card]
+
   def show(kg: Long, cardId: String) = Action {
     Ok(Json.toJson(Card.show(kg, cardId)))
   }

@@ -11,7 +11,7 @@ case class CheckInfo(school_id: Long, card_no: String, card_type: Int, notice_ty
 case class CheckNotification(timestamp: Long, notice_type: Int, child_id: String, pushid: String, record_url: String)
 
 object CheckingMessage {
-  def convert(request: CheckInfo) = DB.withConnection {
+  def convert(request: CheckInfo): Option[CheckNotification] = DB.withConnection {
     implicit c =>
       val simple = {
         get[String]("child_id") ~
@@ -27,6 +27,6 @@ object CheckingMessage {
         .on('cardnum -> request.card_no
         ).as(simple singleOpt)
   }
-
 }
+
 

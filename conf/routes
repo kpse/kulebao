@@ -55,6 +55,8 @@ GET           /kindergarten/:kg/parent/:parentId/child                          
 GET           /kindergarten/:kg/parent/:parentId/child/:childId                  controllers.ChildController.show(kg: Long, parentId: String, childId: String)
 POST          /kindergarten/:kg/parent/:parentId/child/:childId                  controllers.ChildController.update(kg: Long, parentId: String, childId: String)
 
+GET           /kindergarten/:kg/parent/:parentId/child/:childId/dailylog         controllers.DailyLogController.index(kg: Long, parentId: String, childId: String)
+
 GET           /kindergarten/:kg/admin/:adminId/news_reading_count/:newsId        controllers.ReadingNewsController.countReading(kg: Long, adminId: Long, newsId: Long)
 
 GET           /kindergarten/:kg/class/:classId/schedule                          controllers.ScheduleController.index(kg: Long, classId: Long)
@@ -85,7 +87,7 @@ POST          /feedback                                                         
 GET           /feedback                                                          controllers.FeedbackController.index
 
 GET           /push                                                              controllers.PushController.test
-GET           /push/group                                                              controllers.PushController.testGroup(newsId: Option[Long])
+GET           /push/group                                                        controllers.PushController.testGroup(newsId: Option[Long])
 POST          /forwardswipe.do                                                   controllers.PushController.forwardSwipe
 
 # Map static resources from the /public folder to the /assets URL path
