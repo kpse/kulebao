@@ -532,6 +532,26 @@ CREATE TABLE feedback (
   COLLATE =utf8_bin
   AUTO_INCREMENT =2;
 
+
+CREATE TABLE dailylog (
+  uid         INT(11)          NOT NULL AUTO_INCREMENT,
+  school_id   VARCHAR(20) NOT NULL,
+  child_id varchar(40) NOT NULL,
+  pushid   varchar(20) NOT NULL,
+  record_url TEXT DEFAULT '',
+  card_no varchar(20) NOT NULL,
+  card_type INT DEFAULT 0,
+  notice_type INT DEFAULT 0,
+  check_at   BIGINT(20) NOT NULL DEFAULT 0,
+  PRIMARY KEY (uid),
+  KEY `check_at` (`check_at`)
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8
+  COLLATE =utf8_bin
+  AUTO_INCREMENT =2;
+
+
 /*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS = @OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
