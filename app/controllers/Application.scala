@@ -7,7 +7,7 @@ object Application extends Controller with Secured {
   def index = IsAuthenticated {
     username =>
       _ =>
-        Ok(views.html.admin())
+        Redirect(routes.Application.admin)
   }
 
   def admin = IsAuthenticated {
