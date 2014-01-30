@@ -16,7 +16,7 @@ object Auth extends Controller {
     tuple(
       "username" -> text,
       "password" -> text
-    ) verifying ("Invalid username or password", result => result match {
+    ) verifying("Invalid username or password", result => result match {
       case (username, password) => User.authenticate(username, password).isDefined
     })
   )
@@ -24,18 +24,24 @@ object Auth extends Controller {
   /**
    * Login page.
    */
-  def login = Action { implicit request =>
-    Ok(html.login(loginForm))
+  def login = Action {
+    implicit request =>
+      Ok(html.login(loginForm))
   }
 
   /**
    * Handle login form submission.
    */
-  def authenticate = Action { implicit request =>
-    loginForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(html.login(formWithErrors)),
-      user => Redirect(routes.Application.admin).withSession("username" -> user._1)
-    )
+  def authenticate = Action {
+    implicit request =>
+      loginForm.bindFromRequest.fold(
+        formWithErrors => BadRequest(html.login(formWithErrors)),
+        user =>
+          if (user._1 == "operator")
+            Redirect(routes.Application.operation).withSession("username" -> user._1)
+          else
+            Redirect(routes.Application.admin).withSession("username" -> user._1)
+      )
   }
 
   /**
@@ -69,8 +75,18 @@ trait Secured {
   /**
    * Action for authenticated users.
    */
-  def IsAuthenticated(f: => String => Request[AnyContent] => Result) = Security.Authenticated(username, onUnauthorized) { user =>
-    Action(request => f(user)(request))
+  def IsAuthenticated(f: => String => Request[AnyContent] => Result) = Security.Authenticated(username, onUnauthorized) {
+    user =>
+      Action(request => f(user)(request))
+  }
+
+  def IsOperator(f: => String => Request[AnyContent] => Result) = IsAuthenticated {
+    user => request =>
+      if (user == "operator") {
+        f(user)(request)
+      } else {
+        Results.Redirect(routes.Auth.login)
+      }
   }
 
 }

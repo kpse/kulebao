@@ -16,7 +16,7 @@ object Application extends Controller with Secured {
         Ok(views.html.admin())
   }
 
-  def operation() = IsAuthenticated {
+  def operation = IsOperator {
     username =>
       _ =>
         Ok(views.html.operation())
