@@ -29,9 +29,7 @@ class ApplicationSpec extends Specification with TestSupport {
 
       val home = route(FakeRequest(GET, "/").withHeaders(play.api.http.HeaderNames.COOKIE -> Cookies.encode(Seq(sessionCookie)))).get
 
-      status(home) must equalTo(OK)
-      contentType(home) must beSome.which(_ == "text/html")
-      contentAsString(home) must contain("Welcome to Kulebao")
+      status(home) must equalTo(SEE_OTHER)
     }
 
     "redirecting while no cookie" in new WithApplication {

@@ -12,7 +12,7 @@ trait TestSupport {
     def around[T: AsResult](t: => T) = {
       val appWithMemoryDatabase = FakeApplication(additionalConfiguration = inMemoryDatabase("test"))
       running(appWithMemoryDatabase) {
-        AsResult(t)
+        AsResult.effectively(t)
       }
     }
   }
