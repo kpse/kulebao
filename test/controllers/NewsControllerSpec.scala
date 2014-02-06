@@ -28,19 +28,54 @@ class NewsControllerSpec extends Specification with TestSupport {
       }
     }
 
-    "to" in new WithApplication {
+    "accept parameter from" in new WithApplication {
 
-      val detailResponse = route(FakeRequest(GET, "/kindergarten/93740362/detail")).get
+      val newsResponse = route(FakeRequest(GET, "/kindergarten/93740362/news?from=5")).get
 
-      status(detailResponse) must equalTo(OK)
-      contentType(detailResponse) must beSome.which(_ == "application/json")
+      status(newsResponse) must equalTo(OK)
+      contentType(newsResponse) must beSome.which(_ == "application/json")
 
-      val response: JsValue = Json.parse(contentAsString(detailResponse))
-      (response \ "error_code").as[Int] must equalTo(0)
-      (response \ "school_id").as[Long] must equalTo(93740362)
-      (response \ "school_info" \ "timestamp").as[Long] must greaterThan(0L)
-      (response \ "school_info" \ "phone").as[String] must startingWith("13")
-      (response \ "school_info" \ "school_logo_url").as[String] must startingWith("http")
+      val response: JsValue = Json.parse(contentAsString(newsResponse))
+      response match {
+        case JsArray(arr) =>
+          arr.length must equalTo(1)
+          (arr(0) \ "news_id").as[Long] must equalTo(6L)
+        case _ => failure
+      }
+
+    }
+
+    "accept parameter to" in new WithApplication {
+
+      val newsResponse = route(FakeRequest(GET, "/kindergarten/93740362/news?to=5")).get
+
+      status(newsResponse) must equalTo(OK)
+      contentType(newsResponse) must beSome.which(_ == "application/json")
+
+      val response: JsValue = Json.parse(contentAsString(newsResponse))
+      response match {
+        case JsArray(arr) =>
+          arr.length must greaterThan(1)
+          (arr(0) \ "news_id").as[Long] must equalTo(4L)
+        case _ => failure
+      }
+
+    }
+
+    "accept parameter most" in new WithApplication {
+
+      val newsResponse = route(FakeRequest(GET, "/kindergarten/93740362/news?most=2")).get
+
+      status(newsResponse) must equalTo(OK)
+      contentType(newsResponse) must beSome.which(_ == "application/json")
+
+      val response: JsValue = Json.parse(contentAsString(newsResponse))
+      response match {
+        case JsArray(arr) =>
+          arr.length must equalTo(2)
+          (arr(0) \ "news_id").as[Long] must equalTo(6L)
+        case _ => failure
+      }
 
     }
 
