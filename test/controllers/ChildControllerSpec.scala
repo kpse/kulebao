@@ -27,8 +27,8 @@ class ChildControllerSpec extends Specification with TestSupport {
       val response: JsValue = Json.parse(contentAsString(updateResponse))
       (response \ "error_code").as[Int] must equalTo(0)
       (response \ "child_info" \ "nick").as[String] mustNotEqual empty
-      (response \ "child_info" \ "birthday").as[Long] must equalTo(1180886400000L)
       (response \ "child_info" \ "icon_url").as[String] must equalTo("icon_url")
+      (response \ "child_info" \ "birthday").as[Long] must greaterThan(0L)
     }
 
     "be updated with nick" in new WithApplication {
@@ -44,7 +44,7 @@ class ChildControllerSpec extends Specification with TestSupport {
       (response \ "error_code").as[Int] must equalTo(0)
       (response \ "child_info" \ "nick").as[String] must equalTo("new_nick_name")
       (response \ "child_info" \ "icon_url").as[String] mustNotEqual empty
-      (response \ "child_info" \ "birthday").as[Long] must equalTo(1180886400000L)
+      (response \ "child_info" \ "birthday").as[Long] must greaterThan(0L)
     }
 
     "be updated with birthday" in new WithApplication {
@@ -61,7 +61,7 @@ class ChildControllerSpec extends Specification with TestSupport {
       (response \ "error_code").as[Int] must equalTo(0)
       (response \ "child_info" \ "nick").as[String] mustNotEqual empty
       (response \ "child_info" \ "icon_url").as[String] mustNotEqual empty
-      (response \ "child_info" \ "birthday").as[Long] must equalTo(1167580800000L)
+      (response \ "child_info" \ "birthday").as[Long] must greaterThan(0L)
     }
 
   }
