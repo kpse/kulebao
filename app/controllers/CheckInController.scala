@@ -18,6 +18,7 @@ object CheckInController extends Controller {
   implicit val write1 = Json.writes[CheckingInAndOutResponse]
   implicit val write2 = Json.writes[CheckNotification]
 
+  @deprecated(message="delegate to Baidu BAE server no more", since = "2014-02-10")
   def create(kg: Long) = Action.async(parse.json) {
     request =>
       Logger.info("checking : " + request.body)

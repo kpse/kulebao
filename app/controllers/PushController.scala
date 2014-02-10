@@ -109,7 +109,7 @@ object PushController extends Controller {
     }
   }
 
-  def forwardSwipe = Action(parse.json) {
+  def forwardSwipe(kg: Long) = Action(parse.json) {
     request =>
       Logger.info("checking : " + request.body)
       request.body.validate[CheckInfo].map {
