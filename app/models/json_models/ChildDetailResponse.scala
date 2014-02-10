@@ -26,6 +26,14 @@ case class ChildInfo(name: String, nick: String, birthday: String, gender: Int, 
 case class ChildUpdate(nick: Option[String], birthday: Option[Long], icon_url: Option[String])
 
 object Children {
+  def findAllInClass(kg: Long, classId: Option[Long]) = DB.withConnection {
+    implicit c =>
+      val sql = "select c.*, c2.class_name from childinfo c, relationmap r, parentinfo p, classinfo c2 where c.class_id=c2.class_id and p.status=1 and c.status=1 and r.child_id = c.child_id and p.parent_id = r.parent_id and c.school_id={kg}"
+      SQL(classId.map { l => sql + "and c.class_id={classId} "}.getOrElse(sql))
+        .on('classId -> classId.getOrElse(0),
+        'kg -> kg.toString).as(simple *)
+  }
+
 
   def generateUpdate(update: ChildUpdate) = {
     Logger.info(update.toString)

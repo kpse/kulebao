@@ -37,6 +37,13 @@ object ChildController extends Controller {
     }
   }
 
+  def indexInSchool(kg: Long, classId: Option[Long]) = Action {
+    Children.findAllInClass(kg, classId) match {
+      case Nil => BadRequest
+      case all: List[ChildDetail] => Ok(Json.toJson(all))
+    }
+  }
+
   implicit val read1 = Json.reads[ChildUpdate]
 
   def update(kg: Long, phone: String, childId: String) = Action(parse.json) {

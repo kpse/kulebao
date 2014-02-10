@@ -64,6 +64,8 @@ GET           /kindergarten/:kg/class/:classId/schedule/preview                 
 GET           /kindergarten/:kg/class/:classId/schedule/:scheduleId              controllers.ScheduleController.show(kg: Long, classId: Long, scheduleId: Long)
 POST          /kindergarten/:kg/class/:classId/schedule/:scheduleId              controllers.ScheduleController.update(kg: Long, classId: Long, scheduleId: Long)
 
+GET           /kindergarten/:kg/child                                            controllers.ChildController.indexInSchool(kg: Long, classId: Option[Long])
+
 GET           /kindergarten/:kg/cookbook                                         controllers.CookbookController.index(kg: Long)
 GET           /kindergarten/:kg/cookbook/preview                                 controllers.CookbookController.preview(kg: Long)
 GET           /kindergarten/:kg/cookbook/:cookbookId                             controllers.CookbookController.show(kg: Long, cookbookId: Long)
