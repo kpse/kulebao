@@ -33,6 +33,10 @@ class Config
         url: '/edit_child',
         templateUrl: 'templates/admin/add_parent_child.html',
         controller: 'EditParentCtrl'
+    .state 'kindergarten.parents.class.connect_child',
+        url: '/connect_child',
+        templateUrl: 'templates/admin/choose_existing_child.html',
+        controller: 'ConnectToChildCtrl'
     .state 'kindergarten.swipingcard',
         url: '/swipingcard',
         templateUrl: 'templates/admin/swipingcard.html',

@@ -1,0 +1,26 @@
+<div class="loading" ng-show="loading" />
+<table class="table table-hover table-condensed">
+  <thead>
+  <tr class="row">
+    <th class=".col-xs-1">#</th>
+    <th class=".col-xs-3">小孩姓名</th>
+    <th class=".col-xs-3">班级</th>
+    <th class=".col-xs-3">家长姓名</th>
+    <th class=".col-xs-2">操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="child in children | filter: searchText" class="row" tooltip-placement="top" tooltip="单击开始编辑">
+    <td class=".col-xs-1">{{child.id}}</td>
+    <td class=".col-xs-2" ng-click="startEditing(child)">{{child.nick}}</td>
+    <td class=".col-xs-2" ng-click="startEditing(child)">{{child.class_name}}</td>
+    <td class=".col-xs-3" ng-click="startEditing(child)">{{child.parents}}</td>
+
+
+    <td class=".col-xs-2">
+      <button class="btn btn-xs btn-danger" ng-confirm-msg="你确定要关联{{parent.name}}和{{child.nick}}吗?"
+              ng-confirm-click="connect(parent, child)">关联</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

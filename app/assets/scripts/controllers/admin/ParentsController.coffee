@@ -125,6 +125,9 @@ angular.module('kulebaoAdmin')
         $scope.nextPage = ->
           $location.path($location.path().replace(/\/[^\/]+$/, '/edit_child'))
 
+        $scope.connectChild = ->
+            $location.path($location.path().replace(/\/[^\/]+$/, '/connect_child'))
+
         $scope.uploadPic = (person, pic) ->
           upload pic, (url) ->
             $scope.$apply ->
