@@ -22,11 +22,19 @@ object ChildController extends Controller {
   implicit val write1 = Json.writes[ChildDetail]
   implicit val write2 = Json.writes[ChildDetailResponse]
   implicit val write3 = Json.writes[ChildrenResponse]
+  implicit val write4 = Json.writes[ChildInfo]
 
   def show(kg: Long, phone: String, childId: String) = Action {
     Children.show(kg.toLong, phone, childId) match {
       case Some(one: ChildDetail) => Ok(Json.toJson(new ChildDetailResponse(0, Some(one))))
       case None => Ok(Json.toJson(new ChildDetailResponse(1, None)))
+    }
+  }
+
+  def showInfo(kg: Long, childId: String) = Action {
+    Children.info(kg.toLong, childId) match {
+      case Some(one: ChildInfo) => Ok(Json.toJson(one))
+      case None => BadRequest
     }
   }
 

@@ -21,11 +21,29 @@ case class ChildDetail(id: String, nick: String, icon_url: String, birthday: Lon
 
 case class ChildDetailResponse(error_code: Int, child_info: Option[ChildDetail])
 
-case class ChildInfo(name: String, nick: String, birthday: String, gender: Int, portrait: String, class_id: Int)
+case class ChildInfo(child_id: Option[String], name: String, nick: String, birthday: String, gender: Int, portrait: String, class_id: Int)
 
 case class ChildUpdate(nick: Option[String], birthday: Option[Long], icon_url: Option[String])
 
 object Children {
+  val childInformation = {
+    get[String]("child_id") ~
+      get[String]("name") ~
+      get[String]("nick") ~
+      get[String]("picurl") ~
+      get[Int]("gender") ~
+      get[Date]("birthday") ~
+      get[Int]("class_id") map {
+      case childId ~ childName ~ nick ~ icon_url ~ childGender ~ childBirthday ~ classId =>
+        new ChildInfo(Some(childId), childName, nick, childBirthday.toDateOnly, childGender.toInt, icon_url, classId)
+    }
+  }
+  def info(kg: Long, childId: String) : Option[ChildInfo] = DB.withConnection {
+    implicit c =>
+      SQL("select * from childinfo c where c.child_id={child_id}")
+        .on('child_id -> childId).as(childInformation singleOpt)
+  }
+
   def findAllInClass(kg: Long, classId: Option[Long]) = DB.withConnection {
     implicit c =>
       val sql = "select c.*, c2.class_name from childinfo c, relationmap r, parentinfo p, classinfo c2 where c.class_id=c2.class_id and p.status=1 and c.status=1 and r.child_id = c.child_id and p.parent_id = r.parent_id and c.school_id={kg}"

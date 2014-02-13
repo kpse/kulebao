@@ -17,5 +17,7 @@ angular.module('kulebaoAdmin')
         else
           scope.backToList()
 
-
+        scope.connect = (parent, child) ->
+          parent.child = Children.bind(school_id: stateParams.kindergarten, child_id: child.id).get ->
+            location.path(location.path().replace(/\/[^\/]+$/, '/edit_child'))
     ]

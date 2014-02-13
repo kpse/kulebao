@@ -108,27 +108,32 @@ object Parent {
             'status -> 1,
             'timestamp -> timestamp).executeInsert()
         Logger.info("created parent %s".format(createdId))
-        val child_id = "1_%d".format(timestamp)
-        val childUid = SQL("INSERT INTO childinfo(name, child_id, student_id, gender, classname, picurl, birthday, indate, school_id, address, stu_type, hukou, social_id, nick, status, update_at, class_id) " +
-          "VALUES ({name},{child_id},{student_id},{gender},{classname},{picurl},{birthday},{indate},{school_id},{address},{stu_type},{hukou},{social_id},{nick},{status},{timestamp},{class_id})")
-          .on('name -> child.name,
-            'child_id -> child_id,
-            'student_id -> "%d".format(timestamp).take(5),
-            'gender -> child.gender,
-            'classname -> "水果班",
-            'picurl -> child.portrait,
-            'birthday -> child.birthday,
-            'indate -> child.birthday,
-            'school_id -> parent.kindergarten.school_id,
-            'address -> "address",
-            'stu_type -> 2,
-            'hukou -> 1,
-            'social_id -> "social_id",
-            'nick -> child.nick,
-            'status -> 1,
-            'class_id -> child.class_id,
-            'timestamp -> timestamp).executeInsert()
-        Logger.info("created childinfo %s".format(childUid))
+        val child_id = child.child_id.getOrElse("1_%d".format(timestamp))
+        child.child_id match {
+          case None =>
+            val childUid = SQL("INSERT INTO childinfo(name, child_id, student_id, gender, classname, picurl, birthday, indate, school_id, address, stu_type, hukou, social_id, nick, status, update_at, class_id) " +
+              "VALUES ({name},{child_id},{student_id},{gender},{classname},{picurl},{birthday},{indate},{school_id},{address},{stu_type},{hukou},{social_id},{nick},{status},{timestamp},{class_id})")
+              .on('name -> child.name,
+                'child_id -> child_id,
+                'student_id -> "%d".format(timestamp).take(5),
+                'gender -> child.gender,
+                'classname -> "水果班",
+                'picurl -> child.portrait,
+                'birthday -> child.birthday,
+                'indate -> child.birthday,
+                'school_id -> parent.kindergarten.school_id,
+                'address -> "address",
+                'stu_type -> 2,
+                'hukou -> 1,
+                'social_id -> "social_id",
+                'nick -> child.nick,
+                'status -> 1,
+                'class_id -> child.class_id,
+                'timestamp -> timestamp).executeInsert()
+            Logger.info("created childinfo %s".format(childUid))
+          case id =>
+            Logger.info("connect to exists child, child_id = %s".format(id))
+        }
         val relationmapUid = SQL("INSERT INTO relationmap(child_id, parent_id) VALUES ({child_id},{parent_id})")
           .on('child_id -> child_id,
             'parent_id -> parent_id
@@ -178,14 +183,15 @@ object Parent {
       get[Date]("childinfo.birthday") ~
       get[Int]("childinfo.gender") ~
       get[String]("childinfo.picurl") ~
+      get[String]("childinfo.child_id") ~
       get[Int]("class_id") ~
       get[String]("cardnum") ~
       get[String]("phone") map {
       case id ~ k_id ~ name ~ birthday ~ gender ~ portrait ~
         schoolName ~ schoolId ~ relationship ~ childName ~
-        nick ~ childBirthday ~ childGender ~ childPortrait ~ classId ~ card ~ phone =>
+        nick ~ childBirthday ~ childGender ~ childPortrait ~ child_id ~ classId ~ card ~ phone =>
         new ParentInfo(Some(id), birthday.toDateOnly, gender.toInt, portrait, name, phone, new School(schoolId.toLong, schoolName), relationship,
-          new ChildInfo(childName, nick, childBirthday.toDateOnly, childGender.toInt, childPortrait, classId), card)
+          new ChildInfo(Some(child_id), childName, nick, childBirthday.toDateOnly, childGender.toInt, childPortrait, classId), card)
     }
   }
 

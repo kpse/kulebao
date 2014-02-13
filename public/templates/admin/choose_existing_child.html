@@ -11,11 +11,11 @@
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="child in children | filter: searchText" class="row" tooltip-placement="top" tooltip="单击开始编辑">
+  <tr ng-repeat="child in children | filter: searchText" class="row" tooltip-placement="top" tooltip="单击关联">
     <td class=".col-xs-1">{{child.id}}</td>
-    <td class=".col-xs-2" ng-click="startEditing(child)">{{child.nick}}</td>
-    <td class=".col-xs-2" ng-click="startEditing(child)">{{child.class_name}}</td>
-    <td class=".col-xs-3" ng-click="startEditing(child)">{{child.parents}}</td>
+    <td class=".col-xs-2" ng-click="connect(parent, child)">{{child.nick}}</td>
+    <td class=".col-xs-2" ng-click="connect(parent, child)">{{child.class_name}}</td>
+    <td class=".col-xs-3" ng-click="connect(parent, child)">{{child.parents}}</td>
 
 
     <td class=".col-xs-2">
