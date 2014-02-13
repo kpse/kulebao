@@ -13,13 +13,13 @@
   <tbody>
   <tr ng-repeat="child in children | filter: searchText" class="row" tooltip-placement="top" tooltip="单击关联">
     <td class=".col-xs-1">{{child.id}}</td>
-    <td class=".col-xs-2" ng-click="connect(parent, child)">{{child.nick}}</td>
-    <td class=".col-xs-2" ng-click="connect(parent, child)">{{child.class_name}}</td>
-    <td class=".col-xs-3" ng-click="connect(parent, child)">{{child.parents}}</td>
+    <td class=".col-xs-2">{{child.nick}}</td>
+    <td class=".col-xs-2">{{child.class_name}}</td>
+    <td class=".col-xs-3">{{child.parents}}</td>
 
 
     <td class=".col-xs-2">
-      <button class="btn btn-xs btn-danger" ng-confirm-msg="你确定要关联{{parent.name}}和{{child.nick}}吗?"
+      <button class="btn btn-xs btn-primary" ng-confirm-msg="你确定要关联{{parent.name}}和{{child.nick}}吗?"
               ng-confirm-click="connect(parent, child)">关联</button>
     </td>
   </tr>

@@ -3,19 +3,18 @@
   <thead>
   <tr class="row">
     <th class=".col-xs-1">#</th>
+    <th class=".col-xs-3">家长姓名</th>
     <th class=".col-xs-3">小孩姓名</th>
     <th class=".col-xs-4">电话号码</th>
-    <th class=".col-xs-3">家长姓名</th>
     <th class=".col-xs-2">操作</th>
   </tr>
   </thead>
   <tbody>
   <tr ng-repeat="parent in parents | filter: searchText" class="row" tooltip-placement="top" tooltip="单击开始编辑">
     <td class=".col-xs-1">{{parent.id}}</td>
+    <td class=".col-xs-3" ng-if="editingId != parent.id" ng-click="startEditing(parent)">{{parent.name}}</td>
     <td class=".col-xs-2" ng-if="editingId != parent.id" ng-click="startEditing(parent)">{{parent.child.name}}</td>
     <td class=".col-xs-4" ng-if="editingId != parent.id" ng-click="startEditing(parent)">{{parent.phone | phone}}</td>
-    <td class=".col-xs-3" ng-if="editingId != parent.id" ng-click="startEditing(parent)">{{parent.name}}</td>
-
 
     <td class=".col-xs-2">
       <button class="btn btn-xs btn-warning" ng-click="startEditing(parent)">编辑</button>
