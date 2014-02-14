@@ -11,7 +11,7 @@ import java.util.Date
 import play.Logger
 import models.helper.TimeHelper.any2DateTime
 
-case class Parent(id: Long, schoolId: Long, name: String, phone: String)
+case class Parent(id: String, schoolId: Long, name: String, phone: String, portrait: String, gender: Int)
 
 case class ParentInfo(id: Option[Long], birthday: String, gender: Int, portrait: String, name: String, phone: String, kindergarten: School, relationship: String, child: ChildInfo, card: String)
 
@@ -223,5 +223,25 @@ object Parent {
             .as(withRelationship *)
       }
 
+  }
+
+  val simple = {
+    get[String]("parent_id") ~
+      get[String]("school_id") ~
+      get[String]("name") ~
+      get[String]("phone") ~
+      get[Int]("gender") ~
+      get[String]("parentinfo.picurl") map {
+      case id ~ kg ~ name ~ phone ~ gender ~ portrait =>
+        new Parent(id, kg.toLong, name, phone, portrait, gender)
+    }
+  }
+
+  def info(kg: Long, parentId: String) = DB.withConnection {
+    implicit c =>
+      SQL("select * from parentinfo p where school_id={kg} and parent_id={id} and status=1")
+        .on('kg -> kg,
+          'id -> parentId)
+        .as(simple singleOpt)
   }
 }

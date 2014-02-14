@@ -4,8 +4,8 @@ import play.api.mvc._
 import play.api.libs.json.{JsError, Json}
 import play.api.data.Form
 import play.api.data.Forms._
-import models.{ParentInfo, School, News, Parent}
-import models.json_models.{Children, ChildInfo}
+import models.{ParentInfo, School, Parent}
+import models.json_models.ChildInfo
 import play.api.Logger
 
 object ParentController extends Controller {
