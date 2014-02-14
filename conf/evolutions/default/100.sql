@@ -285,6 +285,7 @@ CREATE TABLE IF NOT EXISTS `relationmap` (
               COLLATE utf8_bin NOT NULL,
   `parent_id` VARCHAR(40)
               COLLATE utf8_bin NOT NULL,
+  `card_num` VARCHAR(20)  NOT NULL,
   PRIMARY KEY (`uid`),
   UNIQUE KEY `parent_id` (`parent_id`),
   KEY `child_id` (`child_id`)
@@ -299,10 +300,10 @@ CREATE TABLE IF NOT EXISTS `relationmap` (
 --
 
 INSERT INTO `relationmap` (`uid`, `child_id`, `parent_id`) VALUES
-  (1, '1_93740362_374', '2_93740362_789'),
-  (2, '1_93740362_456', '2_93740362_456'),
-  (3, '1_93740362_9982', '2_93740362_790'),
-  (4, '1_93740362_778', '2_93740362_792');
+  (1, '1_93740362_374', '2_93740362_789', '0001234567'),
+  (2, '1_93740362_456', '2_93740362_456', '0001234568'),
+  (3, '1_93740362_9982', '2_93740362_790', '0001234569'),
+  (4, '1_93740362_778', '2_93740362_792', '0001234570');
 
 -- --------------------------------------------------------
 
