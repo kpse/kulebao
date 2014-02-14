@@ -205,7 +205,7 @@ object Parent {
         .as(withRelationship singleOpt)
   }
 
-  val fullStructureSql = "select p.*, s.name, c.*, card.cardnum from parentinfo p, schoolinfo s, childinfo c, relationmap r, cardinfo card, classinfo ci " +
+  val fullStructureSql = "select p.*, s.name, c.*, card.cardnum, ci.class_name from parentinfo p, schoolinfo s, childinfo c, relationmap r, cardinfo card, classinfo ci " +
     "where p.school_id = s.school_id and s.school_id={kg} and p.status=1 and ci.class_id=c.class_id " +
     "and r.child_id = c.child_id and r.parent_id = p.parent_id and card.userid = p.parent_id"
 

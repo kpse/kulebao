@@ -46,9 +46,10 @@
 
         <div class="col-sm-8">
           <div class="control-group input-append">
-            <input type="text" ng-model="parent.birthday" data-date="en" data-date-format="yyyy-mm-dd"
-                   date-type="string" bs-datepicker
-                   class="form-control datepicker-input">
+            <!--<input type="text" ng-model="parent.birthday" data-date="en" data-date-format="yyyy-mm-dd"-->
+                   <!--date-type="string" bs-datepicker-->
+                   <!--class="form-control datepicker-input">-->
+            <input type="text" class="form-control datepicker-input" ng-model="parent.birthday" data-date-format="yyyy-MM-dd" data-date-type="number" data-max-date="today" data-autoclose="1" name="date2" bs-datepicker>
             <button type="button" class="btn datepicker-button" data-toggle="datepicker"><i
               class="glyphicon glyphicon-calendar"></i></button>
           </div>
@@ -94,7 +95,7 @@
         <a class="btn btn-primary pull-right adding-button" ng-disabled="newAdultForm.$invalid || isDuplicated(parent.card)"
            ng-click="connectChild()" ng-hide="parent.id">关联已有宝宝</a>
         <a class="btn btn-default pull-right adding-button"
-           ng-click="cancelCreating()">取消</a>
+           ng-click="$hide()">取消</a>
       </div>
     </div>
   </form>
