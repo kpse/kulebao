@@ -14,7 +14,7 @@ module.exports = (config) ->
 
   # list of files / patterns to load in the browser
     files: [
-      'public/javascripts/vendor/jquery-1.10.2.min.js',
+      'public/javascripts/vendor/jquery-1.11.0.min.js',
       'public/javascripts/vendor/angularjs/angular.min.js',
       'public/javascripts/vendor/angularjs/angular-route.min.js',
       'public/javascripts/vendor/angularjs/angular-ui-router.min.js',
