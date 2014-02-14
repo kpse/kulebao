@@ -81,6 +81,8 @@ GET           /kindergarten/:kg/relationship                                    
 
 GET           /kindergarten/:kg/assignment                                       controllers.AssignmentController.index(kg: Long, classId: Option[String], from: Option[Long], to: Option[Long], most: Option[Int])
 
+GET           /kindergarten/:kg/relationship                                     controllers.RelationshipController.index(kg: Long, parent: Option[String], child: Option[String])
+
 GET           /ws/swipe                                                          controllers.WSController.call
 POST          /ws/swipe                                                          controllers.WSController.sendMessage
 
