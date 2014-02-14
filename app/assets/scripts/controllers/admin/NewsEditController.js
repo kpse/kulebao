@@ -4,7 +4,7 @@
   var Controller;
 
   Controller = (function() {
-    function Controller($stateParams, newsService, $location, GroupMessage, School) {
+    function Controller(scope, $stateParams, newsService, $location, GroupMessage, School, Modal) {
       var _this = this;
       this.kindergarten = School.get({
         school_id: $stateParams.kindergarten
@@ -82,12 +82,21 @@
         });
         return $location.path("/kindergarten/" + _this.kindergarten.school_id + "/bulletin");
       };
+      this.testModal = function() {
+        var myModal;
+        return myModal = Modal({
+          title: 'My Title',
+          content: 'My Content',
+          show: true,
+          backdrop: 'static'
+        });
+      };
     }
 
     return Controller;
 
   })();
 
-  angular.module('kulebaoAdmin').controller('NewsEditCtrl', ['$stateParams', 'newsService', '$location', 'GroupMessage', 'schoolService', Controller]);
+  angular.module('kulebaoAdmin').controller('NewsEditCtrl', ['$scope', '$stateParams', 'newsService', '$location', 'GroupMessage', 'schoolService', '$modal', Controller]);
 
 }).call(this);

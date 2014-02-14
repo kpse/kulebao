@@ -4,6 +4,7 @@
   "appPath": "app/assets/",
   "dependencies": {
     "angular-ui-utils": "~0.0.4",
-    "angular-upload": "~1.0.4"
+    "angular-upload": "~1.0.4",
+    "angular-motion": "~0.3.2"
   }
 }
