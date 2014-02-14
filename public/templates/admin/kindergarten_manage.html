@@ -54,6 +54,11 @@
           学习内容设置
         </a>
       </li>
+      <li class="action" ng-class="{active : kg.isSelected('relationship')}">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/relationship" class="btn btn-success">
+          幼儿园卡片管理
+        </a>
+      </li>
       <li class="action">
         <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/class-bulletin" class="btn btn-warning">
           班级通知设置

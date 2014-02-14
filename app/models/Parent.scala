@@ -186,12 +186,13 @@ object Parent {
       get[String]("childinfo.child_id") ~
       get[Int]("class_id") ~
       get[String]("cardnum") ~
-      get[String]("phone") map {
+      get[String]("phone") ~
+      get[String]("classinfo.class_name") map {
       case id ~ k_id ~ name ~ birthday ~ gender ~ portrait ~
         schoolName ~ schoolId ~ relationship ~ childName ~
-        nick ~ childBirthday ~ childGender ~ childPortrait ~ child_id ~ classId ~ card ~ phone =>
+        nick ~ childBirthday ~ childGender ~ childPortrait ~ child_id ~ classId ~ card ~ phone ~ className=>
         new ParentInfo(Some(id), birthday.toDateOnly, gender.toInt, portrait, name, phone, new School(schoolId.toLong, schoolName), relationship,
-          new ChildInfo(Some(child_id), childName, nick, childBirthday.toDateOnly, childGender.toInt, childPortrait, classId), card)
+          new ChildInfo(Some(child_id), childName, nick, childBirthday.toDateOnly, childGender.toInt, childPortrait, classId, className), card)
     }
   }
 
@@ -204,8 +205,8 @@ object Parent {
         .as(withRelationship singleOpt)
   }
 
-  val fullStructureSql = "select p.*, s.name, c.*, card.cardnum from parentinfo p, schoolinfo s, childinfo c, relationmap r, cardinfo card " +
-    "where p.school_id = s.school_id and s.school_id={kg} and p.status=1 " +
+  val fullStructureSql = "select p.*, s.name, c.*, card.cardnum from parentinfo p, schoolinfo s, childinfo c, relationmap r, cardinfo card, classinfo ci " +
+    "where p.school_id = s.school_id and s.school_id={kg} and p.status=1 and ci.class_id=c.class_id " +
     "and r.child_id = c.child_id and r.parent_id = p.parent_id and card.userid = p.parent_id"
 
   def all(kg: Long, classId: Option[Long]): List[ParentInfo] = DB.withConnection {

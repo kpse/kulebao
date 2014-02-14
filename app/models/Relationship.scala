@@ -32,7 +32,7 @@ object Relationship {
 
 
   def generateQuery(parent: Option[String], child: Option[String]) = {
-    var sql = "select r.*, p.school_id from relationmap r, childinfo c, parentinfo p where r.child_id=r.child_id and p.parent_id=r.parent_id and p.school_id={kg} and p.status=1"
+    var sql = "select distinct r.*, p.school_id from relationmap r, childinfo c, parentinfo p where r.child_id=r.child_id and p.parent_id=r.parent_id and p.school_id={kg} and p.status=1"
     parent map {
       phone =>
         sql += " and p.phone={phone}"

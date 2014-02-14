@@ -57,6 +57,10 @@ class Config
         url: '/class/:class_id',
         templateUrl: 'templates/admin/class_schedule.html',
         controller: 'ClassScheduleCtrl'
+    .state 'kindergarten.relationship',
+        url: '/relationship',
+        templateUrl: 'templates/admin/relationship.html',
+        controller: 'RelationshipCtrl'
 
     .state('kindergarten.wip',
         url: '/wip',

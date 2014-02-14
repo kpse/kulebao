@@ -21,7 +21,7 @@ case class ChildDetail(id: String, nick: String, icon_url: String, birthday: Lon
 
 case class ChildDetailResponse(error_code: Int, child_info: Option[ChildDetail])
 
-case class ChildInfo(child_id: Option[String], name: String, nick: String, birthday: String, gender: Int, portrait: String, class_id: Int)
+case class ChildInfo(child_id: Option[String], name: String, nick: String, birthday: String, gender: Int, portrait: String, class_id: Int, className: String)
 
 case class ChildUpdate(nick: Option[String], birthday: Option[Long], icon_url: Option[String])
 
@@ -33,14 +33,15 @@ object Children {
       get[String]("picurl") ~
       get[Int]("gender") ~
       get[Date]("birthday") ~
-      get[Int]("class_id") map {
-      case childId ~ childName ~ nick ~ icon_url ~ childGender ~ childBirthday ~ classId =>
-        new ChildInfo(Some(childId), childName, nick, childBirthday.toDateOnly, childGender.toInt, icon_url, classId)
+      get[Int]("childinfo.class_id") ~
+      get[String]("classinfo.class_name") map {
+      case childId ~ childName ~ nick ~ icon_url ~ childGender ~ childBirthday ~ classId ~ className=>
+        new ChildInfo(Some(childId), childName, nick, childBirthday.toDateOnly, childGender.toInt, icon_url, classId, className)
     }
   }
   def info(kg: Long, childId: String) : Option[ChildInfo] = DB.withConnection {
     implicit c =>
-      SQL("select * from childinfo c where c.child_id={child_id}")
+      SQL("select cd.*, ci.class_name from childinfo cd, classinfo ci where ci.class_id=cd.class_id and cd.child_id={child_id}")
         .on('child_id -> childId).as(childInformation singleOpt)
   }
 
