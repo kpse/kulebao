@@ -9,6 +9,7 @@ CREATE TABLE dailylog (
   uid         INT(11)          NOT NULL AUTO_INCREMENT,
   school_id   VARCHAR(20) NOT NULL,
   child_id varchar(40) NOT NULL,
+  parent_name VARCHAR(20) NOT NULL,
   pushid   varchar(20) NOT NULL,
   record_url TEXT DEFAULT '',
   card_no varchar(20) NOT NULL,

@@ -23,7 +23,7 @@ object PushController extends Controller {
   implicit val read = Json.reads[CheckInfo]
 
   def test = Action {
-    val msg = new CheckNotification(System.currentTimeMillis, 1, "1_93740362_374", "925387477040814447", "")
+    val msg = new CheckNotification(System.currentTimeMillis, 1, "1_93740362_374", "925387477040814447", "", "袋鼠")
     DailyLog.create(Some(msg), CheckInfo(93740362L, "0001234569", 2, 0, "", System.currentTimeMillis))
     Ok(Json.toJson(runWithLog(msg, triggerSinglePush)))
   }

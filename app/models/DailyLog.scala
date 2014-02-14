@@ -14,9 +14,10 @@ object DailyLog {
       get[Long]("check_at") ~
       get[String]("record_url") ~
       get[String]("pushid") ~
-      get[Int]("notice_type") map {
-      case child_id ~ timestamp ~ url ~ pushid ~ notice_type =>
-        new CheckNotification(timestamp, notice_type, child_id, pushid, url)
+      get[Int]("notice_type") ~
+      get[String]("parent_name") map {
+      case child_id ~ timestamp ~ url ~ pushid ~ notice_type ~ name=>
+        new CheckNotification(timestamp, notice_type, child_id, pushid, url, name)
     }
   }
 
@@ -34,8 +35,8 @@ object DailyLog {
     implicit c =>
       check map {
         cn =>
-          SQL("insert into dailylog (child_id, pushid, record_url, check_at, card_no, notice_type, school_id) " +
-            "values ({child_id}, {pushid}, {url}, {check_at}, {card_no}, {notice_type}, {school_id})")
+          SQL("insert into dailylog (child_id, pushid, record_url, check_at, card_no, notice_type, school_id, parent_name) " +
+            "values ({child_id}, {pushid}, {url}, {check_at}, {card_no}, {notice_type}, {school_id}, {parent_name})")
             .on(
               'child_id -> cn.child_id,
               'pushid -> cn.pushid,
@@ -43,7 +44,8 @@ object DailyLog {
               'check_at -> cn.timestamp,
               'card_no -> request.card_no,
               'notice_type -> request.notice_type,
-              'school_id -> request.school_id
+              'school_id -> request.school_id,
+              'parent_name -> cn.parent_name
             ).executeInsert()
           cn
       }
