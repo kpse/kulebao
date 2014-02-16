@@ -1,9 +1,10 @@
 package controllers
 
 import play.api.mvc.{Action, Controller}
-import play.api.libs.json.{JsError, Json}
+import play.api.libs.json.{JsValue, JsError, Json}
 import models.{Parent, Relationship}
 import models.json_models.ChildInfo
+import play.Logger
 
 object RelationshipController extends Controller {
 
@@ -18,14 +19,16 @@ object RelationshipController extends Controller {
     Ok(Json.toJson(Relationship.index(kg, parent, child)))
   }
 
+
   def create(kg: Long) = Action(parse.json) {
     implicit request =>
-      request.body.validate[Relationship].map {
-        case (r) =>
-          Ok(Json.toJson(Relationship.create(kg, r)))
-      }.recoverTotal {
-        e => BadRequest("Detected error:" + JsError.toFlatJson(e))
-      }
+      Logger.info(request.body.toString)
+      val body: JsValue = request.body
+      val card: String = (body \ "card").as[String]
+      val relationship: String = (body \ "relationship").as[String]
+      val phone: String = (body \ "parent" \ "phone").as[String]
+      val childId: String = (body \ "child" \ "id").as[String]
+      Ok(Json.toJson(Relationship.create(kg, card, relationship, phone, childId)))
   }
 
 }
