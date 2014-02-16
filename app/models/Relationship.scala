@@ -7,17 +7,30 @@ import anorm.SqlParser._
 import anorm.~
 import models.json_models.{Children, ChildInfo}
 
-case class Relationship(parent: Option[Parent], child: Option[ChildInfo], card: String)
+case class Relationship(parent: Option[Parent], child: Option[ChildInfo], card: String, relationship: String)
 
 object Relationship {
+  def create(kg: Long, relationship: Relationship) = DB.withConnection {
+    implicit c =>
+      SQL("insert into relationmap (child_id, parent_id, card_num, relationship) VALUES" +
+        " ({child_id}, {parent_id}, {card}, {relationship})")
+        .on(
+          'parent_id -> relationship.parent.get.id,
+          'child_id -> relationship.child.get.child_id,
+          'relationship -> relationship.relationship,
+          'card -> relationship.card
+        ).executeInsert()
+  }
+
 
   def simple(kg: Long) = {
     get[String]("parentinfo.school_id") ~
       get[String]("parent_id") ~
       get[String]("child_id") ~
-      get[String]("card_num") map {
-      case kg ~ parent ~ child ~ cardNum =>
-        Relationship(Parent.info(kg.toLong, parent), Children.info(kg.toLong, child), cardNum)
+      get[String]("card_num") ~
+      get[String]("relationship") map {
+      case kg ~ parent ~ child ~ cardNum ~ r =>
+        Relationship(Parent.info(kg.toLong, parent), Children.info(kg.toLong, child), cardNum, r)
     }
   }
 

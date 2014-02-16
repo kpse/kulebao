@@ -1,0 +1,82 @@
+<div class="panel-body" ng-controller="addRelationshipCtrl">
+  <form class="form-horizontal" role="form" name="newRelationshipForm">
+
+    <div class="row">
+      <div class="col-sm-5 well">
+
+        <div class="form-group">
+          <label for="parent-card" class="col-sm-2 control-label">卡号</label>
+
+          <div class="col-sm-8">
+            <input id="parent-card" ng-model="relationship.card"
+                   class="editing-field form-control" required ui-mask="{{'99999-99999'}}"/>
+            <span class="error-field" ng-show="isDuplicated(relationship.card)">与现有卡号重复！</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-offset-1 col-sm-5 well">
+        <div class="form-group">
+
+          <label for="relationship" class="col-sm-2">关系</label>
+
+          <div class="col-sm-8">
+            <select class="form-control relationship-select" ng-model="relationship.relationship"
+                    ng-options="r for r in ['妈妈', '爸爸', '奶奶', '爷爷']" required></select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-5 well">
+        <div class="form-group">
+
+          <div class="portrait-container connection">
+            <img class="portrait" ng-src="{{relationship.parent.portrait}}"
+                 alt="照片"/>
+          </div>
+
+          <label for="parent" class="col-sm-2">家长</label>
+
+          <div class="col-sm-8">
+            <select class="form-control parent-select" ng-model="relationship.parent"
+                    ng-options="p.name for p in parents" required></select>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-sm-offset-1 col-sm-5 well">
+        <div class="form-group">
+
+          <div class="portrait-container connection">
+            <img class="portrait" ng-src="{{relationship.child.icon_url}}"
+                 alt="照片"/>
+          </div>
+
+          <label for="child" class="col-sm-2">宝宝</label>
+
+          <div class="col-sm-8">
+            <select class="form-control child-select" ng-model="relationship.child"
+                    ng-options="c.name group by c.class_name for c in children" required></select>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="col-sm-offset-6 col-sm-6">
+      <div class="form-group">
+        <a class="btn btn-primary pull-right adding-button"
+           ng-disabled="newRelationshipForm.$invalid || isDuplicated(relationship.card)"
+           ng-click="createRelationship(relationship)">关联</a>
+        <a class="btn btn-default pull-right adding-button"
+           ng-click="$hide()">取消</a>
+      </div>
+    </div>
+  </form>
+</div>
+
