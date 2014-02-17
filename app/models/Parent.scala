@@ -11,7 +11,7 @@ import java.util.Date
 import play.Logger
 import models.helper.TimeHelper.any2DateTime
 
-case class Parent(id: String, schoolId: Long, name: String, phone: String, portrait: String, gender: Int)
+case class Parent(id: Option[String], school_id: Long, name: String, phone: String, portrait: String, gender: Int, birthday: String)
 
 case class ParentInfo(id: Option[Long], birthday: String, gender: Int, portrait: String, name: String, phone: String, kindergarten: School, relationship: String, child: ChildInfo, card: String)
 
@@ -88,7 +88,35 @@ object Parent {
         .as(withRelationship.singleOpt)
   }
 
-  def create(kg: Long, parent: ParentInfo) = DB.withTransaction {
+  def create(kg: Long, parent: Parent) = DB.withConnection {
+    implicit c =>
+      val timestamp = System.currentTimeMillis
+      val parent_id = "2_%d".format(timestamp)
+      val createdId: Option[Long] = SQL("INSERT INTO parentinfo(name, parent_id, relationship, phone, gender, company, picurl, birthday, school_id, status, update_at) " +
+        "VALUES ({name},{parent_id},{relationship},{phone},{gender},{company},{picurl},{birthday},{school_id},{status},{timestamp})")
+        .on('name -> parent.name,
+          'parent_id -> parent_id,
+          'relationship -> "",
+          'phone -> parent.phone,
+          'gender -> parent.gender,
+          'company -> "",
+          'picurl -> parent.portrait,
+          'birthday -> parent.birthday,
+          'school_id -> kg.toString,
+          'status -> 1,
+          'timestamp -> timestamp).executeInsert()
+      Logger.info("created parent %s".format(createdId))
+      val accountinfoUid = SQL("INSERT INTO accountinfo(accountid, password, pushid, active, pwd_change_time) " +
+        "VALUES ({accountid},{password},'',0,0)")
+        .on('accountid -> parent.phone,
+          'password -> generateNewPassword(parent.phone)).executeInsert()
+      Logger.info("created accountinfo %s".format(accountinfoUid))
+
+      findById(kg)(createdId.getOrElse(-1))
+
+  }
+
+  def fullCreate(kg: Long, parent: ParentInfo) = DB.withTransaction {
     implicit c =>
       val child = parent.child
       val timestamp = System.currentTimeMillis
@@ -190,7 +218,7 @@ object Parent {
       get[String]("classinfo.class_name") map {
       case id ~ k_id ~ name ~ birthday ~ gender ~ portrait ~
         schoolName ~ schoolId ~ relationship ~ childName ~
-        nick ~ childBirthday ~ childGender ~ childPortrait ~ child_id ~ classId ~ card ~ phone ~ className=>
+        nick ~ childBirthday ~ childGender ~ childPortrait ~ child_id ~ classId ~ card ~ phone ~ className =>
         new ParentInfo(Some(id), birthday.toDateOnly, gender.toInt, portrait, name, phone, new School(schoolId.toLong, schoolName), relationship,
           new ChildInfo(Some(child_id), childName, nick, childBirthday.toDateOnly, childGender.toInt, childPortrait, classId, className), card)
     }
@@ -232,17 +260,27 @@ object Parent {
       get[String]("name") ~
       get[String]("phone") ~
       get[Int]("gender") ~
-      get[String]("parentinfo.picurl") map {
-      case id ~ kg ~ name ~ phone ~ gender ~ portrait =>
-        new Parent(id, kg.toLong, name, phone, portrait, gender)
+      get[String]("picurl") ~
+      get[Date]("birthday") map {
+      case id ~ kg ~ name ~ phone ~ gender ~ portrait ~ birthday =>
+        new Parent(Some(id), kg.toLong, name, phone, portrait, gender, birthday.toDateOnly)
     }
   }
 
+  val simpleSql = "select * from parentinfo p where school_id={kg} and status=1 "
+
   def info(kg: Long, parentId: String) = DB.withConnection {
     implicit c =>
-      SQL("select * from parentinfo p where school_id={kg} and parent_id={id} and status=1")
+      SQL(simpleSql + " and parent_id={id} ")
         .on('kg -> kg,
           'id -> parentId)
         .as(simple singleOpt)
+  }
+
+  def simpleIndex(kg: Long) = DB.withConnection {
+    implicit c =>
+      SQL(simpleSql)
+        .on('kg -> kg)
+        .as(simple *)
   }
 }

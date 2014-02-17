@@ -1,0 +1,90 @@
+<div class="panel-body" ng-controller="addParentCtrl">
+  <form class="form-horizontal row" role="form" name="newAdultForm">
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label for="parent-phone" class="col-sm-4 control-label">电话号码</label>
+
+        <div class="col-sm-8">
+          <input id="parent-phone" type="text" ng-model="parent.phone"
+                 ui-mask="{{'999-9999-9999'}}"
+                 class="editing-field form-control" ng-bk-focus required/>
+          <span class="error-field" ng-show="isDuplicated(parent.phone)">与现有手机号重复！</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="parent-name" class="col-sm-4 control-label">家长姓名</label>
+
+        <div class="col-sm-8">
+          <input id="parent-name" ng-model="parent.name"
+                 class="editing-field form-control" required/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="parent-gender" class="col-sm-4 control-label">性别</label>
+
+        <div class="col-sm-8">
+          <div class="btn-group">
+            <button type="button" class="btn select-button" ng-model="parent.gender" btn-radio="1">女</button>
+            <button type="button" class="btn select-button" ng-model="parent.gender" btn-radio="0">男</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+
+        <label for="parent-birthday" class="col-sm-4 control-label">生日</label>
+
+        <div class="col-sm-8">
+          <div class="control-group input-append">
+            <input type="text" class="form-control datepicker-input" ng-model="parent.birthday" data-date-format="yyyy-MM-dd" data-date-type="number" data-max-date="today" data-autoclose="1" name="date2" bs-datepicker>
+            <button type="button" class="btn datepicker-button" data-toggle="datepicker"><i
+              class="glyphicon glyphicon-calendar"></i></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="portrait-container">
+          <img class="portrait" ng-src="{{parent.portrait}}"
+               alt="照片"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="parent-pic" class="col-sm-4 control-label">上传头像</label>
+
+        <div class="col-sm-8">
+          <input type="file" id="parent-pic" fileupload="pic"/>
+          <button class="btn btn-success btn-xs" ng-disabled="pic === undefined || pic.size > 200000"
+                  ng-click="uploadPic(parent, pic)">上传头像
+          </button>
+          <span ng-class="{error : pic.size > 200000}" class="help-block">图片大小请不要超过200k</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label for="parent-company" class="col-sm-2 control-label">公司</label>
+
+        <div class="col-sm-8">
+          <input id="parent-company" ng-model="parent.company"
+                 class="editing-field form-control"/>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-offset-4 col-sm-8">
+      <div class="form-group">
+        <a class="btn btn-warning pull-right adding-button" ng-disabled="newAdultForm.$invalid || isDuplicated(parent.phone)"
+           ng-click="create(parent)">保存</a>
+        <a class="btn btn-default pull-right adding-button"
+           ng-click="$hide()">取消</a>
+      </div>
+    </div>
+  </form>
+</div>
+
