@@ -2,7 +2,8 @@
 
 angular.module('kulebaoAdmin')
 .controller 'RelationshipCtrl',
-    ['$scope', '$rootScope', '$stateParams', '$location', 'schoolService', 'classService', 'parentService', 'relationshipService', '$modal', 'childService'
+    ['$scope', '$rootScope', '$stateParams', '$location', 'schoolService', 'classService', 'parentService',
+     'relationshipService', '$modal', 'childService'
       (scope, rootScope, stateParams, location, School, Class, Parent, Relationship, modal, Child) ->
         rootScope.tabName = 'relationship'
         scope.kindergarten = School.get school_id: stateParams.kindergarten, ->
@@ -18,14 +19,6 @@ angular.module('kulebaoAdmin')
           scope.relationships = Relationship.bind(school_id: stateParams.kindergarten).query()
 
         scope.newParent = ->
-          scope.parent = new Parent
-            school_id: parseInt(scope.kindergarten.school_id)
-            birthday: '1980-1-1'
-            gender: 1
-            portrait: '/assets/images/portrait_placeholder.png'
-            name: '马大帅'
-            kindergarten: scope.kindergarten.school_info
-
           scope.currentModal = modal scope: scope, contentTemplate: 'templates/admin/add_adult.html'
 
         scope.newChild = ->
@@ -38,7 +31,8 @@ angular.module('kulebaoAdmin')
 
 angular.module('kulebaoAdmin')
 .controller 'addRelationshipCtrl',
-    ['$scope', '$rootScope', '$stateParams', '$location', 'schoolService', 'classService', 'parentService', 'relationshipService', '$modal', 'childService', 'cardService',
+    ['$scope', '$rootScope', '$stateParams', '$location', 'schoolService', 'classService', 'parentService',
+     'relationshipService', '$modal', 'childService', 'cardService',
       (scope, rootScope, stateParams, location, School, Class, Parent, Relationship, modal, Child, Card) ->
         rootScope.tabName = 'relationship'
         scope.kindergarten = School.get school_id: stateParams.kindergarten, ->
@@ -66,20 +60,20 @@ angular.module('kulebaoAdmin')
 
 angular.module('kulebaoAdmin')
 .controller 'addParentCtrl',
-    ['$scope', '$rootScope', '$stateParams', '$location', 'schoolService', 'classService', 'parentService', 'relationshipService', '$modal', 'childService', '$http', 'uploadService',
+    ['$scope', '$rootScope', '$stateParams', '$location', 'schoolService', 'classService', 'parentService',
+     'relationshipService', '$modal', 'childService', '$http', 'uploadService',
       (scope, rootScope, stateParams, location, School, Class, Parent, Relationship, modal, Child, $http, uploadService) ->
         rootScope.tabName = 'relationship'
         scope.kindergarten = School.get school_id: stateParams.kindergarten, ->
           scope.kindergarten.classes = Class.bind({school_id: stateParams.kindergarten}).query()
 
-        scope.newParent = ->
-          scope.parent = new Parent
-            school_id: scope.kindergarten.school_id
-            birthday: '1980-1-1'
-            gender: 1
-            portrait: '/assets/images/portrait_placeholder.png'
-            name: '马大帅'
-            kindergarten: scope.kindergarten.school_info
+        scope.parent = new Parent
+          school_id: scope.kindergarten.school_id
+          birthday: '1980-1-1'
+          gender: 1
+          portrait: '/assets/images/portrait_placeholder.png'
+          name: '马大帅'
+          kindergarten: scope.kindergarten.school_info
 
         scope.relationships = Relationship.bind(school_id: stateParams.kindergarten).query()
 
@@ -95,6 +89,45 @@ angular.module('kulebaoAdmin')
           return false if phone is undefined
           undefined isnt _.find scope.parents, (p) ->
             p.phone == phone
+
+        upload = (file, callback)->
+          return callback(undefined) if file is undefined
+          $http.get('/ws/fileToken?bucket=suoqin-test').success (data)->
+            uploadService.send file, data.token, (remoteFile) ->
+              callback(remoteFile.url)
+
+        scope.uploadPic = (person, pic) ->
+          upload pic, (url) ->
+            scope.$apply ->
+              person.portrait = url if url isnt undefined
+    ]
+
+angular.module('kulebaoAdmin')
+.controller 'addChildCtrl',
+    ['$scope', '$rootScope', '$stateParams', '$location', 'schoolService', 'classService', 'parentService',
+     'relationshipService', '$modal', 'childService', '$http', 'uploadService',
+      (scope, rootScope, stateParams, location, School, Class, Parent, Relationship, modal, Child, $http, uploadService) ->
+        rootScope.tabName = 'relationship'
+        scope.kindergarten = School.get school_id: stateParams.kindergarten, ->
+          scope.kindergarten.classes = Class.bind({school_id: stateParams.kindergarten}).query ->
+            scope.child = new Child
+              name : '宝宝名字'
+              nick : '宝宝小名'
+              birthday : '2009-1-1'
+              gender : 1
+              portrait :  '/assets/images/portrait_placeholder.png'
+              class_id : scope.kindergarten.classes[0].class_id
+              school_id: scope.kindergarten.school_info.school_id
+
+        scope.relationships = Relationship.bind(school_id: stateParams.kindergarten).query()
+
+        scope.parents = Parent.bind(school_id: stateParams.kindergarten).query()
+        scope.children = Child.bind(school_id: stateParams.kindergarten).query()
+        scope.relationship = new Relationship(school_id: stateParams.kindergarten, relationship: '妈妈')
+
+        scope.create = (child) ->
+          child.$save ->
+            scope.$hide()
 
         upload = (file, callback)->
           return callback(undefined) if file is undefined
