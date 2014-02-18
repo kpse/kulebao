@@ -66,4 +66,17 @@ object ChildController extends Controller {
       }.getOrElse(BadRequest)
 
   }
+
+  implicit val read2 = Json.reads[ChildInfo]
+
+
+  def create(kg: Long) = Action(parse.json) {
+    implicit request =>
+      Logger.info(request.body.toString)
+      request.body.validate[ChildInfo].map {
+        case (info) =>
+          Ok(Json.toJson(Children.create(kg, info)))
+      }.getOrElse(BadRequest)
+
+  }
 }

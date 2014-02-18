@@ -220,7 +220,7 @@ object Parent {
         schoolName ~ schoolId ~ relationship ~ childName ~
         nick ~ childBirthday ~ childGender ~ childPortrait ~ child_id ~ classId ~ card ~ phone ~ className =>
         new ParentInfo(Some(id), birthday.toDateOnly, gender.toInt, portrait, name, phone, new School(schoolId.toLong, schoolName), relationship,
-          new ChildInfo(Some(child_id), childName, nick, childBirthday.toDateOnly, childGender.toInt, childPortrait, classId, className), card)
+          new ChildInfo(Some(child_id), childName, nick, childBirthday.toDateOnly, childGender.toInt, childPortrait, classId, Some(className)), card)
     }
   }
 
