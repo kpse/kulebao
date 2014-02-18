@@ -18,7 +18,7 @@ object CheckInController extends Controller {
   implicit val write1 = Json.writes[CheckingInAndOutResponse]
   implicit val write2 = Json.writes[CheckNotification]
 
-  @deprecated(message="delegate to Baidu BAE server no more", since = "2014-02-10")
+  @deprecated(message = "delegate to Baidu BAE server no more", since = "2014-02-10")
   def create(kg: Long) = Action.async(parse.json) {
     request =>
       Logger.info("checking : " + request.body)
@@ -26,7 +26,7 @@ object CheckInController extends Controller {
         case (check) =>
           CheckingMessage.convert(check).map {
             c =>
-              DailyLog.create(Some(c), check)
+              DailyLog.create(c, check)
               val url = "http://djcwebtest.duapp.com/forwardswipe.do"
               val json = Json.toJson(c)
               Logger.info("json sent to push server: %s".format(json.toString))
@@ -34,7 +34,8 @@ object CheckInController extends Controller {
                 response =>
                   Ok(response.json)
               }
-          } getOrElse Future {
+          }
+          Future {
             Ok(Json.toJson(new CheckingInAndOutResponse(1, "未找到与卡号(%s)匹配的数据。".format(check.card_no))))
           }
 

@@ -3,8 +3,8 @@
 angular.module('kulebaoAdmin')
 .controller 'RelationshipCtrl',
     ['$scope', '$rootScope', '$stateParams', '$location', 'schoolService', 'classService', 'parentService',
-     'relationshipService', '$modal', 'childService'
-      (scope, rootScope, stateParams, location, School, Class, Parent, Relationship, modal, Child) ->
+     'relationshipService', '$modal', 'childService', '$http'
+      (scope, rootScope, stateParams, location, School, Class, Parent, Relationship, modal, Child, $http) ->
         rootScope.tabName = 'relationship'
         scope.kindergarten = School.get school_id: stateParams.kindergarten, ->
           scope.kindergarten.classes = Class.bind({school_id: stateParams.kindergarten}).query()
@@ -26,6 +26,20 @@ angular.module('kulebaoAdmin')
 
         scope.newRelationship = ->
           scope.currentModal = modal scope: scope, contentTemplate: 'templates/admin/add_connection.html'
+
+        generateCheckingInfo = (card, name, type) ->
+          school_id: parseInt(stateParams.kindergarten)
+          card_no: card
+          card_type: 2
+          notice_type: type
+          record_url: 'http://suoqin-test.u.qiniudn.com/FoUJaV4r5L0bM0414mGWEIuCLEdL'
+          parent: name
+          timestamp: new Date().getTime()
+
+        scope.sendMessage = (relationship, type) ->
+          check = generateCheckingInfo(relationship.card, relationship.parent.name, type)
+          $http({method: 'POST', url: '/kindergarten/' + stateParams.kindergarten + '/check', data: check}).success (data) ->
+            alert 'error_code:' + data.error_code
 
     ]
 
@@ -111,12 +125,12 @@ angular.module('kulebaoAdmin')
         scope.kindergarten = School.get school_id: stateParams.kindergarten, ->
           scope.kindergarten.classes = Class.bind({school_id: stateParams.kindergarten}).query ->
             scope.child = new Child
-              name : '宝宝名字'
-              nick : '宝宝小名'
-              birthday : '2009-1-1'
-              gender : 1
-              portrait :  '/assets/images/portrait_placeholder.png'
-              class_id : scope.kindergarten.classes[0].class_id
+              name: '宝宝名字'
+              nick: '宝宝小名'
+              birthday: '2009-1-1'
+              gender: 1
+              portrait: '/assets/images/portrait_placeholder.png'
+              class_id: scope.kindergarten.classes[0].class_id
               school_id: scope.kindergarten.school_info.school_id
 
         scope.relationships = Relationship.bind(school_id: stateParams.kindergarten).query()

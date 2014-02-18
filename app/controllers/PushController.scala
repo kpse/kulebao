@@ -24,7 +24,7 @@ object PushController extends Controller {
 
   def test = Action {
     val msg = new CheckNotification(System.currentTimeMillis, 1, "1_93740362_374", "925387477040814447", "", "袋鼠")
-    DailyLog.create(Some(msg), CheckInfo(93740362L, "0001234569", 2, 0, "", System.currentTimeMillis))
+    DailyLog.create(msg, CheckInfo(93740362L, "0001234569", 2, 0, "", System.currentTimeMillis))
     Ok(Json.toJson(runWithLog(msg, triggerSinglePush)))
   }
 
@@ -103,10 +103,8 @@ object PushController extends Controller {
     channelClient
   }
 
-  def createSwipeMessage(check: Option[CheckNotification]) = {
-    check map {
-      c => runWithLog(c, triggerSinglePush)
-    }
+  def createSwipeMessage(check: CheckNotification) = {
+    runWithLog(check, triggerSinglePush)
   }
 
   def forwardSwipe(kg: Long) = Action(parse.json) {
@@ -114,9 +112,14 @@ object PushController extends Controller {
       Logger.info("checking : " + request.body)
       request.body.validate[CheckInfo].map {
         case (check) =>
-          val message = CheckingMessage.convert(check)
-          DailyLog.create(message, check)
-          Ok(Json.toJson(createSwipeMessage(message)))
+          val messages = CheckingMessage.convert(check)
+          Logger.info("messages : " + messages)
+          messages map {
+            m =>
+              DailyLog.create(m, check)
+              createSwipeMessage(m)
+          }
+          Ok(Json.toJson(new SuccessResponse))
       }.recoverTotal {
         e => BadRequest("Detected error:" + JsError.toFlatJson(e))
       }
