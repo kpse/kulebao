@@ -1,0 +1,16 @@
+<div class="panel panel-default" ng-controller="AddNewsCtrl">
+  <div class="panel-heading">
+    <input ng-model="news.title" class="editing-title form-control" ng-maxlength="15"/>
+  </div>
+  <div class="panel-body">
+    <textarea ng-model="news.content" class="editing-content" ng-maxlength="500" />
+  </div>
+  <div class="panel-footer">
+    <span class="issue-date">于{{news.issueDate | date:'yyyy年MM月dd日 HH:mm:ss'}}发布</span>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-info" ng-click="save(news)">保存</button>
+    <button class="btn btn-primary" ng-click="publish(news)">发布</button>
+  </div>
+
+</div>

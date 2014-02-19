@@ -1,20 +1,20 @@
-<div class="panel panel-default" ng-controller="NewsEditCtrl as current">
+<div class="panel panel-default">
   <div class="panel-heading">
     <div class="btn-group">
-      <button class="btn btn-warning" ng-click="current.startEditing($event) && editTarget.focus()">编辑</button>
-      <button class="btn btn-danger" ng-confirm-click="current.deleteMe($event)" ng-confirm-msg="你确定要删除吗?">删除</button>
-      <button class="btn btn-primary" ng-show="!current.news.published" ng-click="current.publish(current.news)">发布</button>
-      <button class="btn btn-info" ng-show="current.news.published" ng-click="current.hidden(current.news)">隐藏</button>
+      <button class="btn btn-warning" ng-click="startEditing($event) && editTarget.focus()">编辑</button>
+      <button class="btn btn-danger" ng-confirm-click="deleteMe($event)" ng-confirm-msg="你确定要删除吗?">删除</button>
+      <button class="btn btn-primary" ng-show="!news.published" ng-click="publish(news)">发布</button>
+      <button class="btn btn-info" ng-show="news.published" ng-click="hidden(news)">隐藏</button>
     </div>
-    <h4 ng-click="current.startEditingTitle($event) && editTitle.focus()" class="news-heading" ng-show="!current.editingTitle">{{current.news.title}}</h4>
-    <input ng-model="current.news.title" ng-show="current.editingTitle" class="editing-title form-control" ng-blur="current.saveTitle($event)" x-ng-target="editTitle" ng-maxlength="15"/>
+    <h4 ng-click="startEditingTitle($event) && editTitle.focus()" class="news-heading" ng-show="!editingTitle">{{news.title}}</h4>
+    <input ng-model="news.title" ng-show="editingTitle" class="editing-title form-control" ng-blur="saveTitle($event)" x-ng-target="editTitle" ng-maxlength="15"/>
   </div>
   <div class="panel-body">
-    <p ng-click="current.startEditing($event) && editTarget.focus()" class="news-content" ng-show="!current.showEditBox">{{current.news.content}}</p>
-    <textarea ng-model="current.news.content" ng-show="current.showEditBox" class="editing-content" ng-blur="current.save($event)" x-ng-target="editTarget" ng-maxlength="500" />
+    <p ng-click="startEditing($event) && editTarget.focus()" class="news-content" ng-show="!showEditBox">{{news.content}}</p>
+    <textarea ng-model="news.content" ng-show="showEditBox" class="editing-content" ng-blur="save($event)" x-ng-target="editTarget" ng-maxlength="500" />
   </div>
   <div class="panel-footer">
-    <span class="issue-date">于{{current.news.issueDate | date:'yyyy年MM月dd日 HH:mm:ss'}}发布</span>
+    <span class="issue-date">于{{news.issueDate | date:'yyyy年MM月dd日 HH:mm:ss'}}发布</span>
   </div>
-  <a ng-click="current.testModal()">窗口</a>
+  <a ng-click="testModal()">窗口</a>
 </div>
