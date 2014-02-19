@@ -82,7 +82,7 @@ angular.module('kulebaoAdmin')
           scope.kindergarten.classes = Class.bind({school_id: stateParams.kindergarten}).query()
 
         scope.parent = new Parent
-          school_id: scope.kindergarten.school_id
+          school_id: parseInt(stateParams.kindergarten)
           birthday: '1980-1-1'
           gender: 1
           portrait: '/assets/images/portrait_placeholder.png'
@@ -131,7 +131,7 @@ angular.module('kulebaoAdmin')
               gender: 1
               portrait: '/assets/images/portrait_placeholder.png'
               class_id: scope.kindergarten.classes[0].class_id
-              school_id: scope.kindergarten.school_info.school_id
+              school_id: parseInt(stateParams.kindergarten)
 
         scope.relationships = Relationship.bind(school_id: stateParams.kindergarten).query()
 
