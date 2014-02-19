@@ -1,25 +1,25 @@
-<div class="newsletters" ng-controller="BulletinManageCtrl as bulletin">
+<div class="newsletters">
   <div class="loading" ng-show="loading"/>
   <div class="row">
     <ul class="list-group col-sm-11">
       <li class="list-group-item read-{{news.read}} news-item"
-          ng-repeat="news in bulletin.newsletters | orderBy:'timestamp':true">
+          ng-repeat="news in newsletters | orderBy:'timestamp':true">
         <div class="btn-group">
-          <button class="btn btn-warning" ng-click="bulletin.edit(news)">编辑</button>
-          <button class="btn btn-danger" ng-confirm-msg="你确定要删除吗?" ng-confirm-click="bulletin.deleteNews(news)">删除
+          <button class="btn btn-warning" ng-click="edit(news)">编辑</button>
+          <button class="btn btn-danger" ng-confirm-msg="你确定要删除吗?" ng-confirm-click="deleteNews(news)">删除
           </button>
-          <button class="btn btn-primary" ng-show="!news.published" ng-click="bulletin.publish(news)">发布</button>
+          <button class="btn btn-primary" ng-show="!news.published" ng-click="publish(news)">发布</button>
         </div>
         <h4 class="list-group-item-heading">{{news.title}}</h4>
-        <a ng-href="#/kindergarten/{{bulletin.kindergarten.school_id}}/news/{{news.news_id}}">
+        <a ng-click="edit(news)">
           <p class="list-group-item-text">{{news.content.substring(0,200)}}</p>
         </a>
         <span class="published">{{news.published ? '已发布' : '未发布'}}</span>
         <span class="issue-date pull-right">于{{news.timestamp | date:'yyyy年MM月dd日 HH:mm:ss'}}发布</span>
       </li>
-      <p ng-show="bulletin.newsletters.length == 0">您还没有创建任何通知，请点击<a ng-click="bulletin.createNews()">这里</a>创建</p>
+      <p ng-show="newsletters.length == 0">您还没有创建任何通知，请点击<a ng-click="createNews()">这里</a>创建</p>
     </ul>
 
-    <button class="btn btn-primary col-sm-1" ng-click="bulletin.createNews()">添加</button>
+    <button class="btn btn-primary col-sm-1" ng-click="createNews()">添加</button>
   </div>
 </div>

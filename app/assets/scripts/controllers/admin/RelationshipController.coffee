@@ -4,7 +4,7 @@ angular.module('kulebaoAdmin')
 .controller 'RelationshipCtrl',
     ['$scope', '$rootScope', '$stateParams', '$location', 'schoolService', 'classService', 'parentService',
      'relationshipService', '$modal', 'childService', '$http'
-      (scope, rootScope, stateParams, location, School, Class, Parent, Relationship, modal, Child, $http) ->
+      (scope, rootScope, stateParams, location, School, Class, Parent, Relationship, Modal, Child, $http) ->
         rootScope.tabName = 'relationship'
         scope.kindergarten = School.get school_id: stateParams.kindergarten, ->
           scope.kindergarten.classes = Class.bind({school_id: stateParams.kindergarten}).query()
@@ -19,13 +19,13 @@ angular.module('kulebaoAdmin')
           scope.relationships = Relationship.bind(school_id: stateParams.kindergarten).query()
 
         scope.newParent = ->
-          scope.currentModal = modal scope: scope, contentTemplate: 'templates/admin/add_adult.html'
+          scope.currentModal = Modal scope: scope, contentTemplate: 'templates/admin/add_adult.html'
 
         scope.newChild = ->
-          scope.currentModal = modal scope: scope, contentTemplate: 'templates/admin/add_child.html'
+          scope.currentModal = Modal scope: scope, contentTemplate: 'templates/admin/add_child.html'
 
         scope.newRelationship = ->
-          scope.currentModal = modal scope: scope, contentTemplate: 'templates/admin/add_connection.html'
+          scope.currentModal = Modal scope: scope, contentTemplate: 'templates/admin/add_connection.html'
 
         generateCheckingInfo = (card, name, type) ->
           school_id: parseInt(stateParams.kindergarten)

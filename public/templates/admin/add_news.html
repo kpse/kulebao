@@ -1,16 +1,27 @@
 <div class="panel panel-default" ng-controller="AddNewsCtrl">
-  <div class="panel-heading">
-    <input ng-model="news.title" class="editing-title form-control" ng-maxlength="15"/>
-  </div>
-  <div class="panel-body">
-    <textarea ng-model="news.content" class="editing-content" ng-maxlength="500" />
-  </div>
-  <div class="panel-footer">
-    <span class="issue-date">于{{news.issueDate | date:'yyyy年MM月dd日 HH:mm:ss'}}发布</span>
-  </div>
-  <div class="btn-group">
-    <button class="btn btn-info" ng-click="save(news)">保存</button>
-    <button class="btn btn-primary" ng-click="publish(news)">发布</button>
-  </div>
+  <form class="form-horizontal" role="form" name="newsForm">
+    <div class="panel-heading">
+      <label for="title" class="control-label">公告标题</label>
+      <input id="title" name="title" ng-model="news.title" class="editing-title form-control" ng-maxlength="15" placeholder="添加标题" required/>
+      <span class="error-field" ng-show="newsForm.title.$invalid">标题请不要超过15个字符</span>
+    </div>
+    <div class="panel-body">
+      <label for="content" class="control-label">公告内容</label>
+      <br/>
+      <small ng-show="news.content">还可以输入{{ 500 - news.content.length}}个字</small>
+      <span class="error-field" ng-show="newsForm.content.$invalid">正文请不要超过500个字符</span>
+      <textarea id="content" name="content" ng-model="news.content" class="editing-content" ng-maxlength="500" placeholder="添加内容" required/>
+
+    </div>
+    <div class="panel-footer">
+      <div class="issue-date">于{{news.issueDate | date:'yyyy年MM月dd日 HH:mm:ss'}}发布</div>
+      <div class="btn-group">
+        <button class="btn btn-default" ng-click="$hide()">取消</button>
+        <button class="btn btn-primary" ng-disabled="newsForm.$invalid" ng-hide="news.published" ng-click="publish(news)">发布</button>
+        <button class="btn btn-warning" ng-show="news.published" ng-click="remove(news)">删除</button>
+        <button class="btn btn-info" ng-disabled="newsForm.$invalid" ng-click="save(news)">保存</button>
+      </div>
+    </div>
+  </form>
 
 </div>
