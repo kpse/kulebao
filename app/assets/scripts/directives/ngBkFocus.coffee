@@ -1,9 +1,11 @@
 'use strict'
 
-ngBkFocus = () ->
+ngBkFocus = ($timeout) ->
   restrict: "A"
   link: (scope, element, attrs) ->
-    element[0].focus() if scope.$eval(attrs['ngBkFocus']) || attrs['ngBkFocus'] is ''
+    $timeout ->
+        element[0].focus() if scope.$eval(attrs['ngBkFocus']) || attrs['ngBkFocus'] is ''
+      , 500, false
 
 
 angular.module('kulebaoApp').directive('ngBkFocus', ngBkFocus)

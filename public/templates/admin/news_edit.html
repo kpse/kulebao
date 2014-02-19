@@ -7,11 +7,11 @@
       <button class="btn btn-info" ng-show="current.news.published" ng-click="current.hidden(current.news)">隐藏</button>
     </div>
     <h4 ng-click="current.startEditingTitle($event) && editTitle.focus()" class="news-heading" ng-show="!current.editingTitle">{{current.news.title}}</h4>
-    <input ng-model="current.news.title" ng-show="current.editingTitle" class="editing-title form-control" ng-blur="current.saveTitle($event)" x-ng-target="editTitle"/>
+    <input ng-model="current.news.title" ng-show="current.editingTitle" class="editing-title form-control" ng-blur="current.saveTitle($event)" x-ng-target="editTitle" ng-maxlength="15"/>
   </div>
   <div class="panel-body">
     <p ng-click="current.startEditing($event) && editTarget.focus()" class="news-content" ng-show="!current.showEditBox">{{current.news.content}}</p>
-    <textarea ng-model="current.news.content" ng-show="current.showEditBox" class="editing-content" ng-blur="current.save($event)" x-ng-target="editTarget"/>
+    <textarea ng-model="current.news.content" ng-show="current.showEditBox" class="editing-content" ng-blur="current.save($event)" x-ng-target="editTarget" ng-maxlength="500" />
   </div>
   <div class="panel-footer">
     <span class="issue-date">于{{current.news.issueDate | date:'yyyy年MM月dd日 HH:mm:ss'}}发布</span>

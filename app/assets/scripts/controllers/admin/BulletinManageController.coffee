@@ -2,6 +2,8 @@
 
 class Controller
   constructor: (scope, $rootScope, $location, adminNewsService, $stateParams, GroupMessage, School) ->
+    $rootScope.tabName = 'bulletin'
+
     scope.loading = true
     @adminUser =
       id: 1
@@ -10,8 +12,6 @@ class Controller
     @kindergarten = School.get school_id: $stateParams.kindergarten, =>
       @newsletters = adminNewsService.bind(school_id: @kindergarten.school_id, admin_id: @adminUser.id).query ->
         scope.loading = false
-
-    $rootScope.tabName = 'bulletin'
 
     @publish = (news) =>
       news.pushlished = true
