@@ -69,7 +69,9 @@ angular.module('kulebaoAdmin').controller 'AddNewsCtrl',
 
       scope.kindergarten = School.get school_id: $stateParams.kindergarten, ->
         if $rootScope.editingNews is undefined
-          scope.news = new adminNewsService(school_id: scope.kindergarten.school_id,admin_id: scope.adminUser.id)
+          scope.news = new adminNewsService
+            school_id: scope.kindergarten.school_id
+            admin_id: scope.adminUser.id
         else
           scope.news = $rootScope.editingNews
           $rootScope.editingNews = undefined

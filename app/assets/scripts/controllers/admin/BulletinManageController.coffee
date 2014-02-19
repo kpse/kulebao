@@ -33,11 +33,6 @@ angular.module('kulebaoAdmin').controller 'BulletinManageCtrl',
           x != news
 
       scope.createNews =  ->
-#        news = new adminNewsService({school_id: scope.kindergarten.school_id, admin_id: scope.adminUser.id});
-#        news.title = "新通知";
-#        news.content = "新通知内容，点击进行编辑";
-#        news.$save(school_id: scope.kindergarten.school_id, news_id: news.news_id);
-#        scope.newsletters.push news
         scope.currentModal = Modal scope: scope, contentTemplate: 'templates/admin/add_news.html'
 
       scope.edit = (news) ->

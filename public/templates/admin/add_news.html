@@ -3,13 +3,15 @@
     <div class="panel-heading">
       <label for="title" class="control-label">公告标题</label>
       <input id="title" name="title" ng-model="news.title" class="editing-title form-control" ng-maxlength="15" placeholder="添加标题" required/>
-      <span class="error-field" ng-show="newsForm.title.$invalid">标题请不要超过15个字符</span>
+      <span class="error-field" ng-show="newsForm.title.$dirty && newsForm.title.$error.required">请填写标题</span>
+      <span class="error-field" ng-show="newsForm.title.$dirty && newsForm.title.$error.maxlength">标题请不要超过15个字符</span>
     </div>
     <div class="panel-body">
       <label for="content" class="control-label">公告内容</label>
       <br/>
-      <small ng-show="news.content">还可以输入{{ 500 - news.content.length}}个字</small>
-      <span class="error-field" ng-show="newsForm.content.$invalid">正文请不要超过500个字符</span>
+      <small ng-show="news.content.length >= 0">还可以输入{{ 500 - news.content.length}}个字</small>
+      <span class="error-field" ng-show="newsForm.content.$dirty && newsForm.content.$error.required">请填写正文内容</span>
+      <span class="error-field" ng-show="newsForm.content.$dirty && newsForm.content.$error.maxlength">正文内容请不要超过500个字符</span>
       <textarea id="content" name="content" ng-model="news.content" class="editing-content" ng-maxlength="500" placeholder="添加内容" required/>
 
     </div>
