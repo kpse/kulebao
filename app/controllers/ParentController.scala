@@ -55,13 +55,14 @@ object ParentController extends Controller {
     )
   )
 
-  def update(kg: Long, parentId: String) = Action(parse.json) {
+  def update(kg: Long, phone: String) = Action(parse.json) {
     request =>
       Logger.info(request.body.toString)
-      request.body.validate[ParentInfo].map {
+      request.body.validate[Parent].map {
+        case (parent) if Parent.registeredWith(phone) =>
+          Ok(Json.toJson(Parent.update2(parent)))
         case (parent) =>
-          val updated = Parent.update(parent)
-          Ok(Json.toJson(updated)).as("application/json")
+          Ok(Json.toJson(Parent.create(kg, parent)))
       } getOrElse BadRequest("Detected error:" + request.body)
   }
 

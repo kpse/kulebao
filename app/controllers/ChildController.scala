@@ -79,4 +79,14 @@ object ChildController extends Controller {
       }.getOrElse(BadRequest)
 
   }
+
+  def update2(kg: Long, childId: String) = Action(parse.json) {
+    implicit request =>
+      Logger.info(request.body.toString)
+      request.body.validate[ChildInfo].map {
+        case (update) =>
+          Ok(Json.toJson(Children.update2(kg, update)))
+      }.getOrElse(BadRequest)
+
+  }
 }

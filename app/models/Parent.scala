@@ -17,6 +17,31 @@ case class ParentInfo(id: Option[Long], birthday: String, gender: Int, portrait:
 
 
 object Parent {
+  def registeredWith(phone: String): Boolean = DB.withConnection {
+    implicit c =>
+      SQL("select count(1) as count from parentinfo where phone={phone}")
+        .on('phone -> phone)
+        .as(get[Long]("count") single) > 0
+  }
+
+  def update2(parent: Parent) = DB.withConnection {
+    implicit c =>
+      val timestamp = System.currentTimeMillis
+      SQL("update parentinfo set name={name}, " +
+        "phone={phone}, gender={gender}, company={company}, " +
+        "picurl={picurl}, birthday={birthday}, " +
+        "update_at={timestamp} where parent_id={parent_id}")
+        .on('name -> parent.name,
+          'phone -> parent.phone,
+          'gender -> parent.gender,
+          'company -> "",
+          'picurl -> parent.portrait,
+          'birthday -> parent.birthday,
+          'parent_id -> parent.id,
+          'timestamp -> timestamp).executeUpdate()
+      info(parent.school_id, parent.id.get)
+  }
+
   def delete(kg: Long)(id: Long) = DB.withConnection {
     implicit c =>
       SQL("update parentinfo set status=0 where uid={id}")
@@ -112,7 +137,7 @@ object Parent {
           'password -> generateNewPassword(parent.phone)).executeInsert()
       Logger.info("created accountinfo %s".format(accountinfoUid))
 
-      findById(kg)(createdId.getOrElse(-1))
+      info(parent.school_id, parent_id)
 
   }
 
@@ -227,10 +252,10 @@ object Parent {
 
   def show(kg: Long, phone: String) = DB.withConnection {
     implicit c =>
-      SQL(fullStructureSql + " and p.phone = {phone}")
+      SQL(simpleSql + " and p.phone = {phone}")
         .on('kg -> kg,
           'phone -> phone)
-        .as(withRelationship singleOpt)
+        .as(simple singleOpt)
   }
 
   val fullStructureSql = "select p.*, s.name, c.*, card.cardnum, ci.class_name from parentinfo p, schoolinfo s, childinfo c, relationmap r, cardinfo card, classinfo ci " +

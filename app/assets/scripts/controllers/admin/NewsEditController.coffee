@@ -74,7 +74,7 @@ angular.module('kulebaoAdmin').controller 'AddNewsCtrl',
             admin_id: scope.adminUser.id
         else
           scope.news = $rootScope.editingNews
-          $rootScope.editingNews = undefined
+          delete $rootScope.editingNews
 
       scope.save = (news) ->
         news.$save ->

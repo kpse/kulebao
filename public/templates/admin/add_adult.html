@@ -9,7 +9,7 @@
           <input id="parent-phone" type="text" ng-model="parent.phone"
                  ui-mask="{{'999-9999-9999'}}"
                  class="editing-field form-control" ng-bk-focus required/>
-          <span class="error-field" ng-show="isDuplicated(parent.phone)">与现有手机号重复！</span>
+          <span class="error-field" ng-show="isDuplicated(parent)">与现有手机号重复！</span>
         </div>
       </div>
 
@@ -79,7 +79,7 @@
     </div>
     <div class="col-sm-offset-4 col-sm-8">
       <div class="form-group">
-        <a class="btn btn-warning pull-right adding-button" ng-disabled="newAdultForm.$invalid || isDuplicated(parent.phone)"
+        <a class="btn btn-warning pull-right adding-button" ng-disabled="newAdultForm.$invalid || isDuplicated(parent)"
            ng-click="create(parent)">保存</a>
         <a class="btn btn-default pull-right adding-button"
            ng-click="$hide()">取消</a>

@@ -15,7 +15,7 @@ angular.module('kulebaoAdmin')
         scope.children = Child.bind(school_id: stateParams.kindergarten).query()
         scope.relationship = scope.relationships[0]
 
-        scope.$on 'newRelationship', ->
+        scope.$on 'refreshRelationship', ->
           scope.relationships = Relationship.bind(school_id: stateParams.kindergarten).query()
 
         scope.newParent = ->
@@ -26,6 +26,19 @@ angular.module('kulebaoAdmin')
 
         scope.newRelationship = ->
           scope.currentModal = Modal scope: scope, contentTemplate: 'templates/admin/add_connection.html'
+
+        scope.editParent = (parent) ->
+          rootScope.editingParent = parent
+          scope.currentModal = Modal
+            scope: scope
+            contentTemplate: 'templates/admin/add_adult.html'
+
+        scope.editChild = (child) ->
+          rootScope.editingChild = child
+          scope.currentModal = Modal
+            scope: scope
+            contentTemplate: 'templates/admin/add_child.html'
+
 
         generateCheckingInfo = (card, name, type) ->
           school_id: parseInt(stateParams.kindergarten)
@@ -63,7 +76,7 @@ angular.module('kulebaoAdmin')
         scope.createRelationship = (relationship) ->
           relationship.$save ->
             scope.$hide()
-            scope.$emit 'newRelationship'
+            scope.$emit 'refreshRelationship'
 
         scope.isDuplicated = (card) ->
           return false if card is undefined || card.length < 10
@@ -80,29 +93,31 @@ angular.module('kulebaoAdmin')
         rootScope.tabName = 'relationship'
         scope.kindergarten = School.get school_id: stateParams.kindergarten, ->
           scope.kindergarten.classes = Class.bind({school_id: stateParams.kindergarten}).query()
-
-        scope.parent = new Parent
-          school_id: parseInt(stateParams.kindergarten)
-          birthday: '1980-1-1'
-          gender: 1
-          portrait: '/assets/images/portrait_placeholder.png'
-          name: '马大帅'
-          kindergarten: scope.kindergarten.school_info
+          if rootScope.editingParent is undefined
+            scope.parent = new Parent
+              school_id: parseInt(stateParams.kindergarten)
+              birthday: '1980-1-1'
+              gender: 1
+              portrait: '/assets/images/portrait_placeholder.png'
+              name: '马大帅'
+              kindergarten: scope.kindergarten.school_info
+          else
+            scope.parent = Parent.bind(school_id: stateParams.kindergarten, phone: rootScope.editingParent.phone).get ->
+              delete rootScope.editingParent
 
         scope.relationships = Relationship.bind(school_id: stateParams.kindergarten).query()
 
         scope.parents = Parent.bind(school_id: stateParams.kindergarten).query()
-        scope.children = Child.bind(school_id: stateParams.kindergarten).query()
-        scope.relationship = new Relationship(school_id: stateParams.kindergarten, relationship: '妈妈')
 
         scope.create = (parent) ->
           parent.$save ->
             scope.$hide()
+            scope.$emit 'refreshRelationship'
 
-        scope.isDuplicated = (phone) ->
-          return false if phone is undefined
+        scope.isDuplicated = (parent) ->
+          return false if parent.phone is undefined
           undefined isnt _.find scope.parents, (p) ->
-            p.phone == phone
+            (p.phone == parent.phone && p.id != parent.id)
 
         upload = (file, callback)->
           return callback(undefined) if file is undefined
@@ -124,24 +139,25 @@ angular.module('kulebaoAdmin')
         rootScope.tabName = 'relationship'
         scope.kindergarten = School.get school_id: stateParams.kindergarten, ->
           scope.kindergarten.classes = Class.bind({school_id: stateParams.kindergarten}).query ->
-            scope.child = new Child
-              name: '宝宝名字'
-              nick: '宝宝小名'
-              birthday: '2009-1-1'
-              gender: 1
-              portrait: '/assets/images/portrait_placeholder.png'
-              class_id: scope.kindergarten.classes[0].class_id
-              school_id: parseInt(stateParams.kindergarten)
+            if rootScope.editingChild is undefined
+              scope.child = new Child
+                name: '宝宝名字'
+                nick: '宝宝小名'
+                birthday: '2009-1-1'
+                gender: 1
+                portrait: '/assets/images/portrait_placeholder.png'
+                class_id: scope.kindergarten.classes[0].class_id
+                school_id: parseInt(stateParams.kindergarten)
+            else
+              scope.child = Child.bind(school_id: stateParams.kindergarten, child_id: rootScope.editingChild.child_id).get ->
+                delete rootScope.editingChild
 
         scope.relationships = Relationship.bind(school_id: stateParams.kindergarten).query()
-
-        scope.parents = Parent.bind(school_id: stateParams.kindergarten).query()
-        scope.children = Child.bind(school_id: stateParams.kindergarten).query()
-        scope.relationship = new Relationship(school_id: stateParams.kindergarten, relationship: '妈妈')
 
         scope.create = (child) ->
           child.$save ->
             scope.$hide()
+            scope.$emit 'refreshRelationship'
 
         upload = (file, callback)->
           return callback(undefined) if file is undefined
