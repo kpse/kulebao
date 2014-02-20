@@ -67,11 +67,15 @@ angular.module('kulebaoAdmin')
 
         scope.relationships = Relationship.bind(school_id: stateParams.kindergarten).query()
 
-        scope.parents = Parent.bind(school_id: stateParams.kindergarten).query()
-        scope.children = Child.bind(school_id: stateParams.kindergarten).query()
+        scope.parents = Parent.bind(school_id: stateParams.kindergarten).query ->
+          scope.availableParents = scope.parents
+        scope.children = Child.bind(school_id: stateParams.kindergarten).query ->
+          scope.availableChildren = scope.children
         scope.relationship = new Relationship(school_id: stateParams.kindergarten, relationship: '妈妈')
+        scope.relationships = Relationship.bind(school_id: stateParams.kindergarten).query()
 
         scope.allCards = Card.bind(school_id: stateParams.kindergarten).query()
+
 
         scope.createRelationship = (relationship) ->
           relationship.$save ->
@@ -82,6 +86,26 @@ angular.module('kulebaoAdmin')
           return false if card is undefined || card.length < 10
           undefined isnt _.find scope.allCards, (c) ->
             c.card_id == card
+
+        scope.alreadyConnected = (parent, child) ->
+          return false if parent is undefined || child is undefined
+          undefined isnt _.find scope.relationships, (r) ->
+            r.parent.phone == parent.phone && r.child.child_id == child.id
+
+        scope.availableChildFor = (parent) ->
+          if parent is undefined
+            scope.children
+          else
+            _.reject scope.children, (c) ->
+              scope.alreadyConnected(parent, c)
+
+        scope.availableParentFor = (child) ->
+          if child is undefined
+            scope.parents
+          else
+            _.reject scope.parents, (p) ->
+              scope.alreadyConnected(p, child)
+
 
     ]
 

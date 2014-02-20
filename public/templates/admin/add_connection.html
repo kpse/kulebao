@@ -41,7 +41,7 @@
 
           <div class="col-sm-8">
             <select class="form-control parent-select" ng-model="relationship.parent"
-                    ng-options="p.name for p in parents" required></select>
+                    ng-options="p.name for p in availableParentFor(relationship.child)" required></select>
           </div>
 
         </div>
@@ -59,8 +59,9 @@
 
           <div class="col-sm-8">
             <select class="form-control child-select" ng-model="relationship.child"
-                    ng-options="c.name group by c.class_name for c in children" required></select>
+                    ng-options="c.name group by c.class_name for c in availableChildFor(relationship.parent)" required></select>
           </div>
+          <p ng-show="alreadyConnected(relationship.parent, relationship.child)" class="error-field">关系已经创建！</p>
 
         </div>
 
@@ -71,7 +72,7 @@
     <div class="col-sm-offset-6 col-sm-6">
       <div class="form-group">
         <a class="btn btn-primary pull-right adding-button"
-           ng-disabled="newRelationshipForm.$invalid || isDuplicated(relationship.card)"
+           ng-disabled="newRelationshipForm.$invalid || isDuplicated(relationship.card) || alreadyConnected(relationship.parent, relationship.child)"
            ng-click="createRelationship(relationship)">关联</a>
         <a class="btn btn-default pull-right adding-button"
            ng-click="$hide()">取消</a>
