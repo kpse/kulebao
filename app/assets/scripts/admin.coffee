@@ -53,6 +53,18 @@ class Config
         url: '/class/:class_id',
         templateUrl: 'templates/admin/class_schedule.html',
         controller: 'ClassScheduleCtrl'
+    .state 'kindergarten.conversation',
+        url: '/conversation',
+        templateUrl: 'templates/admin/all_conversations.html',
+        controller: 'ConversationsListCtrl'
+    .state 'kindergarten.conversation.class',
+        url: '/class/:class_id',
+        templateUrl: 'templates/admin/conversation_in_class.html',
+        controller: 'ConversationsInClassCtrl'
+    .state 'kindergarten.conversation.class.parent',
+        url: '/parent/:phone',
+        templateUrl: 'templates/admin/conversation.html',
+        controller: 'ConversationCtrl'
 
     .state('kindergarten.wip',
         url: '/wip',
