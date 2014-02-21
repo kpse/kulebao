@@ -59,6 +59,11 @@
           幼儿园卡片管理
         </a>
       </li>
+      <li class="action" ng-class="{active : kg.isSelected('conversation')}">
+        <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/conversation" class="btn btn-success">
+          家园互动
+        </a>
+      </li>
       <li class="action">
         <a ng-href="#/kindergarten/{{kg.kindergarten.school_id}}/class-bulletin" class="btn btn-warning">
           班级通知设置

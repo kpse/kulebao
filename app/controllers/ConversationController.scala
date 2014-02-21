@@ -27,8 +27,9 @@ object ConversationController extends Controller {
     request =>
       Logger.info(request.body.toString())
       request.body.validate[Conversation].map {
-        case (conversation) =>
+        case (conversation) if phone.equals(conversation.phone) =>
           Ok(Json.toJson(Conversation.create(kg, conversation)))
+        case _ => BadRequest("phone number does not match.")
       }.recoverTotal {
         e => BadRequest("Detected error:" + JsError.toFlatJson(e))
       }

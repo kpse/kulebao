@@ -1,0 +1,18 @@
+<div class="loading" ng-show="loading" />
+<table class="table table-hover table-condensed">
+  <thead>
+  <tr class="row">
+    <th class=".col-xs-2">家长姓名</th>
+    <th class=".col-xs-7">内容</th>
+    <th class=".col-xs-3">时间</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="p in parents | filter: searchText" class="row">
+    <td class=".col-xs-2"><a ng-click="goDetail(p)">{{p.name}}</a></td>
+    <td class=".col-xs-7">haha</td>
+    <td class=".col-xs-3"></td>
+  </tr>
+  </tbody>
+</table>
+<div class="conversation-view" ui-view></div>
