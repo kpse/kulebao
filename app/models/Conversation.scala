@@ -3,20 +3,53 @@ package models
 import play.api.Play.current
 import play.api.db.DB
 import anorm._
+import anorm.SqlParser._
 
 case class Conversation(phone: String, timestamp: Long, id: Option[Long], content: String, image: Option[String], sender: String)
 
 object Conversation {
-  def create(kg: Long, conversation: Conversation) = {
-    val time = System.currentTimeMillis
-    Conversation(conversation.phone, time, Some(time), conversation.content, conversation.image, conversation.sender)
+  val simple = {
+    get[String]("phone") ~
+      get[Long]("timestamp") ~
+      get[Long]("uid") ~
+      get[String]("content") ~
+      get[String]("image") ~
+      get[String]("sender") map {
+      case phone ~ t ~ id ~ content ~ image ~ sender =>
+        Conversation(phone, t, Some(id), content, Some(image), sender)
+    }
   }
 
-  def index(kg: Long, phone: String, from: Option[Long], to: Option[Long], most: Option[Int], sort: Option[String]) = {
-    val time = System.currentTimeMillis - 10000000
-    val time2 = time - 1000000
-    List(Conversation(phone, time, Some(time), "我很满意学校的服务", Some("http://suoqin-test.u.qiniudn.com/FgPmIcRG6BGocpV1B9QMCaaBQ9LK"), ""),
-      Conversation(phone, time2, Some(time2), "谢谢你的鼓励", Some("http://suoqin-test.u.qiniudn.com/Fget0Tx492DJofAy-ZeUg1SANJ4X"), "带班老师"))
+  def create(kg: Long, conversation: Conversation) = DB.withConnection {
+    implicit c =>
+      val time = System.currentTimeMillis
+      val id = SQL("INSERT INTO conversation (school_id, phone, content, image, sender, timestamp) values" +
+        "({kg}, {phone}, {content}, {image}, {sender}, {timestamp})").on(
+          'kg -> kg.toString,
+          'phone -> conversation.phone,
+          'content -> conversation.content,
+          'image -> conversation.image,
+          'sender -> conversation.sender,
+          'timestamp -> time
+        ).executeInsert()
+      Conversation(conversation.phone, time, id, conversation.content, conversation.image, conversation.sender)
+  }
+
+  def parseSort(sort: Option[String]) : String = {
+    sort match {
+      case Some(s) if s.matches("asc|desc") => "order by uid " + s
+      case _ => "order by uid asc"
+    }
+  }
+
+  def index(kg: Long, phone: String, most: Option[Int], sort: Option[String]) = DB.withConnection {
+    implicit c =>
+      SQL("select * from conversation where school_id={kg} and phone={phone} " + parseSort(sort) + " limit {most} ")
+        .on(
+          'kg -> kg.toString,
+          'phone -> phone,
+          'most -> most.getOrElse(25)
+        ).as(simple *)
   }
 
 }
