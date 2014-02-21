@@ -7,7 +7,6 @@
 
   </div>
 
-  <div class="loading" ng-show="loading"/>
   <button class="btn btn-primary" ng-click="newParent()">创建家长</button>
   <button class="btn btn-success" ng-click="newChild()">创建小孩</button>
   <button class="btn btn-warning" ng-click="newRelationship()">关联小孩和家长</button>
@@ -25,6 +24,7 @@
     </tr>
     </thead>
     <tbody>
+    <div class="loading" ng-show="loading"/>
     <tr ng-repeat="r in relationships | filter: searchText | orderBy: 'child.className' " class="row">
       <td class=".col-xs-1">{{r.card}}</td>
       <td class=".col-xs-2">{{r.child.className}}</td>

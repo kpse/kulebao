@@ -6,10 +6,12 @@ angular.module('kulebaoAdmin')
      'relationshipService', '$modal', 'childService', '$http'
       (scope, rootScope, stateParams, location, School, Class, Parent, Relationship, Modal, Child, $http) ->
         rootScope.tabName = 'relationship'
+        scope.loading = true
         scope.kindergarten = School.get school_id: stateParams.kindergarten, ->
           scope.kindergarten.classes = Class.bind({school_id: stateParams.kindergarten}).query()
 
-        scope.relationships = Relationship.bind(school_id: stateParams.kindergarten).query()
+        scope.relationships = Relationship.bind(school_id: stateParams.kindergarten).query ->
+          scope.loading = false
 
         scope.parents = Parent.bind(school_id: stateParams.kindergarten).query()
         scope.children = Child.bind(school_id: stateParams.kindergarten).query()
