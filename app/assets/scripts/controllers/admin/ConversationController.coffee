@@ -28,7 +28,7 @@ angular.module('kulebaoAdmin')
           scope.parents = Parent.bind(school_id: stateParams.kindergarten, class_id: stateParams.class_id).query()
 
         scope.goDetail = (parent) ->
-            location.path location.path().replace(/\/parent\/\d+$/, '') + '/parent/' + parent.phone
+          location.path location.path().replace(/\/parent\/\d+$/, '') + '/parent/' + parent.phone
 
 
     ]
@@ -36,14 +36,25 @@ angular.module('kulebaoAdmin')
 angular.module('kulebaoAdmin')
 .controller 'ConversationCtrl',
     [ '$scope', '$rootScope', '$stateParams',
-      '$location', 'schoolService', '$http', 'scheduleService', '$timeout', 'classService',
-      (scope, rootScope, stateParams, location, School, $http, Schedule, $timeout, Class) ->
+      '$location', 'schoolService', '$http', 'classService', 'conversationService',
+      (scope, rootScope, stateParams, location, School, $http, Class, Message) ->
         rootScope.tabName = 'conversation'
 
-        scope.conversations = [
-          {phone: '123123123', content: '内容1', timestamp: 1231231231231 },
-          {phone: '123123123', content: '内容2', timestamp: 1231232231231 },
-          {phone: '123123123', content: '内容3', timestamp: 1231233231231 }
-        ]
+        scope.conversations = Message.bind(school_id: stateParams.kindergarten, phone: stateParams.phone, sort: 'desc').query()
+        scope.newInput = 'please add comments'
+
+        scope.send = (msg) ->
+          return if msg is undefined || msg is ''
+          m = new Message
+            school_id: stateParams.kindergarten
+            phone: stateParams.phone
+            content: msg
+            image: ''
+            timestamp: 0
+            sender: '老师'
+          m.$save ->
+            scope.newInput = ''
+            scope.conversations = Message.bind(school_id: stateParams.kindergarten, phone: stateParams.phone, sort: 'desc').query()
+
 
     ]
