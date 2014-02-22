@@ -85,7 +85,7 @@ POST          /kindergarten/:kg/relationship                                    
 GET           /kindergarten/:kg/assignment                                       controllers.AssignmentController.index(kg: Long, classId: Option[String], from: Option[Long], to: Option[Long], most: Option[Int])
 
 GET           /kindergarten/:kg/conversation/:phone                              controllers.ConversationController.index(kg: Long, phone: String, from: Option[Long], to: Option[Long], most: Option[Int], sort: Option[String])
-POST          /kindergarten/:kg/conversation/:phone                              controllers.ConversationController.create(kg: Long, phone: String)
+POST          /kindergarten/:kg/conversation/:phone                              controllers.ConversationController.create(kg: Long, phone: String, retrieve_recent_from: Option[Long])
 
 GET           /ws/swipe                                                          controllers.WSController.call
 POST          /ws/swipe                                                          controllers.WSController.sendMessage

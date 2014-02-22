@@ -23,12 +23,18 @@ object ConversationController extends Controller {
 
   implicit val read = Json.reads[Conversation]
 
-  def create(kg: Long, phone: String) = Action(parse.json) {
+  def create(kg: Long, phone: String, retrieveRecentFrom: Option[Long]) = Action(parse.json) {
     request =>
       Logger.info(request.body.toString())
       request.body.validate[Conversation].map {
         case (conversation) if phone.equals(conversation.phone) =>
-          Ok(Json.toJson(Conversation.create(kg, conversation)))
+          val created = Conversation.create(kg, conversation)
+          retrieveRecentFrom match {
+            case Some(from) =>
+              Ok(Json.toJson(Conversation.index(kg, phone, Some(25), Some("desc")).filter(olderThan(Some(from)))))
+            case _ =>
+              Ok(Json.toJson(created))
+          }
         case _ => BadRequest("phone number does not match.")
       }.recoverTotal {
         e => BadRequest("Detected error:" + JsError.toFlatJson(e))
