@@ -7,7 +7,7 @@ CREATE TABLE relationmap (
   uid int(11) NOT NULL AUTO_INCREMENT,
   child_id varchar(40) NOT NULL,
   parent_id varchar(40) NOT NULL,
-  card_num VARCHAR(20)  NOT NULL,
+  card_num VARCHAR(20)  NOT NULL DEFAULT '',
   relationship VARCHAR(20)  NOT NULL,
   PRIMARY KEY (uid)
 );
