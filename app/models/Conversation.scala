@@ -13,10 +13,10 @@ object Conversation {
       get[Long]("timestamp") ~
       get[Long]("uid") ~
       get[String]("content") ~
-      get[String]("image") ~
+      get[Option[String]]("image") ~
       get[String]("sender") map {
       case phone ~ t ~ id ~ content ~ image ~ sender =>
-        Conversation(phone, t, Some(id), content, Some(image), sender)
+        Conversation(phone, t, Some(id), content, image, sender)
     }
   }
 
@@ -38,7 +38,7 @@ object Conversation {
   def parseSort(sort: Option[String]) : String = {
     sort match {
       case Some(s) if s.matches("asc|desc") => "order by uid " + s
-      case _ => "order by uid asc"
+      case _ => "order by uid desc"
     }
   }
 

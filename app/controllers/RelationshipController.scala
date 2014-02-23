@@ -15,8 +15,8 @@ object RelationshipController extends Controller {
   implicit val read2 = Json.reads[Parent]
   implicit val read3 = Json.reads[Relationship]
 
-  def index(kg: Long, parent: Option[String], child: Option[String]) = Action {
-    Ok(Json.toJson(Relationship.index(kg, parent, child)))
+  def index(kg: Long, parent: Option[String], child: Option[String], classId: Option[Long]) = Action {
+    Ok(Json.toJson(Relationship.index(kg, parent, child, classId)))
   }
 
 
@@ -31,4 +31,7 @@ object RelationshipController extends Controller {
       Ok(Json.toJson(Relationship.create(kg, card, relationship, phone, childId)))
   }
 
+  def show(kg: Long, card: String) = Action {
+    Ok(Json.toJson(Relationship.show(kg, card)))
+  }
 }

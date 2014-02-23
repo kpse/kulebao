@@ -11,6 +11,11 @@ import play.Logger
 case class Relationship(parent: Option[Parent], child: Option[ChildInfo], card: String, relationship: String)
 
 object Relationship {
+  def show(kg: Long, card: String) = DB.withConnection {
+    implicit c =>
+      SQL("select * from relationmap where card_num={card}").on('card -> card).as(simple(kg) singleOpt)
+  }
+
 
   def findById(kg: Long)(uid: Long) = DB.withConnection {
     implicit c =>
@@ -21,7 +26,7 @@ object Relationship {
   def create(kg: Long, card: String, relationship: String, phone: String, childId: String) = DB.withConnection {
     implicit c =>
       Logger.info(relationship.toString)
-      val id : Option[Long] = SQL("insert into relationmap (child_id, parent_id, card_num, relationship) VALUES" +
+      val id: Option[Long] = SQL("insert into relationmap (child_id, parent_id, card_num, relationship) VALUES" +
         " ({child_id}, (select parent_id from parentinfo where phone={phone}), {card}, {relationship})")
         .on(
           'phone -> phone,
@@ -34,7 +39,7 @@ object Relationship {
 
 
   def simple(kg: Long) = {
-      get[String]("parent_id") ~
+    get[String]("parent_id") ~
       get[String]("child_id") ~
       get[String]("card_num") ~
       get[String]("relationship") map {
@@ -43,18 +48,19 @@ object Relationship {
     }
   }
 
-  def index(kg: Long, parent: Option[String], child: Option[String]) = DB.withConnection {
+  def index(kg: Long, parent: Option[String], child: Option[String], classId: Option[Long]) = DB.withConnection {
     implicit c =>
-      SQL(generateQuery(parent, child))
+      SQL(generateQuery(parent, child, classId))
         .on(
           'kg -> kg.toString,
           'phone -> parent,
-          'child_id -> child
+          'child_id -> child,
+          'class_id -> classId
         ).as(simple(kg) *)
   }
 
 
-  def generateQuery(parent: Option[String], child: Option[String]) = {
+  def generateQuery(parent: Option[String], child: Option[String], classId: Option[Long]) = {
     var sql = "select distinct r.* from relationmap r, childinfo c, parentinfo p where r.child_id=c.child_id and p.parent_id=r.parent_id and p.school_id={kg} and p.status=1"
     parent map {
       phone =>
@@ -63,6 +69,10 @@ object Relationship {
     child map {
       child_id =>
         sql += " and c.child_id={child_id}"
+    }
+    classId map {
+      child_id =>
+        sql += " and c.class_id={class_id}"
     }
     sql
   }

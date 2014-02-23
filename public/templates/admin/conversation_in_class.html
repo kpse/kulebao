@@ -2,16 +2,18 @@
 <table class="table table-hover table-condensed">
   <thead>
   <tr class="row">
+    <th class=".col-xs-2">关系</th>
     <th class=".col-xs-2">家长姓名</th>
     <th class=".col-xs-7">最后一条信息内容</th>
     <th class=".col-xs-3">最近联系时间</th>
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="p in parents | filter: searchText" class="row">
-    <td class=".col-xs-2"><a ng-click="goDetail(p)">{{p.name}}</a></td>
-    <td class=".col-xs-7">{{p.lastMessage.content}}</td>
-    <td class=".col-xs-3">{{p.lastMessage.timestamp | date:'yyyy年MM月dd日 HH:mm:ss' }}</td>
+  <tr ng-repeat="r in relationships | filter: searchText" class="row">
+    <td class=".col-xs-2"><a ng-click="goDetail(r.card)">{{r.child.name}}的{{r.relationship}}</a></td>
+    <td class=".col-xs-2"><a ng-click="goDetail(r.card)">{{r.parent.name}}</a></td>
+    <td class=".col-xs-7">{{r.parent.lastMessage.content}}</td>
+    <td class=".col-xs-3">{{r.parent.lastMessage.timestamp | date:'yyyy年MM月dd日 HH:mm:ss' }}</td>
   </tr>
   </tbody>
 </table>

@@ -73,8 +73,8 @@ class Config
         url: '/list',
         templateUrl: 'templates/admin/conversation_in_class.html',
         controller: 'ConversationsInClassCtrl'
-    .state 'kindergarten.conversation.class.parent',
-        url: '/parent/:phone',
+    .state 'kindergarten.conversation.class.relationship',
+        url: '/card/:card',
         templateUrl: 'templates/admin/conversation.html',
         controller: 'ConversationCtrl'
     .state('kindergarten.wip',

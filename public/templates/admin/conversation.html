@@ -1,7 +1,7 @@
 <div class="loading" ng-show="loading"/>
-  <h3>与{{parent.name || '家长'}}的通讯记录</h3>
+  <h3>与{{relationship.child.name}}的{{relationship.relationship}}{{relationship.parent.name || '家长'}}的通讯记录</h3>
 <form class="form">
-  <textarea class="message-input" type="text" ng-model="newInput" required/>
+  <textarea class="message-input" type="text" ng-model="newInput" placeholder="要发送的内容.." required/>
   <button ng-click="send(newInput)" class="btn btn-primary">发送</button>
 </form>
 <table class="table table-hover table-condensed">
