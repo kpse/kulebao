@@ -19,16 +19,16 @@ angular.module('kulebaoAdmin')
 angular.module('kulebaoAdmin')
 .controller 'ConversationsInClassCtrl',
     [ '$scope', '$rootScope', '$stateParams',
-      '$location', 'schoolService', 'classService', 'parentService',
-      (scope, rootScope, stateParams, location, School, Class, Parent) ->
+      '$location', 'schoolService', 'classService', 'parentService', 'conversationService'
+      (scope, rootScope, stateParams, location, School, Class, Parent, Chat) ->
         rootScope.tabName = 'conversation'
 
         scope.kindergarten = School.get school_id: stateParams.kindergarten, ->
           scope.kindergarten.classes = Class.bind({school_id: scope.kindergarten.school_id}).query()
           scope.parents = Parent.bind(school_id: stateParams.kindergarten, class_id: stateParams.class_id).query ->
             _.forEach scope.parents, (p) ->
-              p.lastMessage =
-                content: '老师再见', timestamp: new Date().getTime()
+              p.messages = Chat.bind(school_id: stateParams.kindergarten, phone: p.phone, most: 1, sort: 'desc').query ->
+                 p.lastMessage = p.messages[0]
 
         scope.goDetail = (parent) ->
           if (location.path().indexOf('/list') > 0 )
