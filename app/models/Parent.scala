@@ -42,10 +42,10 @@ object Parent {
       info(parent.school_id, parent.id.get)
   }
 
-  def delete(kg: Long)(id: Long) = DB.withConnection {
+  def delete(kg: Long)(phone: String) = DB.withConnection {
     implicit c =>
-      SQL("update parentinfo set status=0 where uid={id}")
-        .on('id -> id
+      SQL("update parentinfo set status=0 where phone={phone}")
+        .on('phone -> phone
         ).executeUpdate
   }
 

@@ -73,8 +73,8 @@ object ParentController extends Controller {
       } getOrElse BadRequest("Detected error:" + request.body)
   }
 
-  def delete(kg: Long, parentId: Long) = Action {
-    Parent.delete(kg)(parentId)
+  def delete(kg: Long, phone: String) = Action {
+    Parent.delete(kg)(phone)
     Ok("{\"status\":\"success\"}").as("application/json")
   }
 

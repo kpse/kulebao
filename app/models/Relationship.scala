@@ -11,6 +11,13 @@ import play.Logger
 case class Relationship(parent: Option[Parent], child: Option[ChildInfo], card: String, relationship: String)
 
 object Relationship {
+  def delete(kg: Long, card: String)  = DB.withConnection {
+    implicit c =>
+      SQL("update relationmap set status=0 where card_num={card}")
+        .on('card -> card
+        ).executeUpdate
+  }
+
   def show(kg: Long, card: String) = DB.withConnection {
     implicit c =>
       SQL("select * from relationmap where card_num={card}").on('card -> card).as(simple(kg) singleOpt)
@@ -61,7 +68,7 @@ object Relationship {
 
 
   def generateQuery(parent: Option[String], child: Option[String], classId: Option[Long]) = {
-    var sql = "select distinct r.* from relationmap r, childinfo c, parentinfo p where r.child_id=c.child_id and p.parent_id=r.parent_id and p.school_id={kg} and p.status=1"
+    var sql = "select r.* from relationmap r, childinfo c, parentinfo p where r.child_id=c.child_id and p.parent_id=r.parent_id and p.school_id={kg} and p.status=1 and r.status=1 "
     parent map {
       phone =>
         sql += " and p.phone={phone}"

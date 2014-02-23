@@ -46,7 +46,7 @@ GET           /kindergarten/:kg/parent                                          
 POST          /kindergarten/:kg/parent                                           controllers.ParentController.create(kg: Long)
 GET           /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.show(kg: Long, parentId: String)
 POST          /kindergarten/:kg/parent/:phone                                    controllers.ParentController.update(kg: Long, phone: String)
-DELETE        /kindergarten/:kg/parent/:parentId                                 controllers.ParentController.delete(kg: Long, parentId: Long)
+DELETE        /kindergarten/:kg/parent/:phone                                    controllers.ParentController.delete(kg: Long, phone: String)
 
 GET           /kindergarten/:kg/parent/:parentId/news                            controllers.ReadingNewsController.index(kg: Long, parentId: String)
 POST          /kindergarten/:kg/parent/:parentId/news/:newsId                    controllers.ReadingNewsController.create(kg: Long, parentId: Long, newsId: Long)
@@ -81,7 +81,8 @@ GET           /kindergarten/:kg/card                                            
 
 GET           /kindergarten/:kg/relationship                                     controllers.RelationshipController.index(kg: Long, parent: Option[String], child: Option[String], class_id: Option[Long])
 GET           /kindergarten/:kg/relationship/:card                               controllers.RelationshipController.show(kg: Long, card: String)
-POST          /kindergarten/:kg/relationship                                     controllers.RelationshipController.create(kg: Long)
+POST          /kindergarten/:kg/relationship/:card                                     controllers.RelationshipController.create(kg: Long, card: String)
+DELETE        /kindergarten/:kg/relationship/:card                               controllers.RelationshipController.delete(kg: Long, card: String)
 
 GET           /kindergarten/:kg/assignment                                       controllers.AssignmentController.index(kg: Long, classId: Option[String], from: Option[Long], to: Option[Long], most: Option[Int])
 

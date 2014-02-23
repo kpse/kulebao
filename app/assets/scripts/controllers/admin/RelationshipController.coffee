@@ -56,6 +56,9 @@ angular.module('kulebaoAdmin')
           $http({method: 'POST', url: '/kindergarten/' + stateParams.kindergarten + '/check', data: check}).success (data) ->
             alert 'error_code:' + data.error_code
 
+        scope.delete = (card) ->
+          Relationship.bind(school_id: stateParams.kindergarten, card: card).delete ->
+            scope.$emit 'refreshRelationship'
     ]
 
 angular.module('kulebaoAdmin')

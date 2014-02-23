@@ -20,11 +20,10 @@ object RelationshipController extends Controller {
   }
 
 
-  def create(kg: Long) = Action(parse.json) {
+  def create(kg: Long, card: String) = Action(parse.json) {
     implicit request =>
       Logger.info(request.body.toString)
       val body: JsValue = request.body
-      val card: String = (body \ "card").as[String]
       val relationship: String = (body \ "relationship").as[String]
       val phone: String = (body \ "parent" \ "phone").as[String]
       val childId: String = (body \ "child" \ "id").as[String]
@@ -33,5 +32,9 @@ object RelationshipController extends Controller {
 
   def show(kg: Long, card: String) = Action {
     Ok(Json.toJson(Relationship.show(kg, card)))
+  }
+
+  def delete(kg: Long, card: String) = Action {
+    Ok(Json.toJson(Relationship.delete(kg, card)))
   }
 }
