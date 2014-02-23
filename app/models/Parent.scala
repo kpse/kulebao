@@ -308,4 +308,15 @@ object Parent {
         .on('kg -> kg)
         .as(simple *)
   }
+
+  def indexInClass(kg: Long, classId: Long) = DB.withConnection {
+    implicit c =>
+      SQL("select p.* from parentinfo p, childinfo c, relationmap r " +
+        "where p.parent_id = r.parent_id and c.child_id = r.child_id " +
+        "and c.class_id = {class_id} and p.status = 1 and p.school_id = {kg}")
+        .on('kg -> kg.toString,
+          'class_id -> classId)
+        .as(simple *)
+  }
+
 }

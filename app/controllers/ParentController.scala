@@ -16,9 +16,16 @@ object ParentController extends Controller {
   implicit val write4 = Json.writes[Parent]
 
   def index(kg: Long, classId: Option[Long]) = Action {
-    val jsons = Parent.simpleIndex(kg)
-    Logger.info(jsons.toString)
-    Ok(Json.toJson(jsons))
+    classId match {
+      case Some(id) =>
+        val jsons = Parent.indexInClass(kg, id)
+        Logger.info(jsons.toString)
+        Ok(Json.toJson(jsons))
+      case None =>
+        val jsons = Parent.simpleIndex(kg)
+        Logger.info(jsons.toString)
+        Ok(Json.toJson(jsons))
+    }
   }
 
   val parentForm = Form(
