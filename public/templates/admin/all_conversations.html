@@ -6,10 +6,5 @@
     <span>输入内容进行查找</span>
 
   </div>
-  <ul class="nav nav-tabs">
-    <li ng-repeat="c in kindergarten.classes" ng-class="{active: {{c.class_id == current_class}}}">
-      <a ng-click="navigateTo(c)">{{c.name}}</a>
-    </li>
-  </ul>
   <div class="parents-class-view" ui-view></div>
 </div>
