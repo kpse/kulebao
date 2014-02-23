@@ -18,7 +18,7 @@ object ParentController extends Controller {
   def index(kg: Long, classId: Option[Long]) = Action {
     val jsons = Parent.simpleIndex(kg)
     Logger.info(jsons.toString)
-    Ok(Json.toJson(jsons)).as("application/json")
+    Ok(Json.toJson(jsons))
   }
 
   val parentForm = Form(
