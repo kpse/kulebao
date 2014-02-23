@@ -16,9 +16,8 @@ object ConversationController extends Controller {
   def newerThan(to: Option[Long]): ConversationFilter = (n: Conversation) => to.forall(n.id.get < _)
 
 
-  def index(kg: Long, phone: String, from: Option[Long], to: Option[Long], most: Option[Int], sort: Option[String]) = Action {
-    val all = Conversation.index(kg, phone, most, sort)
-    Ok(Json.toJson(all.filter(olderThan(from)).filter(newerThan(to))))
+  def index(kg: Long, phone: String, from: Option[Long], to: Option[Long], most: Option[Int]) = Action {
+    Ok(Json.toJson(Conversation.index(kg, phone, from, to).take(most.getOrElse(25)).sortBy(_.id)))
   }
 
   implicit val read = Json.reads[Conversation]
@@ -31,7 +30,7 @@ object ConversationController extends Controller {
           val created = Conversation.create(kg, conversation)
           retrieveRecentFrom match {
             case Some(from) =>
-              Ok(Json.toJson(Conversation.index(kg, phone, Some(25), Some("desc")).filter(olderThan(Some(from)))))
+              Ok(Json.toJson(Conversation.index(kg, phone, Some(from), None).take(25)))
             case _ =>
               Ok(Json.toJson(created))
           }
