@@ -46,7 +46,7 @@ angular.module('kulebaoAdmin')
       (scope, rootScope, stateParams, location, School, $http, Class, Message, Parent) ->
         rootScope.tabName = 'conversation'
 
-        scope.parent = Parent.bind(school_id: stateParams.kindergarten, parentId: stateParams.phone).get()
+        scope.parent = Parent.bind(school_id: stateParams.kindergarten, phone: stateParams.phone).get()
         scope.conversations = Message.bind(school_id: stateParams.kindergarten, phone: stateParams.phone, sort: 'desc').query()
         scope.newInput = 'please add comments'
 
