@@ -1,21 +1,12 @@
 package controllers
 
-import play.api.libs.json.{JsError, Json}
+import play.api.libs.json.Json
 import play.api.mvc._
 import models.json_models._
-import models.json_models.ChildrenResponse
-import models.json_models.ChildDetailResponse
-import models.json_models.ChildDetail
 import play.api.Logger
-import play.api.data.Form
-import play.api.data.Forms._
 import models.json_models.ChildrenResponse
 import models.json_models.ChildDetailResponse
 import models.json_models.ChildDetail
-import models.{School, ParentInfo}
-import scala.collection.generic.SeqFactory
-import scala.collection.immutable.::
-import scala.::
 
 object ChildController extends Controller {
 
