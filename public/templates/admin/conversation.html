@@ -1,4 +1,5 @@
 <div class="loading" ng-show="loading"/>
+  <h3>与{{parent.name || '家长'}}的通讯记录</h3>
 <form class="form">
   <textarea class="message-input" type="text" ng-model="newInput" required/>
   <button ng-click="send(newInput)" class="btn btn-primary">发送</button>
@@ -7,8 +8,8 @@
   <thead>
   <tr class="row">
     <th class=".col-xs-2">发言人</th>
-    <th class=".col-xs-7">内容</th>
-    <th class=".col-xs-3">时间</th>
+    <th class=".col-xs-7">通讯内容</th>
+    <th class=".col-xs-3">通讯时间</th>
   </tr>
   </thead>
   <tbody>

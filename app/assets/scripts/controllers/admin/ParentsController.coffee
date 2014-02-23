@@ -82,6 +82,9 @@ angular.module('kulebaoAdmin')
             $scope.loading = false
             $location.path($location.path() + '/class/' + $scope.kindergarten.classes[0].class_id + '/list') if $location.path().indexOf("/class/", 0) < 0
 
+        $scope.navigateTo = (c) ->
+          $location.path($location.path().replace(/\/class\/.+$/, '') + '/class/' + c.class_id + '/list')
+
         $scope.delete = (parent) ->
           $scope.parents = _.reject($scope.parents, (p) ->
             parent.id == p.id)

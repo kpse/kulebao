@@ -59,6 +59,10 @@ class Config
         controller: 'ConversationsListCtrl'
     .state 'kindergarten.conversation.class',
         url: '/class/:class_id',
+        templateUrl: 'templates/admin/classes.html',
+        controller: 'ConversationsInClassCtrl'
+    .state 'kindergarten.conversation.class.list',
+        url: '/list',
         templateUrl: 'templates/admin/conversation_in_class.html',
         controller: 'ConversationsInClassCtrl'
     .state 'kindergarten.conversation.class.parent',
